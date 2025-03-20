@@ -1,18 +1,27 @@
+import 'dart:ui';
+
+import 'package:smartie/IDScannerScreen.dart';
+import 'package:smartie/verification_start_page.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class RegistrationPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
+  // final TextEditingController _ageController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _questionsController = TextEditingController();
 
   String? _selectedCountryCode = '+01'; // Default country code
   String? _selectedSex;
+  String? _selectedAge;
   String? _selectedEmploymentStatus;
   String? _selectedReason;
+  bool _isChecked = false;
+
+  RegistrationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +36,30 @@ class RegistrationPage extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Title
                 Text(
                   'Enter your basic details',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 // Subtitle
                 Text(
                   'Give us just a bit to do our magic and we\'ll get you on your way.',
                   style: TextStyle(fontSize: 16, color: Colors.grey),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 // Full Name Input
                 TextFormField(
                   controller: _nameController,
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Full Name',
                     border: OutlineInputBorder(),
@@ -59,7 +71,7 @@ class RegistrationPage extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 // Email Input
                 TextFormField(
                   controller: _emailController,
@@ -77,7 +89,7 @@ class RegistrationPage extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 // Mobile Number Input
                 Row(
                   children: [
@@ -103,7 +115,7 @@ class RegistrationPage extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 8),
                     // Phone Number Input
                     Expanded(
                       flex: 5,
@@ -127,35 +139,39 @@ class RegistrationPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 // Age and Sex Inputs
                 Row(
                   children: [
                     // Age Input
+
+                    // Sex Dropdown
                     Expanded(
                       flex: 2,
-                      child: TextFormField(
-                        controller: _ageController,
-                        keyboardType: TextInputType.number,
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedAge,
                         decoration: InputDecoration(
                           labelText: 'Age',
                           border: OutlineInputBorder(),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your age';
-                          }
-                          if (!RegExp(r'^\d+$').hasMatch(value)) {
-                            return 'Enter a valid age';
-                          }
-                          return null;
+                        items:
+                            ['18-25', '25-35', '35-45', '45-55', '55-65', '65+']
+                                .map(
+                                  (age) => DropdownMenuItem(
+                                    value: age,
+                                    child: Text(age),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (value) {
+                          _selectedAge = value;
                         },
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 8),
                     // Sex Dropdown
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: DropdownButtonFormField<String>(
                         value: _selectedSex,
                         decoration: InputDecoration(
@@ -163,7 +179,7 @@ class RegistrationPage extends StatelessWidget {
                           border: OutlineInputBorder(),
                         ),
                         items:
-                            ['Male', 'Female', 'Other', 'Rather not say']
+                            ['Male', 'Female', 'Other', 'Not Say']
                                 .map(
                                   (sex) => DropdownMenuItem(
                                     value: sex,
@@ -178,7 +194,8 @@ class RegistrationPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+
+                SizedBox(height: 10),
                 // Postal Code Input
                 TextFormField(
                   controller: _postalCodeController,
@@ -190,13 +207,24 @@ class RegistrationPage extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your postal code';
                     }
-                    if (!RegExp(r'^\d+$').hasMatch(value)) {
-                      return 'Enter a valid postal code';
+                    String TrimValue = value.trim();
+                    TrimValue.replaceAll(' ', '');
+
+                    print(TrimValue);
+                    print(TrimValue.length);
+                    print(
+                      RegExp(
+                        r'^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$',
+                      ).hasMatch(TrimValue),
+                    );
+                    if (!RegExp(
+                      r'^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$',
+                    ).hasMatch(TrimValue)) {
+                      return "Invalid Postal Code";
                     }
-                    return null;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 // Employment Status Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedEmploymentStatus,
@@ -217,7 +245,16 @@ class RegistrationPage extends StatelessWidget {
                     _selectedEmploymentStatus = value;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
+                // Reason for Registration Dropdown
+                TextFormField(
+                  controller: _questionsController,
+                  decoration: InputDecoration(
+                    labelText: 'Ask me a question',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 10),
                 // Reason for Registration Dropdown
                 DropdownButtonFormField<String>(
                   value: _selectedReason,
@@ -238,8 +275,26 @@ class RegistrationPage extends StatelessWidget {
                     _selectedReason = value;
                   },
                 ),
-                SizedBox(height: 20),
-                // Submit Button
+                SizedBox(height: 10),
+                Row(
+                  children: <Widget>[
+                    Checkbox(
+                      value: _isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      // Use Expanded to allow the text to wrap
+                      child: Text(
+                        'I agree to the terms and conditions and privacy policy.',
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                    ),
+                  ],
+                ), // Submit Button
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
@@ -248,10 +303,19 @@ class RegistrationPage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Registration Successful!')),
                         );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const IDScannerScreen(),
+                          ), // Replace with your registration page widget
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF008FD7),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       padding: EdgeInsets.symmetric(
                         vertical: 15,
                         horizontal: 30,
@@ -270,4 +334,6 @@ class RegistrationPage extends StatelessWidget {
       ),
     );
   }
+
+  void setState(Null Function() param0) {}
 }

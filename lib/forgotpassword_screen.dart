@@ -1,30 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
-import 'package:smartie/forgotpassword_screen.dart';
-import 'package:smartie/google_login_screen.dart';
+import 'package:smartie/home_screen.dart';
+import 'dart:convert';
+
+import 'package:smartie/login_screen.dart'; // For JSON decoding
 import 'package:smartie/registration_screen.dart';
 
-import 'dart:convert'; // For JSON decoding
-import 'home_screen.dart'; // Import the second screen
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ForgotpasswordScreen extends StatefulWidget {
+  const ForgotpasswordScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotpasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
   // Function to validate credentials
-  Future<void> _validateAndLogin() async {
+  Future<void> _sendForgotPassword() async {
     try {
       print("Before currentState check: ${_formKey.currentState}"); // Debugging
       if (_formKey.currentState!.validate()) {
@@ -33,30 +31,28 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
         // Use the correct API URL
-        const String apiUrl = "https://mic.thegwd.ca/test/api/login";
-
+        const String apiUrl = "https://mic.thegwd.ca/test/api/resetpassword";
+        print(_emailController.text);
         try {
           final response = await http.post(
             Uri.parse(apiUrl),
             headers: {"Content-Type": "application/json"},
-            body: json.encode({
-              "email": _emailController.text,
-              "password": _passwordController.text,
-            }),
+            body: json.encode({"email": _emailController.text}),
           );
           print(response.body);
           // Log the response status code and body for debugging
           if (response.statusCode == 200) {
             final data = json.decode(response.body);
             // Check for the success message in the response
-            if (data['message'] == "Login successful!") {
+            print(data['message']);
+            if (data['message'] == "Successful!") {
               // Navigate to the next screen if login is successful
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),
               );
             } else {
-              _showErrorSnackbar(data['message']);
+              _showErrorSnackbar("Check your Email");
             }
           } else {
             _showErrorSnackbar("An error occurred. Please try again.");
@@ -68,9 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             _isLoading = false;
           });
         }
-      } else {
-        print("Login has failed: ${_formKey.currentState}"); // Debugging
-      }
+      } else {}
     } catch (e) {
       print("Error: $e");
     }
@@ -103,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ), // Replace with your logo path
                 SizedBox(height: 15),
                 Text(
-                  'Sign In',
+                  'Forgot Password',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -111,8 +105,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Text(
-                  'Welcome back! Let\'s get started',
+                  'Let\'s get you back in.',
                   style: TextStyle(fontSize: 16, color: Colors.white),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 15),
                 // Light blue box with rounded corners
@@ -145,28 +140,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 15),
-                        TextFormField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                        ),
+
                         SizedBox(height: 15),
                         _isLoading
                             ? CircularProgressIndicator()
                             : SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: _validateAndLogin,
+                                onPressed: _sendForgotPassword,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xFF008FD7),
                                   padding: EdgeInsets.symmetric(vertical: 15),
@@ -175,41 +156,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 child: Text(
-                                  'Login',
+                                  'Reset Password',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
-                        SizedBox(height: 15),
-                        // Sign up text
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Navigate to the forgot password page
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => ForgotpasswordScreen(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color:
-                                      Colors.grey, // Color for the sign-up link
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
+                ),
+                SizedBox(height: 15),
+                // Sign up text
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to the forgot password page
+                        Navigator.pop(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ), // Replace with your registration page widget
+                        );
+                      },
+                      child: Text(
+                        'Return to Login',
+                        style: TextStyle(
+                          color: Colors.cyan, // Color for the sign-up link
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 15),
                 // Sign up text
@@ -225,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     GestureDetector(
                       onTap: () {
                         // Navigate to the registration page
-                        Navigator.push(
+                        Navigator.pop(
                           context,
                           MaterialPageRoute(
                             builder: (context) => RegistrationPage(),
@@ -248,13 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity, // Match the width of the input fields
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GoogleLoginScreen(),
-                        ),
-                      );
-
                       // Add your Google sign-up logic here
                     },
                     style: ElevatedButton.styleFrom(
@@ -270,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     label: Text(
-                      'Login with Google',
+                      'Sign up with Google',
                       style: TextStyle(
                         color: Colors.black,
                       ), // Black text for contrast
@@ -287,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(
-                        0xFFFFFFFF,
+                        0xFF2F2F2F,
                       ), // Dark background for Microsoft button
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
@@ -295,21 +267,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     icon: Image.asset(
-                      'assets/images/apple_logo_transparent.png', // Replace with your Microsoft logo asset
+                      'assets/images/microsoft_logo.png', // Replace with your Microsoft logo asset
                       height: 20,
                     ),
                     label: Text(
-                      'Login with Apple',
+                      'Sign up with Microsoft',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                       ), // White text for contrast
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
-                Text(
-                  '© 2025 SMARTI&E',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(16.0),
+
+                  child: Text(
+                    '© 2025 SMARTI&E',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
                 ),
               ],
             ),

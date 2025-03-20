@@ -31,10 +31,14 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.3.0 # Ensure this line is included
-
+  google_sign_in: ^6.3.0
+  sign_in_with_apple: ^6.1.4
+  camera: ^0.11.1
+  path_provider: ^2.1.1
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  #cupertino_icons: ^1.0.8
+  cupertino_icons: ^1.0.8
 
 
 
@@ -60,6 +64,7 @@ flutter:
     - assets/images/smartie_logo_white.png
     - assets/images/microsoft_logo.png
     - assets/images/google_logo.png
+    - assets/images/apple_logo_transparent.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -76,10 +81,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: Galano
+       fonts:
+         - asset: assets/fonts/GalanoGrotesqueMedium.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
