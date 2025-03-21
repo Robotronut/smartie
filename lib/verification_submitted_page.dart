@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart'; // Import the second screen
 
 class VerificationSubmittedPage extends StatelessWidget {
   const VerificationSubmittedPage({super.key});
@@ -65,7 +66,14 @@ class VerificationSubmittedPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
                       style: FilledButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
                         shape: RoundedRectangleBorder(

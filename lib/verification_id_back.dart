@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/IDScannerScreen.dart';
+import 'package:smartie/IdScannnerIdBack.dart.dart';
+import 'package:smartie/home_screen.dart';
 
-class VerificationStartPage extends StatelessWidget {
-  const VerificationStartPage({super.key});
+class VerificationIdBackPage extends StatelessWidget {
+  const VerificationIdBackPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class VerificationStartPage extends StatelessWidget {
                     widthFactor: 1.0, // Adjust width to 80% of the screen
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Let's get you verified",
+                      "Second Side Id Photo",
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
@@ -51,7 +53,7 @@ class VerificationStartPage extends StatelessWidget {
                     alignment: Alignment.center,
                     widthFactor: 1.0, // Same width as the first text
                     child: Text(
-                      "Give us just a bit to do our magic and we'll get you on your way.",
+                      "Not so hard eh! Let's get a photo of the back of the ID now.",
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
@@ -87,7 +89,7 @@ class VerificationStartPage extends StatelessWidget {
                         children: [
                           Center(
                             child: Text(
-                              "Before you start, please:",
+                              "Well that looks successful, next step",
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontSize: 14.0,
@@ -108,7 +110,7 @@ class VerificationStartPage extends StatelessWidget {
                               Padding(padding: EdgeInsets.all(4.0)),
                               Expanded(
                                 child: Text(
-                                  "Prepare a valid government-issued ID",
+                                  "Using the same Id, turn it over so we can capture the otherside.",
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     fontFamily: 'GalanoGrotesqueMedium',
@@ -149,7 +151,7 @@ class VerificationStartPage extends StatelessWidget {
                               Padding(padding: EdgeInsets.all(4.0)),
                               Expanded(
                                 child: Text(
-                                  "Be prepared to take a take another photo of the otherside of your ID",
+                                  "Be prepared to take a selfie and photos of your ID",
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     fontFamily: 'GalanoGrotesqueMedium',
@@ -174,7 +176,7 @@ class VerificationStartPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const IDScannerScreen(),
+                            builder: (context) => const IDScannerIdBackScreen(),
                           ),
                         );
                       },

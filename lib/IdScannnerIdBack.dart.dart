@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:smartie/home_screen.dart';
+import 'package:smartie/login_screen.dart';
 import 'dart:convert';
+import 'package:smartie/verification_submitted_page.dart';
 
-import 'package:smartie/verification_id_back.dart';
-
-class IDScannerScreen extends StatefulWidget {
-  const IDScannerScreen({super.key});
+class IDScannerIdBackScreen extends StatefulWidget {
+  const IDScannerIdBackScreen({super.key});
   @override
-  _IDScannerScreenState createState() => _IDScannerScreenState();
+  _IDScannerScreenIdBackState createState() => _IDScannerScreenIdBackState();
 }
 
-class _IDScannerScreenState extends State<IDScannerScreen> {
+class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
   late CameraController _cameraController;
   late Future<void> _initializeControllerFuture;
   late List<CameraDescription> _cameras;
@@ -92,11 +93,10 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
 
       if (response.statusCode == 200) {
         print(response.statusCode);
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          (Route<dynamic> route) => false, // Remove all existing routes
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -104,9 +104,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       }
     } catch (e) {
@@ -115,7 +113,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } finally {
       setState(() {
