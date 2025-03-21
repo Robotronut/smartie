@@ -63,11 +63,13 @@ class VerificationSubmittedPage extends StatelessWidget {
                     width: double.infinity,
                     child: FilledButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => VerificationSubmittedPage(),
                           ),
+                          (Route<dynamic> route) =>
+                              false, // Remove all existing routes
                         );
                       },
                       style: FilledButton.styleFrom(

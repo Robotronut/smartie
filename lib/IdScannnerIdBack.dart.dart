@@ -95,25 +95,27 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
         print(response.statusCode);
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => VerificationSubmittedPage()),
           (Route<dynamic> route) => false, // Remove all existing routes
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('API Error: ${response.statusCode}')),
         );
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => VerificationSubmittedPage()),
+          (Route<dynamic> route) => false, // Remove all existing routes
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => VerificationSubmittedPage()),
+        (Route<dynamic> route) => false, // Remove all existing routes
       );
     } finally {
       setState(() {
