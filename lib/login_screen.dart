@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align items at the start
+                  MainAxisAlignment.center, // Align items at the start
               children: [
                 // Logo at the top
                 Image.asset(
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Text(
                   'Welcome back! Let\'s get started',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
                 SizedBox(height: 15),
                 // Light blue box with rounded corners

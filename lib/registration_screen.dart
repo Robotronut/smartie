@@ -94,7 +94,7 @@ class RegistrationPage extends StatelessWidget {
                   children: [
                     // Country Code Dropdown
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: DropdownButtonFormField<String>(
                         value: _selectedCountryCode,
                         decoration: InputDecoration(
@@ -117,7 +117,7 @@ class RegistrationPage extends StatelessWidget {
                     SizedBox(width: 8),
                     // Phone Number Input
                     Expanded(
-                      flex: 5,
+                      flex: 7,
                       child: TextFormField(
                         controller: _phoneController,
                         keyboardType: TextInputType.number,
@@ -221,6 +221,7 @@ class RegistrationPage extends StatelessWidget {
                     ).hasMatch(TrimValue)) {
                       return "Invalid Postal Code";
                     }
+                    return null;
                   },
                 ),
                 SizedBox(height: 10),

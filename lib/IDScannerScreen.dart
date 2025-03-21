@@ -139,8 +139,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                     "IDScannerScreen: FutureBuilder snapshot: ${snapshot.connectionState}",
                   );
                   if (snapshot.connectionState == ConnectionState.done) {
-                    if (_cameraController == null ||
-                        !_cameraController.value.isInitialized) {
+                    if (!_cameraController.value.isInitialized) {
                       print("IDScannerScreen: Camera not initialized");
                       return Center(child: CircularProgressIndicator());
                     }

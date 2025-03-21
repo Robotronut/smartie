@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smartie/IDScannerScreen.dart';
 import 'package:smartie/IdScannnerIdBack.dart.dart';
-import 'package:smartie/home_screen.dart';
+import 'package:smartie/verification_submitted_page.dart';
 
 class VerificationIdBackPage extends StatelessWidget {
   const VerificationIdBackPage({super.key});
@@ -176,7 +175,8 @@ class VerificationIdBackPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const IDScannerIdBackScreen(),
+                            builder:
+                                (context) => const VerificationSubmittedPage(),
                           ),
                         );
                       },
