@@ -45,7 +45,6 @@ class VerificationSubmittedPage extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 18.0,
-                      fontFamily: 'GalanoGrotesqueMedium',
                     ),
                   ),
 
@@ -53,10 +52,7 @@ class VerificationSubmittedPage extends StatelessWidget {
 
                   Text(
                     "Your verification data has been successfully submitted",
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      fontFamily: 'GalanoGrotesqueMedium',
-                    ),
+                    style: TextStyle(fontSize: 14.0),
                     textAlign: TextAlign.center,
                   ),
 
