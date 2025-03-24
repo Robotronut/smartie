@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/IDScannerScreen.dart';
-import 'package:smartie/IdScannnerIdBack.dart.dart';
+import 'package:smartie/IdScannnerIdBack.dart';
 import 'package:smartie/home_screen.dart';
 
 class VerificationIdBackPage extends StatelessWidget {

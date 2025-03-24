@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,6 +22,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   File? _image;
   bool _isProcessing = false;
   bool _camerasLoaded = false; // Added this
+  double screenWidth = 100;
 
   @override
   void initState() {
@@ -127,6 +129,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.sizeOf(context).width;
     print("IDScannerScreen: build called");
     return Scaffold(
       appBar: AppBar(title: Text('Scan ID')),
@@ -150,16 +153,60 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                       children: <Widget>[
                         CameraPreview(_cameraController),
                         _buildOverlay(),
+                        if (_image == null)
+                          (Container(
+                            width: 300,
+                            alignment: Alignment.topCenter,
+                            padding: EdgeInsets.only(top: 100),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "Please make sure your ID fills the square below and is not blurry",
+                              style: TextStyle(backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+                              color: Color.fromRGBO(255, 255, 255, 0.5),
+                              ),
+                            ),
+                          )),
                         if (_image != null)
                           Positioned.fill(
                             child: Image.file(_image!, fit: BoxFit.cover),
                           ),
+                        if (_image != null)
+                          (Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 120,
+                              width: screenWidth,
+                              color: Colors.white,
+                            ),
+                          )),
+                        if (_image != null)
+                          (Positioned(
+                            bottom: 90,
+                            left: 15,
+                            child: Text(
+                              "Are you happy with this picture?",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          )),
+                                                  if (_image != null)
+                          (Positioned(
+                            bottom: 70,
+                            left: 15,
+                            child: Text(
+                              "Note: This picture will be saved on the internet.",
+                              style: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
+                            ),
+                          )),
                         Positioned(
                           bottom: 20,
+                          left: _image != null ? 5 : null,
                           child:
                               _isProcessing
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue,
+                                    ),
                                     onPressed:
                                         _image != null
                                             ? () => _sendImageToApi(
@@ -168,24 +215,24 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                             )
                                             : _takePicture,
                                     child: Text(
-                                      _image != null
-                                          ? 'Send Image'
-                                          : 'Take Picture',
+                                      style: TextStyle(color: Colors.white),
+                                      _image == null
+                                          ? 'Take Picture'
+                                          : 'Yes, continue to back',
                                     ),
                                   ),
                         ),
                         if (_image != null)
                           Positioned(
-                            top: 20,
-                            right: 20,
-                            child: IconButton(
+                            bottom: 20,
+                            right: 5,
+                            child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
                                   _image = null;
                                 });
                               },
-                              icon: Icon(Icons.close),
-                              color: Colors.white,
+                              child: Text("No, retake picture"),
                             ),
                           ),
                       ],
