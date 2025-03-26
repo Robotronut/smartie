@@ -109,6 +109,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+          (Route<dynamic> route) => false
         );
       }
     } catch (e) {
@@ -118,6 +119,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+        (Route<dynamic> route) => false,
       );
     } finally {
       setState(() {

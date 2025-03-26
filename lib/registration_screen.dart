@@ -1,7 +1,9 @@
-
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:smartie/verification_start_page.dart';
+import 'package:smartie/user_assessment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 // ignore: must_be_immutable
 class RegistrationPage extends StatefulWidget {
@@ -37,11 +39,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
       if (states.any(interactiveStates.contains)) {
         return Colors.grey;
       }
-      if(_isChecked){
+      if (_isChecked) {
         return Color.fromRGBO(0, 162, 233, 1);
       }
       return Colors.white;
-      
     }
 
     return Scaffold(
@@ -116,16 +117,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     border: OutlineInputBorder(),
                     label: Text(
                       "Enter phone number",
-                      style: TextStyle(
-                        fontSize: 14.0
-                      ),
+                      style: TextStyle(fontSize: 14.0),
                     ),
-                    // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0), 
+                    // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
                   ),
                   initialCountryCode: 'CA',
                   showCountryFlag: false,
                   onChanged: (phone) {},
                   validator: (value) {
+                    isPhoneValidated = false;
+                    print(value);
                     if (value!.isValidNumber()) {
                       setState(() {
                           isPhoneValidated = true;
@@ -137,7 +138,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     }
                     return null;
                   },
-              ),
+                ),
                 SizedBox(height: 10),
                 // Age and Sex Inputs
                 Row(
@@ -291,32 +292,37 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: Transform.scale(
                         scale: 0.8,
                         child: Checkbox(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
                           side: WidgetStateBorderSide.resolveWith(
-                              (states) => BorderSide(width: 1.0, color: const Color.fromARGB(255, 132, 132, 132)),
+                            (states) => BorderSide(
+                              width: 1.0,
+                              color: const Color.fromARGB(255, 132, 132, 132),
+                            ),
                           ),
                           checkColor: Colors.white,
                           fillColor: WidgetStateProperty.resolveWith(getColor),
-                          value: _isChecked, 
+                          value: _isChecked,
                           onChanged: (bool? newValue) {
                             setState(() {
                               _isChecked = newValue!;
                             });
                           },
-                        )
-                      )
+                        ),
+                      ),
                     ),
 
                     // Verification Agreement Text
                     Expanded(
-                      child:Text(
+                      child: Text(
                         "I agree that I provided accurate and valid identification documents, including a government-issued ID and a selfie.",
                         style: TextStyle(
                           color: const Color.fromARGB(255, 132, 132, 132),
                           fontSize: 12.0,
                           fontFamily: 'GalanoGrotesqueMedium',
                         ),
-                        )
+                      ),
                     ),
                   ],
                 ),
@@ -327,37 +333,52 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate() & _isChecked) {
+                    onPressed: () {
+                      if (_formKey.currentState!.validate() & _isChecked & isPhoneValidated) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Registration Successful!')),
                         );
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const VerificationStartPage())
+                          MaterialPageRoute(
+                            builder: (context) => UserAssessment(),
+                          ),
                         );
-                    } else if (!_isChecked) {
+                      } else if (!_isChecked) {
                         // Show a warning if checkbox is not checked
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('You must agree to the terms before proceeding.'), backgroundColor: Colors.red),
+                          SnackBar(
+                            content: Text(
+                              'You must agree to the terms before proceeding.',
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } else if (!isPhoneValidated) {
+                        // Show a warning if phone is not validated
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'You must enter a valid phone number before proceeding.',
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
                         );
                       }
-                  },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                    )
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
+                    child: Text(
+                      "Let's go",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  child: Text(
-                    "Let's go",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                )
-              )
+                ),
               ],
             ),
           ),
