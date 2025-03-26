@@ -106,7 +106,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('API Error: ${response.statusCode}')),
         );
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
         );
@@ -115,7 +115,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
       );
@@ -143,8 +143,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                     "IDScannerScreen: FutureBuilder snapshot: ${snapshot.connectionState}",
                   );
                   if (snapshot.connectionState == ConnectionState.done) {
-                    if (_cameraController == null ||
-                        !_cameraController.value.isInitialized) {
+                    if (!_cameraController.value.isInitialized) {
                       print("IDScannerScreen: Camera not initialized");
                       return Center(child: CircularProgressIndicator());
                     }

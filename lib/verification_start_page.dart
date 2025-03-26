@@ -40,7 +40,6 @@ class VerificationStartPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
-                        fontFamily: 'GalanoGrotesqueMedium',
                       ),
                     ),
                   ),
@@ -55,7 +54,6 @@ class VerificationStartPage extends StatelessWidget {
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
-                        fontFamily: 'GalanoGrotesqueMedium',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -91,7 +89,7 @@ class VerificationStartPage extends StatelessWidget {
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontSize: 14.0,
-                                fontFamily: 'GalanoGrotesqueMedium',
+
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -109,10 +107,7 @@ class VerificationStartPage extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   "Prepare a valid government-issued ID",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
-                                  ),
+                                  style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -130,10 +125,7 @@ class VerificationStartPage extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   "Make sure you are in a well-lit place",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
-                                  ),
+                                  style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -150,10 +142,7 @@ class VerificationStartPage extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   "Be prepared to take a take another photo of the otherside of your ID",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
-                                  ),
+                                  style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
                               ),

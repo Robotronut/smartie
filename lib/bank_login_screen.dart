@@ -6,19 +6,19 @@ import 'package:http/http.dart' as http;
 import 'package:smartie/forgotpassword_screen.dart';
 import 'package:smartie/google_login_screen.dart';
 import 'package:smartie/registration_screen.dart';
-import 'package:smartie/user_assessment.dart';
 
 import 'dart:convert'; // For JSON decoding
 import 'home_screen.dart'; // Import the second screen
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class BankLoginScreen extends StatefulWidget {
+  final String imagePath;
+  const BankLoginScreen({super.key, required this.imagePath});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _BankLoginScreenState createState() => _BankLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _BankLoginScreenState extends State<BankLoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -99,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 // Logo at the top
                 Image.asset(
-                  'assets/images/smartie_logo_white.png',
-                  height: 55,
+                  widget.imagePath,
+                  height: MediaQuery.of(context).size.width * 0.7,
                 ), // Replace with your logo path
                 SizedBox(height: 15),
                 Text(

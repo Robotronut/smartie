@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class GoogleLoginScreen extends StatefulWidget {
+  const GoogleLoginScreen({super.key});
+
   @override
   _GoogleLoginScreenState createState() => _GoogleLoginScreenState();
 }

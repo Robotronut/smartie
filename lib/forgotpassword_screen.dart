@@ -259,7 +259,7 @@ class _ForgotPasswordScreenState extends State<ForgotpasswordScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(
-                        0xFF2F2F2F,
+                        0xFFFFFFFF,
                       ), // Dark background for Microsoft button
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
@@ -267,13 +267,13 @@ class _ForgotPasswordScreenState extends State<ForgotpasswordScreen> {
                       ),
                     ),
                     icon: Image.asset(
-                      'assets/images/microsoft_logo.png', // Replace with your Microsoft logo asset
+                      'assets/images/apple_logo_transparent.png', // Replace with your Microsoft logo asset
                       height: 20,
                     ),
                     label: Text(
-                      'Sign up with Microsoft',
+                      'Sign up with Apple Id',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ), // White text for contrast
                     ),
                   ),
