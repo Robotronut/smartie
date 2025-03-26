@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart'; // Import the second screen
+import 'package:smartie/bank_terms_cond_screen.dart';
+// Import the second screen
 
 class VerificationSubmittedPage extends StatelessWidget {
   const VerificationSubmittedPage({super.key});
@@ -31,10 +32,23 @@ class VerificationSubmittedPage extends StatelessWidget {
 
                   Padding(padding: EdgeInsets.all(48.0)),
 
-                  Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: const Color.fromRGBO(0, 162, 233, 1),
-                    size: MediaQuery.of(context).size.width * 0.35,
+                  Container(
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromRGBO(0, 162, 233, 1),
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(180.0)
+                    ),
+                    child: Icon(
+                        Icons.check,
+                        color: const Color.fromRGBO(0, 162, 233, 1),
+                        size: MediaQuery.of(context).size.width * 0.1,
+                        opticalSize: 2.0,
+                        weight: 2.0,
+                      ),
                   ),
 
                   Padding(padding: EdgeInsets.all(4.0)),
@@ -66,7 +80,7 @@ class VerificationSubmittedPage extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => VerificationSubmittedPage(),
+                            builder: (context) => BankTermsCondScreen()
                           ),
                           (Route<dynamic> route) =>
                               false, // Remove all existing routes

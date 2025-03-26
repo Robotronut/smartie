@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Galano', // Use your font family name here
       ),
-      home: LoginScreen(),
+      home: LoginScreen()
     );
   }
 }

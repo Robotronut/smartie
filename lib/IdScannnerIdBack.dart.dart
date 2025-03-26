@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:smartie/home_screen.dart';
-import 'package:smartie/login_screen.dart';
 import 'dart:convert';
 import 'package:smartie/verification_submitted_page.dart';
 

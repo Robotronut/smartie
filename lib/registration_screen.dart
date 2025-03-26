@@ -1,10 +1,16 @@
-import 'dart:ui';
 
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:smartie/verification_start_page.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class RegistrationPage extends StatelessWidget {
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -13,17 +19,31 @@ class RegistrationPage extends StatelessWidget {
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _questionsController = TextEditingController();
 
-  String? _selectedCountryCode = '+01'; // Default country code
+  bool isPhoneValidated = false;
   String? _selectedSex;
   String? _selectedAge;
   String? _selectedEmploymentStatus;
   String? _selectedReason;
   bool _isChecked = false;
 
-  RegistrationPage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<WidgetState> states) {
+      const Set<WidgetState> interactiveStates = <WidgetState>{
+        WidgetState.pressed,
+        WidgetState.hovered,
+        WidgetState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.grey;
+      }
+      if(_isChecked){
+        return Color.fromRGBO(0, 162, 233, 1);
+      }
+      return Colors.white;
+      
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Registration'),
@@ -90,54 +110,34 @@ class RegistrationPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 // Mobile Number Input
-                Row(
-                  children: [
-                    // Country Code Dropdown
-                    Expanded(
-                      flex: 3,
-                      child: DropdownButtonFormField<String>(
-                        value: _selectedCountryCode,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        items:
-                            ['+01', '+91', '+44', '+61', '+81']
-                                .map(
-                                  (code) => DropdownMenuItem(
-                                    value: code,
-                                    child: Text(code),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (value) {
-                          _selectedCountryCode = value;
-                        },
+                IntlPhoneField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    label: Text(
+                      "Enter phone number",
+                      style: TextStyle(
+                        fontSize: 14.0
                       ),
                     ),
-                    SizedBox(width: 8),
-                    // Phone Number Input
-                    Expanded(
-                      flex: 7,
-                      child: TextFormField(
-                        controller: _phoneController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Phone Number',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
-                          if (!RegExp(r'^\d+$').hasMatch(value)) {
-                            return 'Enter a valid phone number';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                    // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0), 
+                  ),
+                  initialCountryCode: 'CA',
+                  showCountryFlag: false,
+                  onChanged: (phone) {},
+                  validator: (value) {
+                    if (value!.isValidNumber()) {
+                      setState(() {
+                          isPhoneValidated = true;
+                      });
+                    } else {
+                      setState(() {
+                          isPhoneValidated = false;
+                      });
+                    }
+                    return null;
+                  },
+              ),
                 SizedBox(height: 10),
                 // Age and Sex Inputs
                 Row(
@@ -276,57 +276,88 @@ class RegistrationPage extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 10),
+
+                Padding(padding: EdgeInsets.all(8.0)),
+
+                //Truth Verification Agreement Checkbox
                 Row(
-                  children: <Widget>[
-                    Checkbox(
-                      value: _isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _isChecked = value!;
-                        });
-                      },
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8.0,
+                  children: [
+                    // Checkbox
+                    SizedBox(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Transform.scale(
+                        scale: 0.8,
+                        child: Checkbox(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                          side: WidgetStateBorderSide.resolveWith(
+                              (states) => BorderSide(width: 1.0, color: const Color.fromARGB(255, 132, 132, 132)),
+                          ),
+                          checkColor: Colors.white,
+                          fillColor: WidgetStateProperty.resolveWith(getColor),
+                          value: _isChecked, 
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              _isChecked = newValue!;
+                            });
+                          },
+                        )
+                      )
                     ),
+
+                    // Verification Agreement Text
                     Expanded(
-                      // Use Expanded to allow the text to wrap
-                      child: Text(
-                        'I agree to the terms and conditions and privacy policy.',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
+                      child:Text(
+                        "I agree that I provided accurate and valid identification documents, including a government-issued ID and a selfie.",
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 132, 132, 132),
+                          fontSize: 12.0,
+                          fontFamily: 'GalanoGrotesqueMedium',
+                        ),
+                        )
                     ),
                   ],
-                ), // Submit Button
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
+                ),
+
+                Padding(padding: EdgeInsets.all(8.0)),
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate() & _isChecked) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Registration Successful!')),
                         );
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const VerificationStartPage(),
-                          ), // Replace with your registration page widget
+                          MaterialPageRoute(builder: (context) => const VerificationStartPage())
+                        );
+                    } else if (!_isChecked) {
+                        // Show a warning if checkbox is not checked
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('You must agree to the terms before proceeding.'), backgroundColor: Colors.red),
                         );
                       }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF008FD7),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 30,
-                      ),
-                    ),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  },
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    )
                   ),
-                ),
+                  child: Text(
+                    "Let's go",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+                )
+              )
               ],
             ),
           ),
@@ -334,6 +365,4 @@ class RegistrationPage extends StatelessWidget {
       ),
     );
   }
-
-  void setState(Null Function() param0) {}
 }
