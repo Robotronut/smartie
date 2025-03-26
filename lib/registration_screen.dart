@@ -129,11 +129,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     print(value);
                     if (value!.isValidNumber()) {
                       setState(() {
-                          isPhoneValidated = true;
+                        isPhoneValidated = true;
                       });
                     } else {
                       setState(() {
-                          isPhoneValidated = false;
+                        isPhoneValidated = false;
                       });
                     }
                     return null;
@@ -334,7 +334,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate() & _isChecked & isPhoneValidated) {
+                      if (_formKey.currentState!.validate() &
+                          _isChecked &
+                          isPhoneValidated) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Registration Successful!')),
@@ -345,22 +347,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             builder: (context) => UserAssessment(),
                           ),
                         );
-                      } else if (!_isChecked) {
-                        // Show a warning if checkbox is not checked
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'You must agree to the terms before proceeding.',
-                            ),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
                       } else if (!isPhoneValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
                               'You must enter a valid phone number before proceeding.',
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } else if (!_isChecked) {
+                        // Show a warning if checkbox is not checked
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'You must agree to the terms before proceeding.',
                             ),
                             backgroundColor: Colors.red,
                           ),
