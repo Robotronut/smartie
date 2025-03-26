@@ -345,22 +345,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             builder: (context) => UserAssessment(),
                           ),
                         );
-                      } else if (!_isChecked) {
-                        // Show a warning if checkbox is not checked
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'You must agree to the terms before proceeding.',
-                            ),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
                       } else if (!isPhoneValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
                               'You must enter a valid phone number before proceeding.',
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } else if (!_isChecked) {
+                        // Show a warning if checkbox is not checked
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'You must agree to the terms before proceeding.',
                             ),
                             backgroundColor: Colors.red,
                           ),
