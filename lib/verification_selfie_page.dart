@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/id_scanner_front.dart';
 import 'package:smartie/id_scannner_back.dart';
+import 'package:smartie/id_scanner_selfie.dart';
 import 'package:smartie/home_screen.dart';
 
-class VerificationIdBackPage extends StatelessWidget {
-  const VerificationIdBackPage({super.key});
+class VerificationSelfiePage extends StatelessWidget {
+  const VerificationSelfiePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class VerificationIdBackPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(
                 top: 64.0,
-                bottom: 24.0,
+                bottom: 4.0,
                 left: 28.0,
                 right: 28.0,
               ),
@@ -38,7 +39,7 @@ class VerificationIdBackPage extends StatelessWidget {
                     widthFactor: 1.0, // Adjust width to 80% of the screen
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Second Side Id Photo",
+                      "Selfie Id Photo",
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
@@ -53,7 +54,7 @@ class VerificationIdBackPage extends StatelessWidget {
                     alignment: Alignment.center,
                     widthFactor: 1.0, // Same width as the first text
                     child: Text(
-                      "Not so hard eh! Let's get a photo of the back of the ID now.",
+                      "You're close! Now we just need one more selfie ID photo.",
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
@@ -75,6 +76,10 @@ class VerificationIdBackPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  Image.asset(
+                    'assets/images/selfie_placeholder.jpg',
+                    width: MediaQuery.of(context).size.width * 0.4,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -89,7 +94,7 @@ class VerificationIdBackPage extends StatelessWidget {
                         children: [
                           Center(
                             child: Text(
-                              "Well that looks successful, next step",
+                              "Final verification step",
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontSize: 14.0,
@@ -110,7 +115,7 @@ class VerificationIdBackPage extends StatelessWidget {
                               Padding(padding: EdgeInsets.all(4.0)),
                               Expanded(
                                 child: Text(
-                                  "Using the same Id, turn it over so we can capture the otherside.",
+                                  "Using the example image above, position your Id beside your face to verify your identity.",
                                   style: TextStyle(
                                     fontSize: 14.0,
                                     fontFamily: 'GalanoGrotesqueMedium',
@@ -156,7 +161,7 @@ class VerificationIdBackPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const IDScannerIdBackScreen(),
+                            builder: (context) => const IdScannerSelfie(),
                           ),
                         );
                       },

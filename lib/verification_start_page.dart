@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartie/IDScannerScreen.dart';
+import 'package:smartie/id_scanner_front.dart';
 
 class VerificationStartPage extends StatelessWidget {
   const VerificationStartPage({super.key});

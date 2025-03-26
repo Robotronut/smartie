@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:smartie/user_assessment.dart';
 import 'package:smartie/verification_start_page.dart';
 import 'package:flutter/material.dart';
 
@@ -305,7 +304,7 @@ class RegistrationPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const VerificationStartPage(),
+                            builder: (context) => UserAssessment(),
                           ), // Replace with your registration page widget
                         );
                       }

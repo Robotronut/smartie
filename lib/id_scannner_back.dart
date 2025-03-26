@@ -2,20 +2,22 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-
+import 'package:smartie/home_screen.dart';
 import 'package:smartie/verification_id_back.dart';
+import 'package:smartie/login_screen.dart';
+import 'package:smartie/verification_selfie_page.dart';
+import 'dart:convert';
+import 'package:smartie/verification_submitted_page.dart';
 
-class IDScannerScreen extends StatefulWidget {
-  const IDScannerScreen({super.key});
+class IDScannerIdBackScreen extends StatefulWidget {
+  const IDScannerIdBackScreen({super.key});
   @override
-  _IDScannerScreenState createState() => _IDScannerScreenState();
+  _IDScannerScreenIdBackState createState() => _IDScannerScreenIdBackState();
 }
 
-class _IDScannerScreenState extends State<IDScannerScreen> {
+class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
   late CameraController _cameraController;
   late Future<void> _initializeControllerFuture;
   late List<CameraDescription> _cameras;
@@ -23,6 +25,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   bool _isProcessing = false;
   bool _camerasLoaded = false; // Added this
   double screenWidth = 100;
+  double screenHeight = 100;
 
   @override
   void initState() {
@@ -94,11 +97,10 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
 
       if (response.statusCode == 200) {
         print(response.statusCode);
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
+          MaterialPageRoute(builder: (context) => VerificationSelfiePage()),
+          (Route<dynamic> route) => false, // Remove all existing routes
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -106,9 +108,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
+          MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
         );
       }
     } catch (e) {
@@ -130,6 +130,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.sizeOf(context).width;
+    screenHeight = MediaQuery.sizeOf(context).height;
     print("IDScannerScreen: build called");
     return Scaffold(
       appBar: AppBar(title: Text('Scan ID')),
@@ -157,12 +158,22 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                           (Container(
                             width: 300,
                             alignment: Alignment.topCenter,
-                            padding: EdgeInsets.only(top: 100),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "Please make sure your ID fills the square below and is not blurry",
-                              style: TextStyle(backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
-                              color: Color.fromRGBO(255, 255, 255, 0.5),
+                            margin: EdgeInsets.only(
+                              top: 100,
+                              bottom: screenHeight - 250,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(0, 0, 0, 0.5),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                "Please make sure your ID fills the square below and is not blurry",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 0.8),
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           )),
@@ -188,13 +199,16 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                               style: TextStyle(color: Colors.black),
                             ),
                           )),
-                                                  if (_image != null)
+                        if (_image != null)
                           (Positioned(
                             bottom: 70,
                             left: 15,
                             child: Text(
-                              "Note: This picture will be saved on the internet.",
-                              style: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
+                              "Note: This picture will be saved on the SMARTI&E server.",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                              ),
                             ),
                           )),
                         Positioned(
@@ -218,7 +232,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                       style: TextStyle(color: Colors.white),
                                       _image == null
                                           ? 'Take Picture'
-                                          : 'Yes, continue to back',
+                                          : 'Yes, continue to selfie',
                                     ),
                                   ),
                         ),
