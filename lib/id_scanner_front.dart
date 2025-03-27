@@ -181,38 +181,49 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                           Positioned.fill(
                             child: Image.file(_image!, fit: BoxFit.cover),
                           ),
-                        if (_image != null)
-                          (Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 120,
-                              width: screenWidth,
-                              color: Colors.white,
-                            ),
-                          )),
-                        if (_image != null)
-                          (Positioned(
-                            bottom: 90,
-                            left: 15,
-                            child: Text(
-                              "Are you happy with this picture?",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )),
-                        if (_image != null)
-                          (Positioned(
-                            bottom: 70,
-                            left: 15,
-                            child: Text(
-                              "Note: This picture will be saved on the SMARTI&E server.",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          )),
+
+                        (Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 130,
+                            width: screenWidth,
+                            color: Colors.white,
+                          ),
+                        )),
+
                         Positioned(
-                          bottom: 20,
+                          bottom: 65,
+                          left: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Are you happy with this picture?",
+                                style: TextStyle(color: Colors.black),
+                              ),
+
+                              ConstrainedBox(
+                                // Wrap the Flexible with ConstrainedBox
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 20,
+                                ), // Adjust maxWidth as needed
+                                child: Flexible(
+                                  child: Text(
+                                    "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
                           left: _image != null ? 5 : null,
                           child:
                               _isProcessing
@@ -230,25 +241,23 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                             : _takePicture,
                                     child: Text(
                                       style: TextStyle(color: Colors.white),
-                                      _image == null
-                                          ? 'Take Picture'
-                                          : 'Yes, continue to back',
+                                      _image == null ? 'Take Picture' : 'Yes',
                                     ),
                                   ),
                         ),
-                        if (_image != null)
-                          Positioned(
-                            bottom: 20,
-                            right: 5,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _image = null;
-                                });
-                              },
-                              child: Text("No, retake picture"),
-                            ),
+
+                        Positioned(
+                          bottom: 10,
+                          right: 5,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _image = null;
+                              });
+                            },
+                            child: Text("Retake"),
                           ),
+                        ),
                       ],
                     );
                   } else {
