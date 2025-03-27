@@ -230,7 +230,10 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
+                                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
                                     ),
                                     onPressed:
                                         _image != null
@@ -250,12 +253,23 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                           bottom: 10,
                           right: 5,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                            ),
                             onPressed: () {
                               setState(() {
                                 _image = null;
                               });
                             },
-                            child: Text("Retake"),
+                            child: Text(
+                              "Retake",
+                              style: TextStyle(
+                                color: const Color.fromRGBO(0, 162, 233, 1),
+                              ),
+                              ),
                           ),
                         ),
                       ],
