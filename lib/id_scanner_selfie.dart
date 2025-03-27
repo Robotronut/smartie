@@ -158,8 +158,8 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                             width: 300,
                             alignment: Alignment.topCenter,
                             margin: EdgeInsets.only(
-                              top: 100,
-                              bottom: screenHeight - 250,
+                              top: 50,
+                              bottom: screenHeight - 200,
                             ),
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(0, 0, 0, 0.5),
@@ -168,7 +168,7 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                             child: Center(
                               child: Text(
                                 textAlign: TextAlign.center,
-                                "Please make sure your face and ID are not blurry and fit within the square below",
+                                "Please make sure your face and ID are not blurry and fit within the shape below",
                                 style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 0.8),
                                   fontWeight: FontWeight.bold,
@@ -177,51 +177,70 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                             ),
                           )),
                         if (_image != null)
-                          Positioned.fill(
-                            child: Image.file(_image!, fit: BoxFit.cover),
-                          ),
-                        (Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: 130,
-                            width: screenWidth,
-                            color: Colors.white,
-                          ),
-                        )),
-
-                        Positioned(
-                          bottom: 65,
-                          left: 15,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Stack(
                             children: [
-                              Text(
-                                "Are you happy with this picture?",
-                                style: TextStyle(color: Colors.black),
+                              Positioned.fill(
+                                child: Image.file(_image!, fit: BoxFit.cover),
                               ),
-
-                              ConstrainedBox(
-                                // Wrap the Flexible with ConstrainedBox
-                                constraints: BoxConstraints(
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width - 20,
-                                ), // Adjust maxWidth as needed
-                                child: Flexible(
-                                  child: Text(
-                                    "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 10.0,
-                                    ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: 10.0,
+                                    top: 5.0,
                                   ),
+                                  height: 130,
+                                  width: screenWidth,
+                                  color: Colors.white,
+                                  child: Text(
+                                    "Are you happy with this picture?",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 65,
+                                left: 15,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ConstrainedBox(
+                                      // Wrap the Flexible with ConstrainedBox
+                                      constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width -
+                                            20,
+                                      ), // Adjust maxWidth as needed
+                                      child: Flexible(
+                                        child: Text(
+                                          "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: 10.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 10,
+                                right: 45,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _image = null;
+                                    });
+                                  },
+                                  child: Text("Retake"),
                                 ),
                               ),
                             ],
                           ),
-                        ),
                         Positioned(
-                          bottom: 20,
+                          bottom: _image != null ? 10 : 20,
                           left: _image != null ? 45 : null,
                           child:
                               _isProcessing
@@ -229,11 +248,7 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                                   : ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
                                     ),
-
                                     onPressed:
                                         _image != null
                                             ? () => _sendImageToApi(
@@ -243,23 +258,10 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                                             : _takePicture,
                                     child: Text(
                                       style: TextStyle(color: Colors.white),
-                                      _image == null ? 'Take Picture' : 'Keep',
+                                      _image == null ? 'Take Picture' : 'Yes',
                                     ),
                                   ),
                         ),
-                        if (_image != null)
-                          Positioned(
-                            bottom: 20,
-                            right: 45,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _image = null;
-                                });
-                              },
-                              child: Text("Retake"),
-                            ),
-                          ),
                       ],
                     );
                   } else {
