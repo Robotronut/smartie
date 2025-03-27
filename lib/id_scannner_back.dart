@@ -108,8 +108,10 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
         );
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
-          (Route<dynamic> route) => false
+          MaterialPageRoute(
+            builder: (context) => const VerificationIdBackPage(),
+          ),
+          (Route<dynamic> route) => false,
         );
       }
     } catch (e) {
@@ -178,40 +180,46 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                               ),
                             ),
                           )),
-                        if (_image != null)
-                          Positioned.fill(
-                            child: Image.file(_image!, fit: BoxFit.cover),
+                        (Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 130,
+                            width: screenWidth,
+                            color: Colors.white,
                           ),
-                        if (_image != null)
-                          (Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 120,
-                              width: screenWidth,
-                              color: Colors.white,
-                            ),
-                          )),
-                        if (_image != null)
-                          (Positioned(
-                            bottom: 90,
-                            left: 15,
-                            child: Text(
-                              "Are you happy with this picture?",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )),
-                        if (_image != null)
-                          (Positioned(
-                            bottom: 70,
-                            left: 15,
-                            child: Text(
-                              "Note: This picture will be saved on the SMARTI&E server.",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontStyle: FontStyle.italic,
+                        )),
+
+                        Positioned(
+                          bottom: 65,
+                          left: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Are you happy with this picture?",
+                                style: TextStyle(color: Colors.black),
                               ),
-                            ),
-                          )),
+
+                              ConstrainedBox(
+                                // Wrap the Flexible with ConstrainedBox
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 20,
+                                ), // Adjust maxWidth as needed
+                                child: Flexible(
+                                  child: Text(
+                                    "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         Positioned(
                           bottom: 20,
                           left: _image != null ? 5 : null,
@@ -231,9 +239,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                                             : _takePicture,
                                     child: Text(
                                       style: TextStyle(color: Colors.white),
-                                      _image == null
-                                          ? 'Take Picture'
-                                          : 'Yes, continue to selfie',
+                                      _image == null ? 'Take Picture' : 'Yes',
                                     ),
                                   ),
                         ),
@@ -247,7 +253,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                                   _image = null;
                                 });
                               },
-                              child: Text("No, retake picture"),
+                              child: Text("Retake"),
                             ),
                           ),
                       ],

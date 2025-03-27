@@ -20,8 +20,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   // final TextEditingController _ageController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _questionsController = TextEditingController();
+  final _phoneFocusNode = FocusNode();
+  final _nameFocusNode = FocusNode();
+  final _emailFocusNode = FocusNode();
+  final _postalFocusNode = FocusNode();
 
   bool isPhoneValidated = false;
+  bool isNameValidated = false;
+  bool isEmailValidated = false;
+  bool isPostalValidated = false;
   String? _selectedSex;
   String? _selectedAge;
   String? _selectedEmploymentStatus;
@@ -79,6 +86,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 // Full Name Input
                 TextFormField(
                   controller: _nameController,
+                  focusNode: _nameFocusNode,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Full Name',
@@ -88,6 +96,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your full name';
                     }
+                    isNameValidated = true;
                     return null;
                   },
                 ),
@@ -95,6 +104,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 // Email Input
                 TextFormField(
                   controller: _emailController,
+                  focusNode: _emailFocusNode,
                   decoration: InputDecoration(
                     labelText: 'Your Email',
                     border: OutlineInputBorder(),
@@ -106,6 +116,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                       return 'Enter a valid email';
                     }
+                    isEmailValidated = true;
                     return null;
                   },
                 ),
@@ -113,6 +124,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 // Mobile Number Input
                 IntlPhoneField(
                   controller: _phoneController,
+                  focusNode: _phoneFocusNode,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text(
@@ -123,10 +135,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   initialCountryCode: 'CA',
                   showCountryFlag: false,
-                  onChanged: (phone) {},
-                  validator: (value) {
-                    isPhoneValidated = false;
-                    print(value);
+                  onChanged: (phone) {
+                    print("phone pressed $phone");
+                    isPhoneValidated = true;
+                  },
+                  /* validator: (value) {
+                    print("value: $value");
                     if (value!.isValidNumber()) {
                       setState(() {
                         isPhoneValidated = true;
@@ -137,18 +151,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       });
                     }
                     return null;
-                  },
+                  }, */
                 ),
                 SizedBox(height: 10),
                 // Age and Sex Inputs
                 Row(
                   children: [
                     // Age Input
-
-                    // Sex Dropdown
                     Expanded(
                       flex: 2,
                       child: DropdownButtonFormField<String>(
+                        isExpanded: true,
                         value: _selectedAge,
                         decoration: InputDecoration(
                           labelText: 'Age',
@@ -173,6 +186,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     Expanded(
                       flex: 2,
                       child: DropdownButtonFormField<String>(
+                        isExpanded: true,
                         value: _selectedSex,
                         decoration: InputDecoration(
                           labelText: 'Sex',
@@ -199,29 +213,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 // Postal Code Input
                 TextFormField(
                   controller: _postalCodeController,
+                  focusNode: _postalFocusNode,
                   decoration: InputDecoration(
                     labelText: 'Postal Code/Zip',
                     border: OutlineInputBorder(),
                   ),
+                  textCapitalization: TextCapitalization.characters,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your postal code';
                     }
                     String TrimValue = value.trim();
-                    TrimValue.replaceAll(' ', '');
+                    TrimValue = TrimValue.replaceAll(' ', '');
 
-                    print(TrimValue);
-                    print(TrimValue.length);
-                    print(
-                      RegExp(
-                        r'^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$',
-                      ).hasMatch(TrimValue),
-                    );
                     if (!RegExp(
                       r'^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$',
                     ).hasMatch(TrimValue)) {
                       return "Invalid Postal Code";
                     }
+                    isPostalValidated = true;
                     return null;
                   },
                 ),
@@ -347,6 +357,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             builder: (context) => UserAssessment(),
                           ),
                         );
+                      } else if (!isNameValidated) {
+                        // Show a warning if phone is not validated
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Missing Full Name'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        _nameFocusNode.requestFocus();
+                      } else if (!isEmailValidated) {
+                        // Show a warning if phone is not validated
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Missing Email.'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        _emailFocusNode.requestFocus();
                       } else if (!isPhoneValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -357,6 +385,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             backgroundColor: Colors.red,
                           ),
                         );
+                        _phoneFocusNode.requestFocus();
+                      } else if (!isPostalValidated) {
+                        // Show a warning if phone is not validated
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Missing Postal/Zip'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        _postalFocusNode.requestFocus();
                       } else if (!_isChecked) {
                         // Show a warning if checkbox is not checked
                         ScaffoldMessenger.of(context).showSnackBar(
