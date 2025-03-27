@@ -7,7 +7,9 @@ class BanksSelectionScreen extends StatefulWidget {
   State<BanksSelectionScreen> createState() => _BanksSelectionScreenState();
 }
 
-final List<Map<String, String>> banks = [
+class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
+  // final TextEditingController _searchController = TextEditingController();
+  final List<Map<String, String>> banks = [
     {'name': 'National Bank of Canada', 'logo': 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png'},
     {'name': 'Laurentian Bank of Canada', 'logo': 'assets/images/bank_logos/Laurentian_Bank_of_Canada_logo.png'},
     {'name': 'BMO Canada', 'logo': 'assets/images/bank_logos/bank_of_montreal_logo.png'},
@@ -17,9 +19,6 @@ final List<Map<String, String>> banks = [
     {'name': 'TD Bank Canada', 'logo': 'assets/images/bank_logos/td-bank-logo.png'},
     {'name': 'ScotiaBank', 'logo': 'assets/images/bank_logos/scotiabank-logo.png'},
   ];
-
-class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
-  // final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +114,18 @@ class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
 }
 
 class BankSearchDelegate extends SearchDelegate {
+
+  final List<Map<String, String>> banks = [
+    {'name': 'National Bank of Canada', 'logo': 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png'},
+    {'name': 'Laurentian Bank of Canada', 'logo': 'assets/images/bank_logos/Laurentian_Bank_of_Canada_logo.png'},
+    {'name': 'BMO Canada', 'logo': 'assets/images/bank_logos/bank_of_montreal_logo.png'},
+    {'name': 'HSBC Canada', 'logo': 'assets/images/bank_logos/HSBC_Bank-logo.png'},
+    {'name': 'Canadian Imperial Bank of Commerce', 'logo': 'assets/images/bank_logos/CIBC-logo.png'},
+    {'name': 'RBC', 'logo': 'assets/images/bank_logos/rbc-royal-bank-logo.png'},
+    {'name': 'TD Bank Canada', 'logo': 'assets/images/bank_logos/td-bank-logo.png'},
+    {'name': 'ScotiaBank', 'logo': 'assets/images/bank_logos/scotiabank-logo.png'},
+  ];
+  
   @override
   // Clear the search query
   List<Widget> buildActions(BuildContext context) {

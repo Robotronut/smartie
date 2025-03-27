@@ -1,17 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:smartie/banks_selection_screen.dart';
-import 'dart:convert'; // For JSON decoding
-import 'home_screen.dart'; // Import the second screen
 
 class BankLoginScreen extends StatefulWidget {
   final String imagePath;
   const BankLoginScreen({super.key, required this.imagePath});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BankLoginScreenState createState() => _BankLoginScreenState();
 }
 
@@ -21,7 +16,7 @@ class _BankLoginScreenState extends State<BankLoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
+      body: Center(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
