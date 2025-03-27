@@ -73,6 +73,10 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       });
     } catch (e) {
       print("IDScannerScreen: Error taking picture: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      Navigator.pop(context);
     }
   }
 
@@ -186,7 +190,10 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Container(
-                                  padding: EdgeInsets.only(left: 10.0, top: 5.0),
+                                  padding: EdgeInsets.only(
+                                    left: 10.0,
+                                    top: 5.0,
+                                  ),
                                   height: 130,
                                   width: screenWidth,
                                   color: Colors.white,
@@ -227,12 +234,28 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                 bottom: 10,
                                 right: 45,
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                  ),
                                   onPressed: () {
                                     setState(() {
                                       _image = null;
                                     });
                                   },
-                                  child: Text("Retake"),
+                                  child: Text(
+                                    "Retake",
+                                    style: TextStyle(
+                                      color: const Color.fromRGBO(
+                                        0,
+                                        162,
+                                        233,
+                                        1,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -245,7 +268,12 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                                      backgroundColor: const Color.fromRGBO(
+                                        0,
+                                        162,
+                                        233,
+                                        1,
+                                      ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(6),
                                       ),
@@ -262,30 +290,6 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                       _image == null ? 'Take Picture' : 'Yes',
                                     ),
                                   ),
-                        ),
-
-                        Positioned(
-                          bottom: 10,
-                          right: 5,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _image = null;
-                              });
-                            },
-                            child: Text(
-                              "Retake",
-                              style: TextStyle(
-                                color: const Color.fromRGBO(0, 162, 233, 1),
-                              ),
-                              ),
-                          ),
                         ),
                       ],
                     );

@@ -40,6 +40,7 @@ class VerificationStartPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
+                        
                       ),
                     ),
                   ),
@@ -72,12 +73,12 @@ class VerificationStartPage extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    /* decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color.fromARGB(255, 236, 235, 235),
                       ),
                       borderRadius: BorderRadius.circular(4.0),
-                    ),
+                    ), */
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
