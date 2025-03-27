@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:smartie/forgotpassword_screen.dart';
 import 'package:smartie/google_login_screen.dart';
 import 'package:smartie/registration_screen.dart';
+import 'package:smartie/user_assessment.dart';
 
 import 'dart:convert'; // For JSON decoding
 import 'home_screen.dart'; // Import the second screen

@@ -2,24 +2,28 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:smartie/verification_submitted_page.dart';
 
-class IDScannerIdBackScreen extends StatefulWidget {
-  const IDScannerIdBackScreen({super.key});
+import 'package:smartie/verification_id_back.dart';
+
+class IDScannerScreen extends StatefulWidget {
+  const IDScannerScreen({super.key});
   @override
-  _IDScannerScreenIdBackState createState() => _IDScannerScreenIdBackState();
+  _IDScannerScreenState createState() => _IDScannerScreenState();
 }
 
-class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
+class _IDScannerScreenState extends State<IDScannerScreen> {
   late CameraController _cameraController;
   late Future<void> _initializeControllerFuture;
   late List<CameraDescription> _cameras;
   File? _image;
   bool _isProcessing = false;
   bool _camerasLoaded = false; // Added this
+  double screenWidth = 100;
+  double screenHeight = 100;
 
   @override
   void initState() {
@@ -91,29 +95,30 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
 
       if (response.statusCode == 200) {
         print(response.statusCode);
-        Navigator.pushAndRemoveUntil(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VerificationSubmittedPage()),
-          (Route<dynamic> route) => false, // Remove all existing routes
+          MaterialPageRoute(
+            builder: (context) => const VerificationIdBackPage(),
+          ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('API Error: ${response.statusCode}')),
         );
-        Navigator.pushAndRemoveUntil(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VerificationSubmittedPage()),
-          (Route<dynamic> route) => false, // Remove all existing routes
+          MaterialPageRoute(
+            builder: (context) => const VerificationIdBackPage(),
+          ),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => VerificationSubmittedPage()),
-        (Route<dynamic> route) => false, // Remove all existing routes
+        MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
       );
     } finally {
       setState(() {
@@ -125,6 +130,8 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.sizeOf(context).width;
+    screenHeight = MediaQuery.sizeOf(context).height;
     print("IDScannerScreen: build called");
     return Scaffold(
       appBar: AppBar(title: Text('Scan ID')),
@@ -147,16 +154,84 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                       children: <Widget>[
                         CameraPreview(_cameraController),
                         _buildOverlay(),
+                        if (_image == null)
+                          (Container(
+                            width: 300,
+                            alignment: Alignment.topCenter,
+                            margin: EdgeInsets.only(
+                              top: 100,
+                              bottom: screenHeight - 250,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(0, 0, 0, 0.5),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                "Please make sure your ID fills the square below and is not blurry",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(255, 255, 255, 0.8),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          )),
                         if (_image != null)
                           Positioned.fill(
                             child: Image.file(_image!, fit: BoxFit.cover),
                           ),
+
+                        (Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 130,
+                            width: screenWidth,
+                            color: Colors.white,
+                          ),
+                        )),
+
                         Positioned(
-                          bottom: 20,
+                          bottom: 65,
+                          left: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Are you happy with this picture?",
+                                style: TextStyle(color: Colors.black),
+                              ),
+
+                              ConstrainedBox(
+                                // Wrap the Flexible with ConstrainedBox
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 20,
+                                ), // Adjust maxWidth as needed
+                                child: Flexible(
+                                  child: Text(
+                                    "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          left: _image != null ? 5 : null,
                           child:
                               _isProcessing
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue,
+                                    ),
                                     onPressed:
                                         _image != null
                                             ? () => _sendImageToApi(
@@ -165,26 +240,24 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                                             )
                                             : _takePicture,
                                     child: Text(
-                                      _image != null
-                                          ? 'Send Image'
-                                          : 'Take Picture',
+                                      style: TextStyle(color: Colors.white),
+                                      _image == null ? 'Take Picture' : 'Yes',
                                     ),
                                   ),
                         ),
-                        if (_image != null)
-                          Positioned(
-                            top: 20,
-                            right: 20,
-                            child: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  _image = null;
-                                });
-                              },
-                              icon: Icon(Icons.close),
-                              color: Colors.white,
-                            ),
+
+                        Positioned(
+                          bottom: 10,
+                          right: 5,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _image = null;
+                              });
+                            },
+                            child: Text("Retake"),
                           ),
+                        ),
                       ],
                     );
                   } else {
