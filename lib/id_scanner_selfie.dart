@@ -247,7 +247,10 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
+                                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
                                     ),
                                     onPressed:
                                         _image != null
@@ -262,6 +265,30 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                                     ),
                                   ),
                         ),
+                        if (_image != null)
+                          Positioned(
+                            bottom: 20,
+                            right: 45,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _image = null;
+                                });
+                              },
+                              child: Text(
+                                "Retake",
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 162, 233, 1),
+                                ),
+                                ),
+                            ),
+                          ),
                       ],
                     );
                   } else {
