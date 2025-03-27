@@ -19,10 +19,10 @@ class VerificationSelfiePage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 64.0,
+                top: 24.0,
                 bottom: 4.0,
-                left: 28.0,
-                right: 28.0,
+                left: 18.0,
+                right: 18.0,
               ),
               child: Column(
                 children: [
@@ -32,18 +32,17 @@ class VerificationSelfiePage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(24.0)),
+                  Padding(padding: EdgeInsets.all(4.0)),
 
                   FractionallySizedBox(
                     alignment: Alignment.center,
                     widthFactor: 1.0, // Adjust width to 80% of the screen
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Selfie Id Photo",
+                      "Id and You Photo",
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
-                        fontFamily: 'GalanoGrotesqueMedium',
                       ),
                     ),
                   ),
@@ -54,11 +53,22 @@ class VerificationSelfiePage extends StatelessWidget {
                     alignment: Alignment.center,
                     widthFactor: 1.0, // Same width as the first text
                     child: Text(
-                      "You're close! Now we just need one more selfie ID photo.",
+                      "You're close!",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(0, 162, 233, 1),
+                        fontSize: 16.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  FractionallySizedBox(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0, // Same width as the first text
+                    child: Text(
+                      "Now we just need one more selfie ID photo.",
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
-                        fontFamily: 'GalanoGrotesqueMedium',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -69,26 +79,30 @@ class VerificationSelfiePage extends StatelessWidget {
 
             Padding(
               padding: EdgeInsets.only(
-                top: 0.0,
-                bottom: 16.0,
-                left: 16.0,
-                right: 16.0,
+                top: 10.0,
+                bottom: 6.0,
+                left: 6.0,
+                right: 6.0,
               ),
+
               child: Column(
                 children: [
                   Image.asset(
                     'assets/images/selfie_placeholder.jpg',
                     width: MediaQuery.of(context).size.width * 0.4,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 236, 235, 235),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 6.0,
+                      bottom: 6.0,
+                      left: 6.0,
+                      right: 6.0,
                     ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(),
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(20.0),
                       child: Column(
                         spacing: 20.0,
                         children: [
@@ -98,7 +112,7 @@ class VerificationSelfiePage extends StatelessWidget {
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontSize: 14.0,
-                                fontFamily: 'GalanoGrotesqueMedium',
+
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -116,10 +130,7 @@ class VerificationSelfiePage extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   "Using the example image above, position your Id beside your face to verify your identity.",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
-                                  ),
+                                  style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -137,10 +148,7 @@ class VerificationSelfiePage extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   "Make sure you are in a well-lit place",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
-                                  ),
+                                  style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -150,30 +158,31 @@ class VerificationSelfiePage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 18, right: 18),
+                    //Submit Button
+                    child: SizedBox(
+                      width: double.infinity,
 
-                  Padding(padding: EdgeInsets.all(8.0)),
-
-                  //Submit Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const IdScannerSelfie(),
+                      child: FilledButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const IdScannerSelfie(),
+                            ),
+                          );
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                        );
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
                         ),
-                      ),
-                      child: Text(
-                        "Start Now",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        child: Text(
+                          "Start Now",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

@@ -59,6 +59,7 @@ class UserAssessment extends StatelessWidget {
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
+                            isExpanded: true,
                             value: _repaymentPlan,
                             decoration: InputDecoration(
                               labelText: 'Repayment Plan',
@@ -149,6 +150,7 @@ class UserAssessment extends StatelessWidget {
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
+                            isExpanded: true,
                             value: _housingPlan,
                             decoration: InputDecoration(
                               labelText: 'Housing',
@@ -175,6 +177,7 @@ class UserAssessment extends StatelessWidget {
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
+                            isExpanded: true,
                             value: _budgetPlan,
                             decoration: InputDecoration(
                               labelText: 'Budget & Financing',
@@ -212,13 +215,15 @@ class UserAssessment extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        'Understand your benefits.',
+                        'Understand your benefits.\nVisit: https://benefitswayfinder.org',
                         style: TextStyle(
                           color: Colors.cyan, // Color for the sign-up link
                           fontWeight: FontWeight.bold,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
+                    Padding(padding: EdgeInsets.only(top: 8.0)),
                     Row(
                       children: <Widget>[
                         Checkbox(
@@ -277,6 +282,7 @@ class UserAssessment extends StatelessWidget {
                       ],
                     ),
                     // Submit Button
+                    Padding(padding: EdgeInsets.only(bottom: 8.0)),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
