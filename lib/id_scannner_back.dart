@@ -54,6 +54,10 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
       });
     } catch (e) {
       print("IDScannerScreen: Error getting available cameras: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      Navigator.pop(context);
     }
   }
 
@@ -75,6 +79,10 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
       });
     } catch (e) {
       print("IDScannerScreen: Error taking picture: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      Navigator.pop(context);
     }
   }
 

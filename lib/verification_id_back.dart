@@ -107,7 +107,7 @@ class VerificationIdBackPage extends StatelessWidget {
                               Padding(padding: EdgeInsets.all(4.0)),
                               Expanded(
                                 child: Text(
-                                  "Using the same Id, turn it over so we can capture the otherside.",
+                                  "Using the same Id, turn it over so we can capture the other side.",
                                   style: TextStyle(
                                     fontSize: 14.0,
                                   ),

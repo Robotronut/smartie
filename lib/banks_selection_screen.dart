@@ -45,7 +45,22 @@ class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(36.0)),
+                  Padding(padding: EdgeInsets.all(20.0)),
+
+                  FractionallySizedBox(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0, // Same width as the first text
+                    child: Text(
+                      "Please select your bank. You can also search for it with the box below to help you out:",
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 132, 132, 132),
+                        fontSize: 14.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.all(5.0)),
 
                   //Search Bar
                   TextField(
