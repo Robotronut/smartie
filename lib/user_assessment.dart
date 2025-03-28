@@ -283,39 +283,30 @@ class UserAssessment extends StatelessWidget {
                     ),
                     // Submit Button
                     Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Handle form submission
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Assessment Complete!')),
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => const VerificationStartPage(),
-                              ), // Replace with your registration page widget
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF008FD7),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerificationStartPage(),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 30,
-                          ),
-                        ),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                        );
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
                     ),
+                    child: Text(
+                      "Start Photo Verification",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
                   ],
                 ),
               ),

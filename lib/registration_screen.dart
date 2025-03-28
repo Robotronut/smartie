@@ -330,7 +330,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         style: TextStyle(
                           color: const Color.fromARGB(255, 132, 132, 132),
                           fontSize: 12.0,
-                          fontFamily: 'GalanoGrotesqueMedium',
                         ),
                       ),
                     ),
@@ -349,7 +348,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           isPhoneValidated) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Registration Successful!')),
+                          SnackBar(content: Text('Registration Successful!'), duration: Durations.long1),
                         );
                         Navigator.push(
                           context,

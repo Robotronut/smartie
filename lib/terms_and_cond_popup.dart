@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TermsAndCondPopUp extends StatelessWidget {
-  TermsAndCondPopUp({super.key});
+  const TermsAndCondPopUp({super.key});
 
   @override
   Widget build(BuildContext context) {

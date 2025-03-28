@@ -9,9 +9,6 @@ class BanksSelectionScreen extends StatefulWidget {
 
 class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
   // final TextEditingController _searchController = TextEditingController();
-
-  // String? selectedBank;
-
   final List<Map<String, String>> banks = [
     {'name': 'National Bank of Canada', 'logo': 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png'},
     {'name': 'Laurentian Bank of Canada', 'logo': 'assets/images/bank_logos/Laurentian_Bank_of_Canada_logo.png'},
@@ -26,7 +23,8 @@ class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
@@ -47,84 +45,87 @@ class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(48.0)),
+                  Padding(padding: EdgeInsets.all(36.0)),
 
                   //Search Bar
-                  IconButton(
-                    onPressed: () {
+                  TextField(
+                    onTap: () {
                       showSearch(
                         context: context, 
                         delegate: BankSearchDelegate()
                       );
-                    }, 
-                    icon: const Icon(Icons.search)
-                  ),
-                  
-                  SingleChildScrollView(
-                    child: ListView(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(8),
-                      children: <Widget>[
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              side: BorderSide(color: const Color.fromARGB(255, 210, 210, 210))
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context, 
-                                MaterialPageRoute(
-                                  builder: (context) => BankLoginScreen(imagePath: 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png')
-                                )
-                              );
-                            }, 
-                            child: Image.asset(
-                              'assets/images/bank_logos/National_Bank_Of_Canada_logo.png', 
-                              width: MediaQuery.of(context).size.width * 0.7, 
-                              height: MediaQuery.of(context).size.width * 0.3,
-                            )
-                          ),
-                      ],
-                    )
-                  ),
-                  
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: const Icon(Icons.search, color:Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 210, 210, 210)),
                       ),
-                      side: BorderSide(color: const Color.fromARGB(255, 210, 210, 210))
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: const Color.fromRGBO(0, 162, 233, 1)),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 12.0),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => BankLoginScreen(imagePath: 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png')
-                        )
-                      );
-                    }, 
-                    child: Image.asset(
-                      'assets/images/bank_logos/National_Bank_Of_Canada_logo.png', 
-                      width: MediaQuery.of(context).size.width * 0.7, 
-                      height: MediaQuery.of(context).size.width * 0.3,
-                    )
                   ),
-                                    
+
+                  Padding(padding: EdgeInsets.all(16.0)),
+                  
+                  // List of banks
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: 10.0,
+                    children: banks.map((bank) {
+                      return OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            side: BorderSide(color: const Color.fromARGB(255, 210, 210, 210)),
+                            minimumSize: Size(MediaQuery.of(context).size.width * 0.9, MediaQuery.of(context).size.width * 0.1),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) => BankLoginScreen(imagePath: bank['logo']!)
+                              )
+                            );
+                          }, 
+                          child: Image.asset(
+                            bank['logo']!, 
+                            width: 160.0, 
+                            height: 100.0,
+                          )
+                        );
+                    }).toList(),
+                  )                
                 ],
               ),
             ),
           ],
+          ),
         ),
     );
   }
 }
 
 class BankSearchDelegate extends SearchDelegate {
-  List<String> banks = ['National Bank of Canada', 'Laurentian Bank of Canada', 'BMO Canada', 'HSBC Canada', 'Canadian Imperial Bank of Commerce', 'RBC', 'TD Bank Canada', 'ScotiaBank', 'Canadian Western Bank'];
 
+  final List<Map<String, String>> banks = [
+    {'name': 'National Bank of Canada', 'logo': 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png'},
+    {'name': 'Laurentian Bank of Canada', 'logo': 'assets/images/bank_logos/Laurentian_Bank_of_Canada_logo.png'},
+    {'name': 'BMO Canada', 'logo': 'assets/images/bank_logos/bank_of_montreal_logo.png'},
+    {'name': 'HSBC Canada', 'logo': 'assets/images/bank_logos/HSBC_Bank-logo.png'},
+    {'name': 'Canadian Imperial Bank of Commerce', 'logo': 'assets/images/bank_logos/CIBC-logo.png'},
+    {'name': 'RBC', 'logo': 'assets/images/bank_logos/rbc-royal-bank-logo.png'},
+    {'name': 'TD Bank Canada', 'logo': 'assets/images/bank_logos/td-bank-logo.png'},
+    {'name': 'ScotiaBank', 'logo': 'assets/images/bank_logos/scotiabank-logo.png'},
+  ];
+  
   @override
   // Clear the search query
   List<Widget> buildActions(BuildContext context) {
@@ -154,8 +155,8 @@ class BankSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
     for (var bank in banks) {
-      if (bank.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(bank);
+      if (bank['name']!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(bank['logo']!);
       }
     }
 
@@ -163,8 +164,27 @@ class BankSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
         var result = matchQuery[index];
-        return ListTile(
-          title:  Text(result),
+        return OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+            side: BorderSide(color: const Color.fromARGB(255, 231, 230, 230)),
+            minimumSize: Size(MediaQuery.of(context).size.width * 0.9, MediaQuery.of(context).size.width * 0.1),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => BankLoginScreen(imagePath: result)
+              )
+            );
+          }, 
+          child: Image.asset(
+            result, 
+            width: 160.0, 
+            height: 100.0,
+          )
         );
       }
     );
@@ -174,8 +194,8 @@ class BankSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     List<String> matchQuery = [];
     for (var bank in banks) {
-      if (bank.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(bank);
+      if (bank['name']!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(bank['logo']!);
       }
     }
 
@@ -183,8 +203,27 @@ class BankSearchDelegate extends SearchDelegate {
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
         var result = matchQuery[index];
-        return ListTile(
-          title:  Text(result),
+        return OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+            side: BorderSide(color: const Color.fromARGB(255, 231, 230, 230)),
+            minimumSize: Size(MediaQuery.of(context).size.width * 0.9, MediaQuery.of(context).size.width * 0.1),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => BankLoginScreen(imagePath: result)
+              )
+            );
+          }, 
+          child: Image.asset(
+            result, 
+            width: 160.0, 
+            height: 100.0,
+          )
         );
       }
     );
