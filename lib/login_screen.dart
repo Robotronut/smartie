@@ -169,7 +169,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: ElevatedButton(
                                 onPressed: _validateAndLogin,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF008FD7),
+                                  backgroundColor: const Color.fromRGBO(
+                                    0,
+                                    162,
+                                    233,
+                                    1,
+                                  ),
                                   padding: EdgeInsets.symmetric(vertical: 15),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
@@ -236,7 +241,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'Sign up.',
                         style: TextStyle(
-                          color: Colors.cyan, // Color for the sign-up link
+                          color: const Color.fromRGBO(
+                            0,
+                            162,
+                            233,
+                            1,
+                          ), // Color for the sign-up link
                           fontWeight: FontWeight.bold,
                         ),
                       ),

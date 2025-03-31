@@ -42,7 +42,6 @@ class VerificationIdBackPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
-                        fontFamily: 'GalanoGrotesqueMedium',
                       ),
                     ),
                   ),
@@ -57,7 +56,6 @@ class VerificationIdBackPage extends StatelessWidget {
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
-                        fontFamily: 'GalanoGrotesqueMedium',
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -76,12 +74,12 @@ class VerificationIdBackPage extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    /* decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color.fromARGB(255, 236, 235, 235),
                       ),
                       borderRadius: BorderRadius.circular(4.0),
-                    ),
+                    ), */
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
@@ -93,7 +91,6 @@ class VerificationIdBackPage extends StatelessWidget {
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontSize: 14.0,
-                                fontFamily: 'GalanoGrotesqueMedium',
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -113,7 +110,6 @@ class VerificationIdBackPage extends StatelessWidget {
                                   "Using the same Id, turn it over so we can capture the otherside.",
                                   style: TextStyle(
                                     fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
@@ -134,7 +130,6 @@ class VerificationIdBackPage extends StatelessWidget {
                                   "Make sure you are in a well-lit place",
                                   style: TextStyle(
                                     fontSize: 14.0,
-                                    fontFamily: 'GalanoGrotesqueMedium',
                                   ),
                                   textAlign: TextAlign.start,
                                 ),
