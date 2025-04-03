@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:smartie/id_verification_failed.dart';
 import 'package:smartie/verification_id_back.dart';
 
 class IDScannerScreen extends StatefulWidget {

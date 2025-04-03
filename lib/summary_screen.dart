@@ -16,7 +16,12 @@ class DataItem {
 }
 
 class _SummaryScreenState extends State<SummaryScreen> {
+
+  final TextEditingController _creditorController = TextEditingController();
+
+  String? _selectedCreditor;
   String selectedValue = 'Monthly';
+  int currentPageIndex = 0;
 
   final List<DataItem> summary_dataset = [
     DataItem(0.43, 'Income', Colors.pink),
@@ -25,6 +30,36 @@ class _SummaryScreenState extends State<SummaryScreen> {
     DataItem(0.18, 'Debt', Colors.blue),
     DataItem(0.16, 'MDI', Colors.deepPurple),
   ];
+
+  DateTime now = DateTime.now();
+  String get formattedDate {
+    DateTime now = DateTime.now();
+    return '${now.day.toString().padLeft(2, '0')}/'
+           '${now.month.toString().padLeft(2, '0')}/'
+           '${now.year}';
+  }
+
+    List<DropdownMenuEntry<String>> entries() {
+    var entries = <DropdownMenuEntry<String>>[];
+    entries.add(const DropdownMenuEntry(value: "RBC", label: "RBC"));
+    entries.add(const DropdownMenuEntry(value: "TD", label: "TD"));
+    entries.add(
+      const DropdownMenuEntry(value: "Scotiabank", label: "Scotiabank"),
+    );
+    entries.add(const DropdownMenuEntry(value: "BMO", label: "BMO"));
+    entries.add(const DropdownMenuEntry(value: "CIBC", label: "CIBC"));
+    entries.add(const DropdownMenuEntry(value: "HSBC", label: "HSBC"));
+    entries.add(
+      const DropdownMenuEntry(value: "Laurentian", label: "Laurentian"),
+    );
+    entries.add(
+      const DropdownMenuEntry(
+        value: "National Bank of Canada",
+        label: "National Bank of Canada",
+      ),
+    );
+    return entries;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +105,47 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 )
             )],
       ),
-      body: Center(
+      bottomNavigationBar: NavigationBar(
+                      destinations: [
+                        NavigationDestination(
+                          icon: Icon(Icons.grid_view), 
+                          label: "Home"
+                        ),
+                        NavigationDestination(
+                          icon: Icon(Icons.comment_outlined), 
+                          label: "Messages"
+                        ),
+                        NavigationDestination(
+                          icon: Icon(Icons.sentiment_very_satisfied_outlined), 
+                          label: "SMARTIE"
+                        ),
+                        NavigationDestination(
+                          icon: Icon(Icons.task_outlined), 
+                          label: "Document"
+                        ),
+                        NavigationDestination(
+                          icon: Icon(Icons.help_outline_rounded), 
+                          label: "Support"
+                        )
+                      ],
+                      selectedIndex: currentPageIndex,
+                      onDestinationSelected: (int index) {
+                          setState(() {
+                            currentPageIndex = index;
+                          });
+                      },
+                      indicatorColor: const Color.fromARGB(255, 204, 227, 246),
+                      backgroundColor: Colors.white
+                      // labelBehavior: onlyShowSelected,
+                      // animationDuration: Duration(ms: 1000),
+                    ),
+      body: <Widget>[Center(
         child: SingleChildScrollView(
           child: Column(
           children: [
             Padding(padding: EdgeInsets.all(8.0)),
 
             Container(
-              height: 680.0,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.0),
@@ -124,11 +192,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
                         },
                       ),
                     ),
-                    Wrap(
-                      spacing: 4.0,
+
+                    Row(
                       children: [
-                        SizedBox(
-                          width: 160.0,
+                        Expanded(
                           child: TextButton(
                             style: TextButton.styleFrom(
                               minimumSize: Size.zero,
@@ -138,6 +205,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             onPressed: () {}, 
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Income',
@@ -147,8 +215,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                     fontWeight: FontWeight.w800,
                                   )
                                 ),
-                                Padding(padding: EdgeInsets.only(left: 24.0)),
-                                Text(
+                                Row(
+                                  children: [
+                                    Text(
                                   '\$3,000',
                                   style: TextStyle(
                                     fontSize: 16.0,
@@ -163,13 +232,16 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   color: Color.fromRGBO(0, 162, 233, 1),
                                   size: 24.0,
                                   )
+                                  ],
+                                ) 
                               ],
                             )
                           ),
                         ),
-                        
-                        SizedBox(
-                          width: 164.0,
+
+                        Padding(padding: EdgeInsets.only(left: 20.0)),
+
+                        Expanded(
                           child: TextButton(
                             style: TextButton.styleFrom(
                               minimumSize: Size.zero,
@@ -179,6 +251,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             onPressed: () {}, 
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Fixed Exp',
@@ -188,8 +261,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                     fontWeight: FontWeight.w800,
                                   )
                                 ),
-                                Padding(padding: EdgeInsets.only(left: 20.0)),
-                                Text(
+                                Row(
+                                  children: [
+                                    Text(
                                   '\$1,750',
                                   style: TextStyle(
                                     fontSize: 16.0,
@@ -204,55 +278,69 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   color: Color.fromRGBO(0, 162, 233, 1),
                                   size: 24.0,
                                   )
+                                  ],
+                                )
+                                
                               ],
                             )
                           ),
-                        ),
-                        SizedBox(
-                          width: 162.0,
+                        )
+                      ],
+                    ),
+
+                    Padding(padding: EdgeInsets.only(top: 8.0)),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
                           child: TextButton(
                             style: TextButton.styleFrom(
                               minimumSize: Size.zero,
                               padding: EdgeInsets.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            onPressed: () {}, 
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 16.0),
+                              ),
+                              onPressed: () {}, 
                               child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Flex Exp',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w800,
-                                  )
-                                ),
-                                Padding(padding: EdgeInsets.only(left: 30.0)),
-                                Text(
-                                  '\$500',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 2.0,
-                                  )
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Flex Exp',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
+                                    )
                                   ),
-                                Icon(
-                                  Icons.chevron_right_rounded,
-                                  color: Color.fromRGBO(0, 162, 233, 1),
-                                  size: 24.0,
+                                  Row(
+                                    children: [
+                                      Text(
+                                    '\$500',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                      decorationThickness: 2.0,
+                                    )
+                                    ),
+                                  Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: Color.fromRGBO(0, 162, 233, 1),
+                                    size: 24.0,
+                                    )
+                                    ],
                                   )
-                              ],
-                            )
-                            )
-                          ),
+                                  
+                                ],
+                              )
+                            ),
                         ),
-                        SizedBox(
-                          width: 162.0,
+
+                        Padding(padding: EdgeInsets.only(left: 16.0)),
+
+                        Expanded(
                           child: TextButton(
                             style: TextButton.styleFrom(
                               minimumSize: Size.zero,
@@ -260,10 +348,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () {}, 
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 16.0),
-                              child: Row(
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Debt',
@@ -273,8 +360,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                     fontWeight: FontWeight.w800,
                                   )
                                 ),
-                                Padding(padding: EdgeInsets.only(left: 60.0)),
-                                Text(
+                                Row(
+                                  children: [
+                                    Text(
                                   '\$250',
                                   style: TextStyle(
                                     fontSize: 16.0,
@@ -289,55 +377,53 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   color: Color.fromRGBO(0, 162, 233, 1),
                                   size: 24.0,
                                   )
+                                  ],
+                                )
                               ],
                             )
-                            )
                           ),
-                        ),
-                        SizedBox(
-                          width: 162.0,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              minimumSize: Size.zero,
-                              padding: EdgeInsets.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            onPressed: () {}, 
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 16.0),
-                              child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'MDI',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w800,
-                                  )
-                                ),
-                                Padding(padding: EdgeInsets.only(left: 62.0)),
-                                Text(
-                                  '\$500',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 2.0,
-                                  )
-                                  ),
-                                Icon(
-                                  Icons.chevron_right_rounded,
-                                  color: Color.fromRGBO(0, 162, 233, 1),
-                                  size: 24.0,
-                                  )
-                              ],
-                            ),
-                            )
-                          ),
-                        ),
+                        )
                       ],
+                    ),
+
+                    Padding(padding: EdgeInsets.only(top: 8.0)),
+
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      onPressed: () {}, 
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'MDI',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w800,
+                            )
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 62.0)),
+                          Text(
+                            '\$500',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              decorationThickness: 2.0,
+                            )
+                            ),
+                          Icon(
+                            Icons.chevron_right_rounded,
+                            color: Color.fromRGBO(0, 162, 233, 1),
+                            size: 24.0,
+                            )
+                        ],
+                      ),
                     ),
 
                     Divider(
@@ -354,11 +440,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
                     Padding(padding: EdgeInsets.only(top: 4.0)),
 
-                    Row(
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         DonutChartWidget(summary_dataset),
-
-                        Padding(padding: EdgeInsets.only(left: 16.0)),
 
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -553,6 +640,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                         )
                       ],
                     ), 
+                    ),
 
                     Padding(padding: EdgeInsets.only(top: 4.0)),
 
@@ -623,7 +711,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
             Padding(padding: EdgeInsets.all(8.0)),
 
             Container(
-              height: 680.0,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.0),
@@ -645,6 +732,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     Padding(padding: EdgeInsets.all(8.0)),
 
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -664,7 +752,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 'Instalment',
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontWeight: FontWeight.w600,
                                   fontSize: 16.0,
                                 ),
                               ),
@@ -672,21 +759,285 @@ class _SummaryScreenState extends State<SummaryScreen> {
                           ],
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            
+                              Text(
+                                formattedDate,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+
+                              Padding(padding: EdgeInsets.all(4.0)),
+
+                              Text(
+                                'Starting Date',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12.0,
+                                ),
+                              ),
                           ],
                         )
                       ],
-                    )
+                    ),
 
+                    Padding(padding: EdgeInsets.all(8.0)),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 239, 237, 237),
+                              borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                "Repayment Plan",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+
+                              Padding(padding: EdgeInsets.all(4.0)),
+
+                              Text(
+                                'Plan',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 129, 129, 129),
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              ],
+                            ),
+                            )
+                          ),
+                        ),
+
+                        Padding(padding: EdgeInsets.all(4.0)),
+
+                        Expanded(
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 239, 237, 237),
+                              borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                "Monthly*",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+
+                              Padding(padding: EdgeInsets.all(4.0)),
+
+                              Text(
+                                'Frequency',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 129, 129, 129),
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              ],
+                            ),
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Padding(padding: EdgeInsets.all(8.0)),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 239, 237, 237),
+                              borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                "\$5000",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+
+                              Padding(padding: EdgeInsets.all(4.0)),
+
+                              Text(
+                                'Total outstanding',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 129, 129, 129),
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              ],
+                            ),
+                            )
+                          ),
+                        ),
+
+                        Padding(padding: EdgeInsets.all(4.0)),
+
+                        Expanded(
+                          child: Container(
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 239, 237, 237),
+                              borderRadius: BorderRadius.circular(12.0), // Rounded corners
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 12.0),
+                              child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                "12",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+
+                              Padding(padding: EdgeInsets.all(4.0)),
+
+                              Text(
+                                'Term',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 129, 129, 129),
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              ],
+                            ),
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Padding(padding: EdgeInsets.all(8.0)),
+
+                    Divider(
+                      color: Colors.grey,
+                    ),
+
+                    Padding(padding: EdgeInsets.all(8.0)),
+
+                    Text(
+                      'Share Your SMARTIE Report',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                      )
+                    ),
+
+                    Padding(padding: EdgeInsets.all(8.0)),
+
+                    Text(
+                      'Share the creditor you\'d like to share your SMARTIE report with. THis list has been automatically populated based on your connected accounts.',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.grey
+                      )
+                    ),
+
+                    Padding(padding: EdgeInsets.only(top: 24.0)),
+
+                    DropdownMenu<String>(
+                        controller: _creditorController,
+                        enableFilter: true,
+                        width: MediaQuery.of(context).size.width,
+                        requestFocusOnTap: true,
+                        label: const Text('Choose a Creditor'),
+                        dropdownMenuEntries: entries(),
+                    ),
+
+                    Padding(padding: EdgeInsets.all(10.0)),
+
+                    SizedBox(
+                      width: double.infinity, 
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(
+                            context,
+                            MaterialPageRoute(builder: (context) => SummaryScreen())
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        child: Text(
+                          'Share SMARTIE Report',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ), 
+                        ),
+                      ),
+                    ),
                   ],
                 )
                 )
               ),
+
+              Padding(padding: EdgeInsets.all(10.0)),
           ],
         )
       ),
-      )
+      ),
+    
+    Center(
+      child: Text("Page Coming Soon")
+    ),
+
+    Center(
+      child: Text("Page Coming Soon")
+    ),
+
+    Center(
+      child: Text("Page Coming Soon")
+    ),
+
+    Center(
+      child: Text("Page Coming Soon")
+    ),
+
+    Center(
+      child: Text("Page Coming Soon")
+    ),
+    ][currentPageIndex]
     );
   }
 }
@@ -703,8 +1054,8 @@ class _DonutChartWidgetState extends State<DonutChartWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150.0,
-      height: 150.0, 
+      width: MediaQuery.of(context).size.width * 0.4,
+      // height: 150.0, 
       child: CustomPaint(
         child: Container(),
         painter: DonutChartPainter(widget.summary_dataset),
