@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:smartie/verification_start_page.dart';
@@ -17,9 +19,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  // final TextEditingController _ageController = TextEditingController();
+  final TextEditingController iconController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
-  final TextEditingController _questionsController = TextEditingController();
+  final TextEditingController _creditorController = TextEditingController();
   final _phoneFocusNode = FocusNode();
   final _nameFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
@@ -29,14 +31,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool isNameValidated = false;
   bool isEmailValidated = false;
   bool isPostalValidated = false;
-  String? _selectedSex;
-  String? _selectedAge;
   String? _selectedEmploymentStatus;
   String? _selectedReason;
+  String? _selectedCreditor;
+  String? _hasCreditor = "No";
+  String selectedCategory = "";
   bool _isChecked = false;
+  bool _creditorInvite = false;
+
+  List<DropdownMenuEntry<String>> entries() {
+    var entries = <DropdownMenuEntry<String>>[];
+    entries.add(const DropdownMenuEntry(value: "RBC", label: "RBC"));
+    entries.add(const DropdownMenuEntry(value: "TD", label: "TD"));
+    entries.add(
+      const DropdownMenuEntry(value: "Scotiabank", label: "Scotiabank"),
+    );
+    entries.add(const DropdownMenuEntry(value: "BMO", label: "BMO"));
+    entries.add(const DropdownMenuEntry(value: "CIBC", label: "CIBC"));
+    entries.add(const DropdownMenuEntry(value: "HSBC", label: "HSBC"));
+    entries.add(
+      const DropdownMenuEntry(value: "Laurentian", label: "Laurentian"),
+    );
+    entries.add(
+      const DropdownMenuEntry(
+        value: "National Bank of Canada",
+        label: "National Bank of Canada",
+      ),
+    );
+    return entries;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     Color getColor(Set<WidgetState> states) {
       const Set<WidgetState> interactiveStates = <WidgetState>{
         WidgetState.pressed,
@@ -154,62 +181,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   }, */
                 ),
                 SizedBox(height: 10),
-                // Age and Sex Inputs
-                Row(
-                  children: [
-                    // Age Input
-                    Expanded(
-                      flex: 2,
-                      child: DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        value: _selectedAge,
-                        decoration: InputDecoration(
-                          labelText: 'Age',
-                          border: OutlineInputBorder(),
-                        ),
-                        items:
-                            ['18-25', '25-35', '35-45', '45-55', '55-65', '65+']
-                                .map(
-                                  (age) => DropdownMenuItem(
-                                    value: age,
-                                    child: Text(age),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (value) {
-                          _selectedAge = value;
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    // Sex Dropdown
-                    Expanded(
-                      flex: 2,
-                      child: DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        value: _selectedSex,
-                        decoration: InputDecoration(
-                          labelText: 'Sex',
-                          border: OutlineInputBorder(),
-                        ),
-                        items:
-                            ['Male', 'Female', 'Other', 'Not Say']
-                                .map(
-                                  (sex) => DropdownMenuItem(
-                                    value: sex,
-                                    child: Text(sex),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (value) {
-                          _selectedSex = value;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 10),
                 // Postal Code Input
                 TextFormField(
                   controller: _postalCodeController,
@@ -257,24 +228,106 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                 ),
                 SizedBox(height: 10),
-                // Reason for Registration Dropdown
-                TextFormField(
-                  controller: _questionsController,
-                  decoration: InputDecoration(
-                    labelText: 'Ask me a question',
-                    border: OutlineInputBorder(),
+                Row(
+                  children: <Widget>[
+                    Flexible(
+                      flex: 2,
+                      child: Text(
+                        "Did a creditor or another business send you to SMARTI&E today?",
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 132, 132, 132),
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: DropdownButtonFormField<String>(
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        value: _hasCreditor,
+                        items:
+                            ["No", "Yes"]
+                                .map(
+                                  (reason) => DropdownMenuItem(
+                                    value: reason,
+                                    child: Text(reason),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged: (value) {
+                          _hasCreditor = value;
+                          if (value == "Yes") {
+                            setState(() {
+                              _creditorInvite = true;
+                            });
+                          } else {
+                            setState(() {
+                              _creditorInvite = false;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Please add their name or select from below:",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: const Color.fromARGB(255, 132, 132, 132),
+                    ),
                   ),
                 ),
                 SizedBox(height: 10),
+                IgnorePointer(
+                  ignoring: _creditorInvite ? false : true,
+                  child: DropdownMenu<String>(
+                    controller: iconController,
+                    enableFilter: true,
+                    width: screenWidth,
+                    requestFocusOnTap: true,
+                    leadingIcon: const Icon(Icons.search),
+                    label: const Text('Creditor / Business Name'),
+                    inputDecorationTheme: InputDecorationTheme(
+                      filled: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 5.0),
+                      fillColor:
+                          _creditorInvite ? Colors.transparent : Colors.grey,
+                      border: OutlineInputBorder(),
+                    ),
+                    dropdownMenuEntries: entries(),
+                  ),
+                ),
+                SizedBox(height: 10),
+
                 // Reason for Registration Dropdown
                 DropdownButtonFormField<String>(
+                  isExpanded: true,
                   value: _selectedReason,
                   decoration: InputDecoration(
-                    labelText: 'Reason for Registration',
+                    labelText: 'How can Smarti&e help you today?',
                     border: OutlineInputBorder(),
                   ),
                   items:
-                      ['Personal Use', 'Business Use', 'Other']
+                      [
+                            "💰 Help Budgeting",
+                            "📅 Build a Repayment Plan",
+                            "🧾 Apply for Low-Income Support",
+                            "🧑‍💼 Apply for Credit",
+                            "🏠 Get Help with Renting",
+                            "Plan for a Major Life Change",
+                            "Start University or Leave Home with Confidence",
+                            "💡 Increase Your Income / Understand Your Benefits",
+                            "🌍 Newcomer to Canada",
+                            "🗂️ Prepare for Credit Counseling",
+                            "⚖️ Prepare for Insolvency",
+                          ]
                           .map(
                             (reason) => DropdownMenuItem(
                               value: reason,
@@ -348,7 +401,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           isPhoneValidated) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Registration Successful!'), duration: Durations.long1),
+                          SnackBar(
+                            content: Text('Registration Successful!'),
+                            duration: Durations.extralong1,
+                          ),
                         );
                         Navigator.push(
                           context,
