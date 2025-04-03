@@ -87,7 +87,13 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
     setState(() {
       _isProcessing = true;
     });
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const VerificationSubmittedPage(),
+      ),
+    );
+    return;
     try {
       Uint8List imageBytes = await imageFile.readAsBytes();
       String base64Image = base64Encode(imageBytes);
@@ -271,7 +277,12 @@ class _IdScannerSelfie extends State<IdScannerSelfie> {
                                   ? CircularProgressIndicator()
                                   : ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                                      backgroundColor: const Color.fromRGBO(
+                                        0,
+                                        162,
+                                        233,
+                                        1,
+                                      ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(6),
                                       ),
