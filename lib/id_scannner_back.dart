@@ -90,7 +90,11 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
     setState(() {
       _isProcessing = true;
     });
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const VerificationSelfiePage()),
+    );
+    return;
     try {
       Uint8List imageBytes = await imageFile.readAsBytes();
       String base64Image = base64Encode(imageBytes);
