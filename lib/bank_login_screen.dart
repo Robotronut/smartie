@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/banks_selection_screen.dart';
+import 'package:smartie/summary_screen.dart';
 
 class BankLoginScreen extends StatefulWidget {
   final String imagePath;
@@ -59,6 +60,33 @@ class _BankLoginScreenState extends State<BankLoginScreen> {
                     ),
                     child: Text(
                       'Return to previous page',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ), // White text for contrast
+                    ),
+                  ),
+                ),
+
+                Padding(padding: const EdgeInsets.all(8.0)),
+
+                SizedBox(
+                  width: double.infinity, 
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                        MaterialPageRoute(builder: (context) => SummaryScreen())
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: Text(
+                      'Go to Summary',
                       style: TextStyle(
                         color: Colors.white,
                       ), // White text for contrast

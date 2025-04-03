@@ -77,7 +77,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             Padding(padding: EdgeInsets.all(8.0)),
 
             Container(
-              height: 700.0,
+              height: 680.0,
               width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.0),
@@ -618,7 +618,71 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   ],
                 ),
                 ),
-            )
+            ),
+
+            Padding(padding: EdgeInsets.all(8.0)),
+
+            Container(
+              height: 680.0,
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                color: Colors.white
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Proposed Plan',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                      )
+                    ),
+                    
+                    Padding(padding: EdgeInsets.all(8.0)),
+
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '\$416.66',
+                              style: TextStyle(
+                                color: const Color.fromRGBO(0, 162, 233, 1),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 36.0,
+                              ),
+                            ),
+
+                            Padding(
+                              padding: EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                'Instalment',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            
+                          ],
+                        )
+                      ],
+                    )
+
+                  ],
+                )
+                )
+              ),
           ],
         )
       ),
