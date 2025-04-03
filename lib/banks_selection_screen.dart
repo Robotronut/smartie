@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:smartie/bank_login_screen.dart';
 
@@ -10,14 +11,14 @@ class BanksSelectionScreen extends StatefulWidget {
 class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
   // final TextEditingController _searchController = TextEditingController();
   final List<Map<String, String>> banks = [
-    {'name': 'National Bank of Canada', 'logo': 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png'},
-    {'name': 'Laurentian Bank of Canada', 'logo': 'assets/images/bank_logos/Laurentian_Bank_of_Canada_logo.png'},
-    {'name': 'BMO Canada', 'logo': 'assets/images/bank_logos/bank_of_montreal_logo.png'},
-    {'name': 'HSBC Canada', 'logo': 'assets/images/bank_logos/HSBC_Bank-logo.png'},
-    {'name': 'Canadian Imperial Bank of Commerce', 'logo': 'assets/images/bank_logos/CIBC-logo.png'},
     {'name': 'RBC', 'logo': 'assets/images/bank_logos/rbc-royal-bank-logo.png'},
     {'name': 'TD Bank Canada', 'logo': 'assets/images/bank_logos/td-bank-logo.png'},
+    {'name': 'BMO Canada', 'logo': 'assets/images/bank_logos/bank_of_montreal_logo.png'},
+    {'name': 'Canadian Imperial Bank of Commerce ( CIBC )', 'logo': 'assets/images/bank_logos/CIBC-logo.png'},  
     {'name': 'ScotiaBank', 'logo': 'assets/images/bank_logos/scotiabank-logo.png'},
+    {'name': 'National Bank of Canada', 'logo': 'assets/images/bank_logos/National_Bank_Of_Canada_logo.png'},
+    {'name': 'Laurentian Bank of Canada', 'logo': 'assets/images/bank_logos/Laurentian_Bank_of_Canada_logo.png'},
+    {'name': 'HSBC Canada', 'logo': 'assets/images/bank_logos/HSBC_Bank-logo.png'},
   ];
 
   @override
@@ -45,7 +46,44 @@ class _BanksSelectionScreenState extends State<BanksSelectionScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(36.0)),
+                  Padding(padding: EdgeInsets.all(20.0)),
+
+                  FractionallySizedBox(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0, // Same width as the first text
+                    // child: Text(
+                    //   "bank-verbiage".tr().toString(),
+                    //   style: TextStyle(
+                    //     color: const Color.fromARGB(255, 132, 132, 132),
+                    //     fontSize: 14.0,
+                    //   ),
+                    //   textAlign: TextAlign.center,
+                    // ),
+                    child: Text(
+                      "Please select your bank. You can also search for it with the box below to help you out:",
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 132, 132, 132),
+                        fontSize: 14.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  // FilledButton(
+                  //   onPressed: () async {
+                  //     context.locale = Locale('en','US');
+                  //   }, 
+                  //   child: Text('English')
+                  // ),
+
+                  // FilledButton(
+                  //   onPressed: () async {
+                  //     context.locale = Locale('fr','FR');
+                  //   }, 
+                  //   child: Text('French')
+                  // ),
+
+                  Padding(padding: EdgeInsets.all(12.0)),
 
                   //Search Bar
                   TextField(
