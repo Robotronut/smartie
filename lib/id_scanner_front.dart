@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:smartie/id_verification_failed.dart';
 import 'package:smartie/verification_id_back.dart';
 
 class IDScannerScreen extends StatefulWidget {
@@ -53,10 +52,6 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       });
     } catch (e) {
       print("IDScannerScreen: Error getting available cameras: $e");
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.pop(context);
     }
   }
 
@@ -78,10 +73,6 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       });
     } catch (e) {
       print("IDScannerScreen: Error taking picture: $e");
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.pop(context);
     }
   }
 
@@ -89,11 +80,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
     setState(() {
       _isProcessing = true;
     });
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
-    );
-    return;
+
     try {
       Uint8List imageBytes = await imageFile.readAsBytes();
       String base64Image = base64Encode(imageBytes);
@@ -172,8 +159,8 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                             width: 300,
                             alignment: Alignment.topCenter,
                             margin: EdgeInsets.only(
-                              top: 50,
-                              bottom: screenHeight - 200,
+                              top: 100,
+                              bottom: screenHeight - 250,
                             ),
                             decoration: BoxDecoration(
                               color: Color.fromRGBO(0, 0, 0, 0.5),
@@ -182,7 +169,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                             child: Center(
                               child: Text(
                                 textAlign: TextAlign.center,
-                                "Please make sure your ID fills the shape below and is not blurry",
+                                "Please make sure your ID fills the square below and is not blurry",
                                 style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 0.8),
                                   fontWeight: FontWeight.bold,
@@ -191,87 +178,53 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                             ),
                           )),
                         if (_image != null)
-                          Stack(
+                          Positioned.fill(
+                            child: Image.file(_image!, fit: BoxFit.cover),
+                          ),
+
+                        (Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 130,
+                            width: screenWidth,
+                            color: Colors.white,
+                          ),
+                        )),
+
+                        Positioned(
+                          bottom: 65,
+                          left: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Positioned.fill(
-                                child: Image.file(_image!, fit: BoxFit.cover),
+                              Text(
+                                "Are you happy with this picture?",
+                                style: TextStyle(color: Colors.black),
                               ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                    left: 10.0,
-                                    top: 5.0,
-                                  ),
-                                  height: 130,
-                                  width: screenWidth,
-                                  color: Colors.white,
+
+                              ConstrainedBox(
+                                // Wrap the Flexible with ConstrainedBox
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 20,
+                                ), // Adjust maxWidth as needed
+                                child: Flexible(
                                   child: Text(
-                                    "Are you happy with this picture?",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 65,
-                                left: 15,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ConstrainedBox(
-                                      // Wrap the Flexible with ConstrainedBox
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                            20,
-                                      ), // Adjust maxWidth as needed
-                                      child: Flexible(
-                                        child: Text(
-                                          "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontStyle: FontStyle.italic,
-                                            fontSize: 10.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 10,
-                                right: 45,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _image = null;
-                                    });
-                                  },
-                                  child: Text(
-                                    "Retake",
+                                    "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
                                     style: TextStyle(
-                                      color: const Color.fromRGBO(
-                                        0,
-                                        162,
-                                        233,
-                                        1,
-                                      ),
+                                      color: Colors.red,
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 10.0,
                                     ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
+                        ),
                         Positioned(
-                          bottom: _image != null ? 10 : 20,
-                          left: _image != null ? 45 : null,
+                          bottom: 10,
+                          left: _image != null ? 5 : null,
                           child:
                               _isProcessing
                                   ? CircularProgressIndicator()
@@ -299,6 +252,30 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                       _image == null ? 'Take Picture' : 'Yes',
                                     ),
                                   ),
+                        ),
+
+                        Positioned(
+                          bottom: 10,
+                          right: 5,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _image = null;
+                              });
+                            },
+                            child: Text(
+                              "Retake",
+                              style: TextStyle(
+                                color: const Color.fromRGBO(0, 162, 233, 1),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     );

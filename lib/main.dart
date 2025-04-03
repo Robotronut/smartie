@@ -7,17 +7,15 @@ import 'login_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  runApp(EasyLocalization(
-    supportedLocales: [
-      Locale('en', 'US'),
-      Locale('fr', 'FR'),
-    ], 
-    path: 'assets/translations',
-    saveLocale: true,
-    fallbackLocale: Locale('en', 'US'),
-    child: MyApp()
-    )
-    );
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en', 'US'), Locale('fr', 'FR')],
+      path: 'assets/translations',
+      saveLocale: true,
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -34,8 +32,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      // home: LoginScreen()
-      home: SummaryScreen()
+      home: LoginScreen(),
+      //home: SummaryScreen()
     );
   }
 }

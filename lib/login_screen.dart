@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:smartie/forgotpassword_screen.dart';
 import 'package:smartie/google_login_screen.dart';
 import 'package:smartie/registration_screen.dart';
+import 'package:smartie/summary_screen.dart';
 import 'package:smartie/user_assessment.dart';
 
 import 'dart:convert'; // For JSON decoding
@@ -32,7 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _isLoading = true;
         });
-
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SummaryScreen()),
+        );
+        return;
         // Use the correct API URL
         const String apiUrl = "https://mic.thegwd.ca/test/api/login";
 
