@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/id_scanner_front.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VerificationStartPage extends StatelessWidget {
   const VerificationStartPage({super.key});
@@ -40,7 +41,6 @@ class VerificationStartPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20.0,
-                        
                       ),
                     ),
                   ),
@@ -51,7 +51,21 @@ class VerificationStartPage extends StatelessWidget {
                     alignment: Alignment.center,
                     widthFactor: 1.0, // Same width as the first text
                     child: Text(
-                      "Give us just a bit to do our magic and we'll get you on your way.",
+                      "We confirm your identity to protect you from fraud and ensure we’re offering the right support in a safe and secure way.",
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 132, 132, 132),
+                        fontSize: 14.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(8.0)),
+
+                  FractionallySizedBox(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0, // Same width as the first text
+                    child: Text(
+                      "So, give us just a bit to do our magic and we'll get you on your way.",
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
@@ -86,7 +100,7 @@ class VerificationStartPage extends StatelessWidget {
                         children: [
                           Center(
                             child: Text(
-                              "Before you start, please:",
+                              "You will need:",
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontSize: 14.0,
@@ -107,7 +121,7 @@ class VerificationStartPage extends StatelessWidget {
                               Padding(padding: EdgeInsets.all(4.0)),
                               Expanded(
                                 child: Text(
-                                  "Prepare a valid government-issued ID",
+                                  "A valid government-issued ID (Driver's license or passport)",
                                   style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
@@ -126,23 +140,6 @@ class VerificationStartPage extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   "Make sure you are in a well-lit place",
-                                  style: TextStyle(fontSize: 14.0),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.check_box_outlined,
-                                color: const Color.fromRGBO(0, 162, 233, 1),
-                              ),
-                              Padding(padding: EdgeInsets.all(4.0)),
-                              Expanded(
-                                child: Text(
-                                  "Be prepared to take a take another photo of the otherside of your ID",
                                   style: TextStyle(fontSize: 14.0),
                                   textAlign: TextAlign.start,
                                 ),
@@ -180,12 +177,53 @@ class VerificationStartPage extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  Padding(padding: EdgeInsets.all(8.0)),
+
+                  FractionallySizedBox(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0, // Same width as the first text
+                    child: Text(
+                      "Dont have a government ID? You may be able to use a residency permit, refugee document, or work/study visa.",
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 132, 132, 132),
+                        fontSize: 14.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.all(4.0)),
+
+                  GestureDetector(
+                      onTap: () {
+                        // open web page
+                        launch(
+                          'https://benefitswayfinder.org/',
+                          isNewTab: true,
+                        );
+                      },
+                      child: Text(
+                        'Click here to learn more',
+                        style: TextStyle(
+                          color: Colors.cyan, // Color for the sign-up link
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+  Future<void> launch(String url, {bool isNewTab = true}) async {
+    await launchUrl(
+      Uri.parse(url),
+      webOnlyWindowName: isNewTab ? '_blank' : '_self',
     );
   }
 }

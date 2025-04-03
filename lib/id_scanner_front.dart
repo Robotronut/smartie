@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:smartie/id_verification_failed.dart';
 import 'package:smartie/verification_id_back.dart';
 
 class IDScannerScreen extends StatefulWidget {
@@ -52,6 +53,10 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       });
     } catch (e) {
       print("IDScannerScreen: Error getting available cameras: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      Navigator.pop(context);
     }
   }
 

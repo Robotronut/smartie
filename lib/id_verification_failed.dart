@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/bank_terms_cond_screen.dart';
+import 'package:smartie/verification_start_page.dart';
+
 // Import the second screen
 
-class VerificationSubmittedPage extends StatelessWidget {
-  const VerificationSubmittedPage({super.key});
+class IdVerificationFailed extends StatelessWidget {
+  const IdVerificationFailed({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +35,10 @@ class VerificationSubmittedPage extends StatelessWidget {
                   Padding(padding: EdgeInsets.all(48.0)),
 
                   Container(
-                    height: MediaQuery.of(context).size.width * 0.2,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color.fromRGBO(0, 162, 233, 1),
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(180.0)
-                    ),
                     child: Icon(
-                        Icons.check,
-                        color: const Color.fromRGBO(0, 162, 233, 1),
-                        size: MediaQuery.of(context).size.width * 0.1,
+                        Icons.error,
+                        color: const Color.fromRGBO(255, 100, 100, 1),
+                        size: MediaQuery.of(context).size.width * 0.2,
                         opticalSize: 2.0,
                         weight: 2.0,
                       ),
@@ -55,7 +48,7 @@ class VerificationSubmittedPage extends StatelessWidget {
 
                   Text(
                     textAlign: TextAlign.center,
-                    "Thank you!",
+                    "Verification Failed",
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 18.0,
@@ -65,7 +58,7 @@ class VerificationSubmittedPage extends StatelessWidget {
                   Padding(padding: EdgeInsets.all(8.0)),
 
                   Text(
-                    "Your ID is confirmed — SMARTIE is ready when you are. Click Next to get started!",
+                    "We couldn’t confirm your ID this time, but that’s okay — it happens! You can try again, or click Next and we’ll help you find another way forward.",
                     style: TextStyle(fontSize: 14.0),
                     textAlign: TextAlign.center,
                   ),
