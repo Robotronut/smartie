@@ -22,7 +22,7 @@ class TermsAndCondPopUp extends StatelessWidget {
                   spacing: 12.0,
                   children: [
                     Text(
-                        "Terms and Conditions",
+                        "SMARTIE - Terms and Conditions for Bank Account Connection",
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 24.0,
@@ -30,21 +30,29 @@ class TermsAndCondPopUp extends StatelessWidget {
                       ),
                     
                     Text(
-                        "Last Updated: March 25, 2025",
+                        "Last Updated: April 4, 2025",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                       ),
 
                     Text(
-                        "Welcome to SMARTI&E. By using our mobile application, you agree to comply with and be bound by the following terms and conditions. Please read them carefully before proceeding.",
+                      "1. Introduction",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+
+                    Text(
+                        "By using SMARTIE and connecting your bank account, you agree to these Terms and Conditions. Please read them carefully. This process allows SMARTIE to access your financial data solely for providing personalized financial insights, affordability assessments, and tailored advice. No credit check will be conducted.",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                       ),
 
                     Text(
-                        "1. Acceptance of Terms",
+                        "2. Consent to Access Financial Data",
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold
@@ -52,14 +60,14 @@ class TermsAndCondPopUp extends StatelessWidget {
                       ),
 
                     Text(
-                        "By accessing or using SMARTI&E, you confirm that you have read, understood, and agreed to these Terms and Conditions. If you do not agree, please do not use the app.",
+                        "You consent to allow SMARTIE to securely access your financial data from your connected bank account(s) to provide tailored insights and recommendations. This access is read-only and used solely for the purposes described in this agreement.",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                       ),
 
                     Text(
-                        "2. Eligibility",
+                        "3. Data Usage and Privacy",
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold
@@ -67,14 +75,14 @@ class TermsAndCondPopUp extends StatelessWidget {
                       ),
 
                     Text(
-                        "To use SMARTI&E, you must:\n\n- Be at least 18 years old or the legal age of financial responsibility in your country.\n- Provide accurate and complete information when creating an account.",
+                        "• SMARTIE will never store or share your banking credentials.\n• Your financial data will be accessed securely and used only to provide you with personalized insights, budgeting tools, and recommendations.\n• Your information will not be sold or shared with third parties without your explicit consent, unless required by law.",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                       ),
 
                     Text(
-                        "3. Financial Services Disclaimer",
+                        "4. No Impact on Credit Score",
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold
@@ -82,14 +90,14 @@ class TermsAndCondPopUp extends StatelessWidget {
                       ),
 
                     Text(
-                        "SMARTI&E does not provide financial, investment, tax, or legal advice. Any financial analysis, predictions, or recommendations offered by the app are for informational purposes only. You are responsible for conducting your own research and consulting a professional before making financial decisions.",
+                        "Connecting your bank account with SMARTIE does not involve a credit check and will not affect your credit score in any way.",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                       ),
 
                       Text(
-                        "4. Privacy Policy",
+                        "5. Security and Encryption",
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold
@@ -97,7 +105,67 @@ class TermsAndCondPopUp extends StatelessWidget {
                       ),
 
                     Text(
-                        "We value your privacy. Our Privacy Policy explains how we collect, store, and protect your data. By using the app, you agree to our data practices as outlined in the Privacy Policy.",
+                        "SMARTIE uses industry-standard encryption protocols to ensure that your data is transmitted and stored securely. We are committed to maintaining the highest standards of data protection.",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
+
+                      Text(
+                        "6. User Responsibilities",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                    Text(
+                        "You agree to provide accurate information and ensure that you have the authority to connect the bank accounts you choose to link with SMARTIE.",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
+
+                      Text(
+                        "7. Termination",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                    Text(
+                        "You may disconnect your bank account from SMARTIE at any time. Upon disconnection, SMARTIE will immediately cease access to your financial data.",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
+
+                      Text(
+                        "8. Changes to Terms",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                    Text(
+                        "SMARTIE reserves the right to modify these Terms and Conditions. Any changes will be communicated to you via the app, and your continued use of SMARTIE following such changes will constitute acceptance.",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
+
+                      Text(
+                        "9. Contact Information",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                    Text(
+                        "For any questions or concerns regarding these Terms and Conditions, please contact us.",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),

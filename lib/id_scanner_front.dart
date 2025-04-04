@@ -8,7 +8,8 @@ import 'dart:convert';
 import 'package:smartie/verification_id_back.dart';
 
 class IDScannerScreen extends StatefulWidget {
-  const IDScannerScreen({super.key});
+  final String verifyIdType;
+  const IDScannerScreen({super.key, required this.verifyIdType});
   @override
   _IDScannerScreenState createState() => _IDScannerScreenState();
 }
@@ -31,6 +32,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
 
   Future<void> _setupCamera() async {
     print("IDScannerScreen: Starting camera setup");
+    print(widget.verifyIdType);
     try {
       _cameras = await availableCameras();
       print("IDScannerScreen: Available cameras found");

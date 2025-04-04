@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:smartie/verification_start_page.dart';
-import 'package:smartie/user_assessment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -20,24 +19,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController iconController = TextEditingController();
-  final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _creditorController = TextEditingController();
   final _phoneFocusNode = FocusNode();
   final _nameFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
-  final _postalFocusNode = FocusNode();
 
   bool isPhoneValidated = false;
   bool isNameValidated = false;
   bool isEmailValidated = false;
   bool isPostalValidated = false;
-  String? _selectedEmploymentStatus;
   String? _selectedReason;
   String? _selectedCreditor;
   String? _hasCreditor = "No";
   String selectedCategory = "";
   bool _isChecked = false;
   bool _creditorInvite = false;
+  String _selectedCommunicationMode = 'Email';
+  bool _showOtherCreditorInput = false;
+  bool _isOtherCreditorValidated = false;
 
   List<DropdownMenuEntry<String>> entries() {
     var entries = <DropdownMenuEntry<String>>[];
@@ -58,6 +57,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         label: "National Bank of Canada",
       ),
     );
+    entries.add(const DropdownMenuEntry(value: "ATB Financial", label: "ATB Financial"));
+    entries.add(const DropdownMenuEntry(value: "Other", label: "Other"));
     return entries;
   }
 
@@ -81,7 +82,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration'),
+        title: Text('Welcome to SMARTI&E'),
         backgroundColor: Color(0xFF008FD7), // Same color as the login button
       ),
       body: SingleChildScrollView(
@@ -94,7 +95,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               children: [
                 // Title
                 Text(
-                  'Enter your basic details',
+                  'Ready to make your financial journey smoother than ever?',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -105,8 +106,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 SizedBox(height: 10),
                 // Subtitle
                 Text(
-                  'Give us just a bit to do our magic and we\'ll get you on your way.',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  'Let\'s get you set up in 3 simple steps. What can we call you?',
+                  style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
@@ -128,106 +129,89 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                 ),
                 SizedBox(height: 10),
-                // Email Input
-                TextFormField(
-                  controller: _emailController,
-                  focusNode: _emailFocusNode,
-                  decoration: InputDecoration(
-                    labelText: 'Your Email',
-                    border: OutlineInputBorder(),
+                
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'How can we reach you?',
+                    style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      return 'Enter a valid email';
-                    }
-                    isEmailValidated = true;
-                    return null;
-                  },
                 ),
+                
                 SizedBox(height: 10),
-                // Mobile Number Input
-                IntlPhoneField(
-                  controller: _phoneController,
-                  focusNode: _phoneFocusNode,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text(
-                      "Enter phone number",
-                      style: TextStyle(fontSize: 14.0),
-                    ),
-                    // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-                  ),
-                  initialCountryCode: 'CA',
-                  showCountryFlag: false,
-                  onChanged: (phone) {
-                    print("phone pressed $phone");
-                    isPhoneValidated = true;
-                  },
-                  /* validator: (value) {
-                    print("value: $value");
-                    if (value!.isValidNumber()) {
-                      setState(() {
-                        isPhoneValidated = true;
-                      });
-                    } else {
-                      setState(() {
-                        isPhoneValidated = false;
-                      });
-                    }
-                    return null;
-                  }, */
-                ),
-                SizedBox(height: 10),
-                // Postal Code Input
-                TextFormField(
-                  controller: _postalCodeController,
-                  focusNode: _postalFocusNode,
-                  decoration: InputDecoration(
-                    labelText: 'Postal Code/Zip',
-                    border: OutlineInputBorder(),
-                  ),
-                  textCapitalization: TextCapitalization.characters,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your postal code';
-                    }
-                    String TrimValue = value.trim();
-                    TrimValue = TrimValue.replaceAll(' ', '');
 
-                    if (!RegExp(
-                      r'^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$',
-                    ).hasMatch(TrimValue)) {
-                      return "Invalid Postal Code";
-                    }
-                    isPostalValidated = true;
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
-                // Employment Status Dropdown
                 DropdownButtonFormField<String>(
-                  value: _selectedEmploymentStatus,
                   decoration: InputDecoration(
-                    labelText: 'Employment Status',
                     border: OutlineInputBorder(),
                   ),
+                  value: _selectedCommunicationMode,
                   items:
-                      ['Employed', 'Unemployed', 'Student', 'Retired', 'Other']
+                      ["Email", "Mobile Phone"]
                           .map(
-                            (status) => DropdownMenuItem(
-                              value: status,
-                              child: Text(status),
+                            (commType) => DropdownMenuItem(
+                              value: commType,
+                              child: Text(commType),
                             ),
                           )
                           .toList(),
                   onChanged: (value) {
-                    _selectedEmploymentStatus = value;
+                      setState(() {
+                        _selectedCommunicationMode = value!;
+                      });
                   },
                 ),
+
                 SizedBox(height: 10),
+
+                Column(
+                  children: [
+                    _selectedCommunicationMode == 'Email' ? 
+                    // Email Input
+                    TextFormField(
+                      controller: _emailController,
+                      focusNode: _emailFocusNode,
+                      decoration: InputDecoration(
+                        labelText: 'Your Email',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Enter a valid email';
+                        }
+                        isEmailValidated = true;
+                        return null;
+                      },
+                    )
+
+                    :
+
+                    // Mobile Number Input
+                    IntlPhoneField(
+                      controller: _phoneController,
+                      focusNode: _phoneFocusNode,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        label: Text(
+                          "Enter phone number",
+                          style: TextStyle(fontSize: 14.0),
+                        ),
+                        // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                      ),
+                      initialCountryCode: 'CA',
+                      showCountryFlag: false,
+                      onChanged: (phone) {
+                        print("phone pressed $phone");
+                        isPhoneValidated = true;
+                      },
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 10),
+
                 Row(
                   children: <Widget>[
                     Flexible(
@@ -302,8 +286,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       border: OutlineInputBorder(),
                     ),
                     dropdownMenuEntries: entries(),
+                    onSelected: (value) {
+                      if (value == 'Other') {
+                        setState(() {
+                          _showOtherCreditorInput = true;
+                        });
+                      }
+                    },
                   ),
                 ),
+                SizedBox(height: 10),
+
+                //Other Creditor Conditional Text Input
+                Visibility(
+                  visible: _showOtherCreditorInput,
+                  child: TextFormField(
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      labelText: 'Other Creditor',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter creditor/business name';
+                      }
+                      _isOtherCreditorValidated = true;
+                      return null;
+                    },
+                  ),
+                ),
+
                 SizedBox(height: 10),
 
                 // Reason for Registration Dropdown
@@ -409,7 +421,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserAssessment(),
+                            builder: (context) => VerificationStartPage(),
                           ),
                         );
                       } else if (!isNameValidated) {
@@ -421,7 +433,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         );
                         _nameFocusNode.requestFocus();
-                      } else if (!isEmailValidated) {
+                      } else if (_selectedCommunicationMode == "Email" && !isEmailValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -430,7 +442,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         );
                         _emailFocusNode.requestFocus();
-                      } else if (!isPhoneValidated) {
+                      } else if (_selectedCommunicationMode == "Mobile Phone" && !isPhoneValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -441,15 +453,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         );
                         _phoneFocusNode.requestFocus();
-                      } else if (!isPostalValidated) {
-                        // Show a warning if phone is not validated
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Missing Postal/Zip'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                        _postalFocusNode.requestFocus();
                       } else if (!_isChecked) {
                         // Show a warning if checkbox is not checked
                         ScaffoldMessenger.of(context).showSnackBar(

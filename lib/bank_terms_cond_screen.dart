@@ -66,37 +66,62 @@ class _BankTermsCondScreenState extends State<BankTermsCondScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Connect your bank securely. Please note, this action will have no impact on your credit score.",
+                      "One Last Step",
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
-                        fontSize: 16.0,
+                        fontSize: 18.0,
                       ),
                     ),
                   ),
 
-                  Padding(padding: EdgeInsets.all(8.0)),
+                  Padding(padding: EdgeInsets.all(6.0)),
 
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => TermsAndCondPopUp())
-                      );
-                    }, 
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    alignment: Alignment.centerLeft,
                     child: Text(
-                      "View Terms and Conditions",
+                      "By connecting your bank SmartI&E is able to give you accurate personalized insights, smarter recommendations, ans a clearer view of your finances - without impacting your credit score.",
                       style: TextStyle(
-                        fontSize: 16.0,
-                        color: const Color.fromRGBO(0, 162, 233, 1),
-                        decoration: TextDecoration.underline,
-                        decorationColor: const Color.fromRGBO(0, 162, 233, 1),
-                        decorationThickness: 2.0,
-                        fontWeight: FontWeight.bold,
-                        )
-                      )
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14.0,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
                   ),
 
-                  Padding(padding: EdgeInsets.all(8.0)),
+                  Padding(padding: EdgeInsets.all(16.0)),
+
+                  //Submit Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () {
+                        if (_isChecked) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const BanksSelectionScreen())
+                          );
+                      } else if (!_isChecked) {
+                          // Show a warning if checkbox is not checked
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('You must agree to the terms before proceeding.'), backgroundColor: Colors.red),
+                          );
+                        }
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: _isChecked ? const Color.fromRGBO(0, 162, 233, 1) : Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      child: Text(
+                        "Continue",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.all(56.0)),
 
                   //Truth Verification Agreement Checkbox
                   Row(
@@ -139,37 +164,26 @@ class _BankTermsCondScreenState extends State<BankTermsCondScreen> {
                   ],
                 ),
 
-                  Padding(padding: EdgeInsets.all(16.0)),
-
-                  //Submit Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () {
-                        if (_isChecked) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const BanksSelectionScreen())
-                          );
-                      } else if (!_isChecked) {
-                          // Show a warning if checkbox is not checked
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('You must agree to the terms before proceeding.'), backgroundColor: Colors.red),
-                          );
-                        }
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: _isChecked ? const Color.fromRGBO(0, 162, 233, 1) : Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Text(
-                        "Continue",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => TermsAndCondPopUp())
+                      );
+                    }, 
+                    child: Text(
+                      "View Terms and Conditions",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: const Color.fromRGBO(0, 162, 233, 1),
+                        decoration: TextDecoration.underline,
+                        decorationColor: const Color.fromRGBO(0, 162, 233, 1),
+                        decorationThickness: 2.0,
+                        fontWeight: FontWeight.bold,
+                        )
+                      )
                   ),
+
                 ],
               ),
             ),

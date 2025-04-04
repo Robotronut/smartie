@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:smartie/id_scanner_front.dart';
+import 'package:smartie/verification_submitted_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class VerificationStartPage extends StatelessWidget {
+class VerificationStartPage extends StatefulWidget {
   const VerificationStartPage({super.key});
+  @override
+  State<VerificationStartPage> createState() => _VerificationStartPageState();
+}
+
+class _VerificationStartPageState extends State<VerificationStartPage> {
+
+  String _selectedVerificationId = "Driver's License";
 
   @override
   Widget build(BuildContext context) {
@@ -48,29 +56,14 @@ class VerificationStartPage extends StatelessWidget {
                   Padding(padding: EdgeInsets.all(8.0)),
 
                   FractionallySizedBox(
-                    alignment: Alignment.center,
+                    alignment: Alignment.centerLeft,
                     widthFactor: 1.0, // Same width as the first text
                     child: Text(
-                      "We confirm your identity to protect you from fraud and ensure we’re offering the right support in a safe and secure way.",
+                      "To keep your information safe and secure, we need to quickly verify your identity. It's just a simple step to protect your account and make sure it's really you.",
                       style: TextStyle(
                         color: const Color.fromARGB(255, 132, 132, 132),
                         fontSize: 14.0,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(8.0)),
-
-                  FractionallySizedBox(
-                    alignment: Alignment.center,
-                    widthFactor: 1.0, // Same width as the first text
-                    child: Text(
-                      "So, give us just a bit to do our magic and we'll get you on your way.",
-                      style: TextStyle(
-                        color: const Color.fromARGB(255, 132, 132, 132),
-                        fontSize: 14.0,
-                      ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
@@ -86,30 +79,23 @@ class VerificationStartPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Container(
-                    /* decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 236, 235, 235),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ), */
-                    child: Padding(
+                    Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
                         spacing: 20.0,
                         children: [
-                          Center(
-                            child: Text(
-                              "You will need:",
-                              style: TextStyle(
-                                color: const Color.fromRGBO(0, 162, 233, 1),
-                                fontSize: 14.0,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "You will need:",
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 162, 233, 1),
+                                  fontSize: 14.0,
 
-                                fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ),
 
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,6 +135,35 @@ class VerificationStartPage extends StatelessWidget {
                         ],
                       ),
                     ),
+
+                  Padding(padding: EdgeInsets.all(8.0)),
+
+                  //Dropdown Choice for Identity
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      underline: SizedBox(),
+                      value: _selectedVerificationId,
+                      items:
+                          ["Driver's License", "Passport", "ID Card"]
+                              .map(
+                                (commType) => DropdownMenuItem(
+                                  value: commType,
+                                  child: Text(commType),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (value) {
+                          setState(() {
+                            _selectedVerificationId = value!;
+                          });
+                      },
+                    )
                   ),
 
                   Padding(padding: EdgeInsets.all(8.0)),
@@ -161,7 +176,7 @@ class VerificationStartPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const IDScannerScreen(),
+                            builder: (context) => IDScannerScreen(verifyIdType: _selectedVerificationId),
                           ),
                         );
                       },
