@@ -24,12 +24,42 @@ class BankVerifyScreen extends StatelessWidget {
                 Padding(padding: EdgeInsets.all(48.0)),
                 
                 Text(
-                    "Your bank details are being verified. You’ll receive an email from us once the verification is complete.",
-                    style: TextStyle(fontSize: 14.0),
+                  "We are connecting to your bank...",
+                  style: TextStyle(fontSize: 16.0),
+                  textAlign: TextAlign.center,
+                ),
+
+                 Padding(padding: EdgeInsets.all(24.0)),
+
+                Text(
+                  "Did you know?",
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromRGBO(0, 162, 233, 1),
+                    ),
+                  textAlign: TextAlign.center,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0, bottom: 64.0, left: 36.0, right: 36.0),
+                  child: Text(
+                    "Did you know that by using SMARTIE, you're joining the 49% of Canadians who seek financial advice to enhance their financial well-being?",
+                    style: TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
+                ),
 
-                  Padding(padding: EdgeInsets.all(64.0)),
+                Padding(
+                  padding: EdgeInsets.only(left: 36.0, right: 36.0),
+                  child: Text(
+                    "Ready to take control? Let's do this!",
+                    style: TextStyle(fontSize: 16.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+                Padding(padding: EdgeInsets.all(64.0)),
               ],
             ),
           ),

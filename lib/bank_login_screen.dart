@@ -166,9 +166,9 @@ class _BankLoginScreenState extends State<BankLoginScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your card number';
                             }
-                            if (!RegExp(r'^\d{12}$').hasMatch(value)) {
-                              return 'Enter a valid card number';
-                            }
+                            // if (!RegExp(r'^\d{12}$').hasMatch(value)) {
+                            //   return 'Enter a valid card number';
+                            // }
                             return null;
                           },
                         ),

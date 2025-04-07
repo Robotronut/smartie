@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class SummaryScreen extends StatefulWidget {
@@ -59,6 +58,59 @@ class _SummaryScreenState extends State<SummaryScreen> {
       ),
     );
     return entries;
+  }
+
+  int income = 0;
+  int fixedExp = 0;
+  int flexExp = 0;
+  int debt = 0;
+  int mdi = 0;
+  int installment = 0;
+  int total_outstanding = 0;
+  final rand = Random();
+
+  @override
+  void initState() {
+    super.initState();
+    income = 2500 + rand.nextInt(2000);     
+    fixedExp = 1200 + rand.nextInt(1000);  
+    flexExp = 300 + rand.nextInt(400);      
+    debt = 100 + rand.nextInt(300);       
+    mdi = 200 + rand.nextInt(600); 
+    installment = 200 + rand.nextInt(600); 
+    total_outstanding = 1500 + rand.nextInt(500);
+
+    // For chart percentages
+    List<double> rawValues = List.generate(5, (_) => rand.nextDouble());
+    double total = rawValues.reduce((a, b) => a + b);
+    List<double> normalized = rawValues.map((v) => v / total).toList();
+
+    summary_dataset[0] = DataItem(normalized[0], 'Income', Colors.pink);
+    summary_dataset[1] = DataItem(normalized[1], 'Fixed', Colors.orange);
+    summary_dataset[2] = DataItem(normalized[2], 'Flexible', Colors.green);
+    summary_dataset[3] = DataItem(normalized[3], 'Debt', Colors.blue);
+    summary_dataset[4] = DataItem(normalized[4], 'MDI', Colors.deepPurple);       
+  }
+
+  void _generateRandomValues() {
+    setState(() {
+      income = 2500 + rand.nextInt(2000); 
+      fixedExp = 1000 + rand.nextInt(1000);
+      flexExp = 300 + rand.nextInt(400);
+      debt = 100 + rand.nextInt(500);
+      mdi = 200 + rand.nextInt(600);
+
+    // For chart percentages
+    List<double> rawValues = List.generate(5, (_) => rand.nextDouble());
+    double total = rawValues.reduce((a, b) => a + b);
+    List<double> normalized = rawValues.map((v) => v / total).toList();
+
+    summary_dataset[0] = DataItem(normalized[0], 'Income', Colors.pink);
+    summary_dataset[1] = DataItem(normalized[1], 'Fixed', Colors.orange);
+    summary_dataset[2] = DataItem(normalized[2], 'Flexible', Colors.green);
+    summary_dataset[3] = DataItem(normalized[3], 'Debt', Colors.blue);
+    summary_dataset[4] = DataItem(normalized[4], 'MDI', Colors.deepPurple);
+    });
   }
 
   @override
@@ -188,6 +240,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                         onSelected: (value) {
                           setState(() {
                             selectedValue = value!; // Update the state when a selection is made
+                             _generateRandomValues();
                           });
                         },
                       ),
@@ -210,7 +263,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Text(
                                   'Income',
                                   style: TextStyle(
-                                    fontSize: 14.0,
+                                    fontSize:  MediaQuery.of(context).size.width * 0.035,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w800,
                                   )
@@ -218,9 +271,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                  '\$3,000',
+                                  '\$$income',
                                   style: TextStyle(
-                                    fontSize: 16.0,
+                                    fontSize:  MediaQuery.of(context).size.width * 0.04,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
@@ -256,7 +309,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Text(
                                   'Fixed Exp',
                                   style: TextStyle(
-                                    fontSize: 14.0,
+                                    fontSize:  MediaQuery.of(context).size.width * 0.035,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w800,
                                   )
@@ -264,9 +317,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                  '\$1,750',
+                                  '\$$fixedExp',
                                   style: TextStyle(
-                                    fontSize: 16.0,
+                                    fontSize:  MediaQuery.of(context).size.width * 0.04,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
@@ -308,7 +361,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Text(
                                     'Flex Exp',
                                     style: TextStyle(
-                                      fontSize: 14.0,
+                                      fontSize:  MediaQuery.of(context).size.width * 0.035,
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w800,
                                     )
@@ -316,9 +369,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                    '\$500',
+                                    '\$$flexExp',
                                     style: TextStyle(
-                                      fontSize: 16.0,
+                                      fontSize:  MediaQuery.of(context).size.width * 0.04,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline,
@@ -355,7 +408,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Text(
                                   'Debt',
                                   style: TextStyle(
-                                    fontSize: 14.0,
+                                    fontSize:  MediaQuery.of(context).size.width * 0.035,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w800,
                                   )
@@ -363,9 +416,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                  '\$250',
+                                  '\$$debt',
                                   style: TextStyle(
-                                    fontSize: 16.0,
+                                    fontSize:  MediaQuery.of(context).size.width * 0.04,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
@@ -388,42 +441,62 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
                     Padding(padding: EdgeInsets.only(top: 8.0)),
 
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onPressed: () {}, 
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'MDI',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w800,
-                            )
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 62.0)),
-                          Text(
-                            '\$500',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              decorationThickness: 2.0,
-                            )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: Size.zero,
+                              padding: EdgeInsets.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {}, 
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'MDI',
+                                    style: TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width * 0.035,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
+                                    )
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                    '\$$mdi',
+                                    style: TextStyle(
+                                      fontSize:  MediaQuery.of(context).size.width * 0.04,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                      decorationThickness: 2.0,
+                                    )
+                                    ),
+                                  Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: Color.fromRGBO(0, 162, 233, 1),
+                                    size: 24.0,
+                                    )
+                                    ],
+                                  )
+                                  
+                                ],
+                              )
                             ),
-                          Icon(
-                            Icons.chevron_right_rounded,
-                            color: Color.fromRGBO(0, 162, 233, 1),
-                            size: 24.0,
-                            )
-                        ],
-                      ),
+                        ),
+
+                        Padding(padding: EdgeInsets.only(left: 16.0)),
+
+                        Expanded(
+                          child: FractionallySizedBox(
+                            widthFactor: MediaQuery.of(context).size.width * 0.5,
+                          )
+                        )
+                      ],
                     ),
 
                     Divider(
@@ -479,7 +552,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Padding(padding: EdgeInsets.only(left: 4.0)),
 
                                   Text(
-                                    '(43%)',
+                                    '(${(summary_dataset[0].value* 100).toInt()}%)',
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w800,
@@ -516,7 +589,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Padding(padding: EdgeInsets.only(left: 4.0)),
 
                                   Text(
-                                    '(15%)',
+                                    '(${(summary_dataset[1].value* 100).toInt()}%)',
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w800,
@@ -553,7 +626,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Padding(padding: EdgeInsets.only(left: 4.0)),
 
                                   Text(
-                                    '(8%)',
+                                    '(${(summary_dataset[2].value* 100).toInt()}%)',
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w800,
@@ -590,7 +663,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Padding(padding: EdgeInsets.only(left: 4.0)),
 
                                   Text(
-                                    '(18%)',
+                                    '(${(summary_dataset[3].value* 100).toInt()}%)',
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w800,
@@ -627,7 +700,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   Padding(padding: EdgeInsets.only(left: 4.0)),
 
                                   Text(
-                                    '(16%)',
+                                    '(${(summary_dataset[4].value* 100).toInt()}%)',
                                     style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w800,
@@ -738,7 +811,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '\$416.66',
+                              '\$$installment',
                               style: TextStyle(
                                 color: const Color.fromRGBO(0, 162, 233, 1),
                                 fontWeight: FontWeight.w600,
@@ -749,7 +822,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             Padding(
                               padding: EdgeInsets.only(left: 4.0),
                               child: Text(
-                                'Instalment',
+                                'Installment',
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 16.0,
@@ -882,7 +955,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                "\$5000",
+                                '\$$total_outstanding',
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold
