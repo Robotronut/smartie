@@ -42,12 +42,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     var entries = <DropdownMenuEntry<String>>[];
     entries.add(const DropdownMenuEntry(value: "RBC", label: "RBC"));
     entries.add(const DropdownMenuEntry(value: "TD", label: "TD"));
+       entries.add(const DropdownMenuEntry(value: "CIBC", label: "CIBC"));
     entries.add(
       const DropdownMenuEntry(value: "Scotiabank", label: "Scotiabank"),
     );
     entries.add(const DropdownMenuEntry(value: "BMO", label: "BMO"));
-    entries.add(const DropdownMenuEntry(value: "CIBC", label: "CIBC"));
     entries.add(const DropdownMenuEntry(value: "HSBC", label: "HSBC"));
+    entries.add(const DropdownMenuEntry(value: "ATB Financial", label: "ATB Financial"));
     entries.add(
       const DropdownMenuEntry(value: "Laurentian", label: "Laurentian"),
     );
@@ -57,7 +58,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
         label: "National Bank of Canada",
       ),
     );
-    entries.add(const DropdownMenuEntry(value: "ATB Financial", label: "ATB Financial"));
     entries.add(const DropdownMenuEntry(value: "Other", label: "Other"));
     return entries;
   }
@@ -409,8 +409,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: FilledButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate() &
-                          _isChecked &
-                          isPhoneValidated) {
+                          _isChecked & (isEmailValidated | isPhoneValidated)) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

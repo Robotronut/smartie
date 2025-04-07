@@ -57,6 +57,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
         label: "National Bank of Canada",
       ),
     );
+    entries.add(const DropdownMenuEntry(value: "ATB Financial", label: "ATB Financial"));
     return entries;
   }
 
