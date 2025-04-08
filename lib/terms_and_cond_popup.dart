@@ -183,7 +183,10 @@ class TermsAndCondPopUp extends StatelessWidget {
                       ),
                       child: Text(
                         "I have read the terms and conditions",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.035,
+                          ),
                       ),
                     )
                   ]

@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   'assets/images/smartie_logo_white.png',
                   height: 55,
                 ), // Replace with your logo path
-                SizedBox(height: 15),
+                SizedBox(height: 50),
                 Text(
                   'Sign In',
                   style: TextStyle(
@@ -257,70 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
-                // Google Sign-Up Button
-                SizedBox(
-                  width: double.infinity, // Match the width of the input fields
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GoogleLoginScreen(),
-                        ),
-                      );
 
-                      // Add your Google sign-up logic here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.white, // White background for Google button
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    icon: Image.asset(
-                      'assets/images/google_logo.png', // Replace with your Google logo asset
-                      height: 20,
-                    ),
-                    label: Text(
-                      'Login with Google',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ), // Black text for contrast
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                // Microsoft Sign-Up Button
-                SizedBox(
-                  width: double.infinity, // Match the width of the input fields
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // Add your Microsoft sign-up logic here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(
-                        0xFFFFFFFF,
-                      ), // Dark background for Microsoft button
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    icon: Image.asset(
-                      'assets/images/apple_logo_transparent.png', // Replace with your Microsoft logo asset
-                      height: 20,
-                    ),
-                    label: Text(
-                      'Login with Apple',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ), // White text for contrast
-                    ),
-                  ),
-                ),
                 SizedBox(height: 15),
                 Text(
                   '© 2025 SMARTI&E',

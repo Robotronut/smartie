@@ -1,7 +1,44 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:smartie/login_screen.dart';
 
-class BankVerifyScreen extends StatelessWidget {
-  const BankVerifyScreen({super.key});
+class BankVerifyScreen extends StatefulWidget {
+  @override
+  _BankVerifyScreenState createState() => _BankVerifyScreenState();
+}
+
+class _BankVerifyScreenState extends State<BankVerifyScreen> {
+
+  String _text = 'We are verifying your bank details';
+  int _dotCount = 0;
+  late Timer _timer;
+
+  @override
+  void initState(){
+    super.initState();
+
+    //Delay for 3s
+    Future.delayed(Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(builder: (context) => LoginScreen())
+      );
+    });
+
+    // Loading dots animation
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+        _dotCount = (_dotCount + 1) % 4;
+        _text = 'We are verifying your bank details' + '.' * _dotCount;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -24,7 +61,7 @@ class BankVerifyScreen extends StatelessWidget {
                 Padding(padding: EdgeInsets.all(48.0)),
                 
                 Text(
-                  "We are connecting to your bank...",
+                  _text,
                   style: TextStyle(fontSize: 16.0),
                   textAlign: TextAlign.center,
                 ),

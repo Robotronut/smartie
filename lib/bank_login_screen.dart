@@ -213,32 +213,32 @@ class _BankLoginScreenState extends State<BankLoginScreen> {
                               ),
                             ),
                         SizedBox(height: 15),
-                        // Sign up text
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Navigate to the forgot password page
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => ForgotpasswordScreen(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color:
-                                      Colors.grey, // Color for the sign-up link
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // // Sign up text
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         // Navigate to the forgot password page
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //             builder:
+                        //                 (context) => ForgotpasswordScreen(),
+                        //           ),
+                        //         );
+                        //       },
+                        //       child: Text(
+                        //         'Forgot Password?',
+                        //         style: TextStyle(
+                        //           color:
+                        //               Colors.grey, // Color for the sign-up link
+                        //           fontWeight: FontWeight.bold,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

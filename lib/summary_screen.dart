@@ -79,7 +79,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
     debt = 100 + rand.nextInt(300);       
     mdi = 200 + rand.nextInt(600); 
     installment = 200 + rand.nextInt(600); 
-    total_outstanding = 1500 + rand.nextInt(500);
+    total_outstanding = 5000 + rand.nextInt(500);
 
     // For chart percentages
     List<double> rawValues = List.generate(5, (_) => rand.nextDouble());
@@ -158,7 +158,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 )
             )],
       ),
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          labelTextStyle: WidgetStateProperty.all(
+            TextStyle(fontSize: MediaQuery.of(context).size.width * 0.03),
+          ),
+        ), 
+        child: NavigationBar(
                       destinations: [
                         NavigationDestination(
                           icon: Icon(Icons.grid_view), 
@@ -192,6 +198,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                       // labelBehavior: onlyShowSelected,
                       // animationDuration: Duration(ms: 1000),
                     ),
+        ),
       body: <Widget>[Center(
         child: SingleChildScrollView(
           child: Column(

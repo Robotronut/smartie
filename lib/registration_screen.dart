@@ -328,17 +328,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   items:
                       [
-                            "💰 Help Budgeting",
-                            "📅 Build a Repayment Plan",
-                            "🧾 Apply for Low-Income Support",
-                            "🧑‍💼 Apply for Credit",
-                            "🏠 Get Help with Renting",
+                            "Help Budgeting",
+                            "Build a Repayment Plan",
+                            "Apply for Low-Income Support",
+                            "Apply for Credit",
+                            "Get Help with Renting",
                             "Plan for a Major Life Change",
                             "Start University or Leave Home with Confidence",
-                            "💡 Increase Your Income / Understand Your Benefits",
-                            "🌍 Newcomer to Canada",
-                            "🗂️ Prepare for Credit Counseling",
-                            "⚖️ Prepare for Insolvency",
+                            "Increase Your Income / Understand Your Benefits",
+                            "Newcomer to Canada",
+                            "Prepare for Credit Counseling",
+                            "Prepare for Insolvency",
                           ]
                           .map(
                             (reason) => DropdownMenuItem(

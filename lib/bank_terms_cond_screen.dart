@@ -89,39 +89,29 @@ class _BankTermsCondScreenState extends State<BankTermsCondScreen> {
                     ),
                   ),
 
-                  Padding(padding: EdgeInsets.all(16.0)),
+                  Padding(padding: EdgeInsets.all(8.0)),
 
-                  //Submit Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () {
-                        if (_isChecked) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const BanksSelectionScreen())
-                          );
-                      } else if (!_isChecked) {
-                          // Show a warning if checkbox is not checked
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('You must agree to the terms before proceeding.'), backgroundColor: Colors.red),
-                          );
-                        }
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: _isChecked ? const Color.fromRGBO(0, 162, 233, 1) : Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Text(
-                        "Continue",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => TermsAndCondPopUp())
+                      );
+                    }, 
+                    child: Text(
+                      "View Terms and Conditions",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: const Color.fromRGBO(0, 162, 233, 1),
+                        decoration: TextDecoration.underline,
+                        decorationColor: const Color.fromRGBO(0, 162, 233, 1),
+                        decorationThickness: 2.0,
+                        fontWeight: FontWeight.bold,
+                        )
+                      )
                   ),
 
-                  Padding(padding: EdgeInsets.all(56.0)),
+                  Padding(padding: EdgeInsets.all(12.0)),
 
                   //Truth Verification Agreement Checkbox
                   Row(
@@ -164,26 +154,37 @@ class _BankTermsCondScreenState extends State<BankTermsCondScreen> {
                   ],
                 ),
 
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => TermsAndCondPopUp())
-                      );
-                    }, 
-                    child: Text(
-                      "View Terms and Conditions",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: const Color.fromRGBO(0, 162, 233, 1),
-                        decoration: TextDecoration.underline,
-                        decorationColor: const Color.fromRGBO(0, 162, 233, 1),
-                        decorationThickness: 2.0,
-                        fontWeight: FontWeight.bold,
-                        )
-                      )
-                  ),
+                Padding(padding: EdgeInsets.all(8.0)),
 
+                //Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () {
+                      if (_isChecked) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const BanksSelectionScreen())
+                        );
+                    } else if (!_isChecked) {
+                        // Show a warning if checkbox is not checked
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('You must agree to the terms before proceeding.'), backgroundColor: Colors.red),
+                        );
+                      }
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: _isChecked ? const Color.fromRGBO(0, 162, 233, 1) : Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
+                    child: Text(
+                      "Continue",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
                 ],
               ),
             ),
