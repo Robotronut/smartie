@@ -282,7 +282,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       filled: true,
                       contentPadding: EdgeInsets.symmetric(vertical: 5.0),
                       fillColor:
-                          _creditorInvite ? Colors.transparent : Colors.grey,
+                          _creditorInvite ? Colors.transparent : Color.fromRGBO(128, 128, 128, 0.5),
                       border: OutlineInputBorder(),
                     ),
                     dropdownMenuEntries: entries(),

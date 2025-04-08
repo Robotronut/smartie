@@ -176,7 +176,7 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => IDScannerScreen(verifyIdType: _selectedVerificationId),
+                            builder: (context) => IDScannerScreen(verifyIdType: _selectedVerificationId)
                           ),
                         );
                       },

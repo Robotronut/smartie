@@ -95,52 +95,52 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
       MaterialPageRoute(builder: (context) => const VerificationSelfiePage()),
     );
     return;
-    try {
-      Uint8List imageBytes = await imageFile.readAsBytes();
-      String base64Image = base64Encode(imageBytes);
+    // try {
+    //   Uint8List imageBytes = await imageFile.readAsBytes();
+    //   String base64Image = base64Encode(imageBytes);
 
-      var response = await http.post(
-        Uri.parse(
-          'https://mic.thegwd.ca/test/api/uploadphoto',
-        ), // Replace with your API endpoint
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'ImageData': base64Image}),
-      );
+    //   var response = await http.post(
+    //     Uri.parse(
+    //       'https://mic.thegwd.ca/test/api/uploadphoto',
+    //     ), // Replace with your API endpoint
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: jsonEncode({'ImageData': base64Image}),
+    //   );
 
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => VerificationSelfiePage()),
-          (Route<dynamic> route) => false, // Remove all existing routes
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('API Error: ${response.statusCode}')),
-        );
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
-          (Route<dynamic> route) => false,
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
-        (Route<dynamic> route) => false,
-      );
-    } finally {
-      setState(() {
-        _isProcessing = false;
-        _image = null;
-      });
-    }
+    //   if (response.statusCode == 200) {
+    //     print(response.statusCode);
+    //     Navigator.pushAndRemoveUntil(
+    //       context,
+    //       MaterialPageRoute(builder: (context) => VerificationSelfiePage()),
+    //       (Route<dynamic> route) => false, // Remove all existing routes
+    //     );
+    //   } else {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('API Error: ${response.statusCode}')),
+    //     );
+    //     Navigator.pushAndRemoveUntil(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const VerificationIdBackPage(),
+    //       ),
+    //       (Route<dynamic> route) => false,
+    //     );
+    //   }
+    // } catch (e) {
+    //   ScaffoldMessenger.of(
+    //     context,
+    //   ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    //   Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+    //     (Route<dynamic> route) => false,
+    //   );
+    // } finally {
+    //   setState(() {
+    //     _isProcessing = false;
+    //     _image = null;
+    //   });
+    // }
   }
 
   @override
@@ -149,7 +149,7 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
     screenHeight = MediaQuery.sizeOf(context).height;
     print("IDScannerScreen: build called");
     return Scaffold(
-      appBar: AppBar(title: Text('Scan ID')),
+      appBar: AppBar(title: Text('Scan Back of ID')),
       body:
           _camerasLoaded
               ? FutureBuilder<void>(

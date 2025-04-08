@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:smartie/bank_terms_cond_screen.dart';
+import 'package:smartie/verification_id_back.dart';
+import 'package:smartie/verification_start_page.dart';
 import 'login_screen.dart';
 
 Future<void> main() async {
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      home: BankTermsCondScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:smartie/id_scanner_front.dart';
 import 'package:smartie/id_scannner_back.dart';
 import 'package:smartie/home_screen.dart';
+import 'package:smartie/verification_selfie_page.dart';
 
 class VerificationIdBackPage extends StatelessWidget {
-  const VerificationIdBackPage({super.key});
+  const VerificationIdBackPage({super.key, required this.idType});
+  final String idType;
 
   @override
   Widget build(BuildContext context) {
@@ -73,71 +75,59 @@ class VerificationIdBackPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Container(
-                    /* decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 236, 235, 235),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ), */
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        spacing: 20.0,
-                        children: [
-                          Center(
-                            child: Text(
-                              "Well that looks successful, next step",
-                              style: TextStyle(
-                                color: const Color.fromRGBO(0, 162, 233, 1),
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      spacing: 20.0,
+                      children: [
+                        Center(
+                          child: Text(
+                            "Well that looks successful, next step",
+                            style: TextStyle(
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
                             ),
+                            textAlign: TextAlign.center,
                           ),
+                        ),
 
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.check_box_outlined,
-                                color: const Color.fromRGBO(0, 162, 233, 1),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check_box_outlined,
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                            ),
+                            Padding(padding: EdgeInsets.all(4.0)),
+                            Expanded(
+                              child: Text(
+                                "Using the same Id, turn it over so we can capture the other side.",
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.start,
                               ),
-                              Padding(padding: EdgeInsets.all(4.0)),
-                              Expanded(
-                                child: Text(
-                                  "Using the same Id, turn it over so we can capture the other side.",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
 
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.check_box_outlined,
-                                color: const Color.fromRGBO(0, 162, 233, 1),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check_box_outlined,
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                            ),
+                            Padding(padding: EdgeInsets.all(4.0)),
+                            Expanded(
+                              child: Text(
+                                "Make sure you are in a well-lit place",
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.start,
                               ),
-                              Padding(padding: EdgeInsets.all(4.0)),
-                              Expanded(
-                                child: Text(
-                                  "Make sure you are in a well-lit place",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
 
@@ -164,6 +154,32 @@ class VerificationIdBackPage extends StatelessWidget {
                       child: Text(
                         "Start Now",
                         style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.only(top: 20)),
+
+                  Opacity(
+                    opacity: idType == "Passport" ? 1 : 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        // skip to selfie step
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => const VerificationSelfiePage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Using a passport without a back side? Click here to skip to the selfie step',
+                        style: TextStyle(
+                          color: Colors.cyan, // Color for the sign-up link
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),

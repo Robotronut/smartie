@@ -23,6 +23,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   bool _camerasLoaded = false; // Added this
   double screenWidth = 100;
   double screenHeight = 100;
+  String idType = "";
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   Future<void> _setupCamera() async {
     print("IDScannerScreen: Starting camera setup");
     print(widget.verifyIdType);
+    idType = widget.verifyIdType.toString();
     try {
       _cameras = await availableCameras();
       print("IDScannerScreen: Available cameras found");
@@ -90,54 +92,54 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
     });
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+      MaterialPageRoute(builder: (context) => VerificationIdBackPage(idType: idType)),
     );
     return;
-    try {
-      Uint8List imageBytes = await imageFile.readAsBytes();
-      String base64Image = base64Encode(imageBytes);
+    // try {
+    //   Uint8List imageBytes = await imageFile.readAsBytes();
+    //   String base64Image = base64Encode(imageBytes);
 
-      var response = await http.post(
-        Uri.parse(
-          'https://mic.thegwd.ca/test/api/uploadphoto',
-        ), // Replace with your API endpoint
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'ImageData': base64Image}),
-      );
+    //   var response = await http.post(
+    //     Uri.parse(
+    //       'https://mic.thegwd.ca/test/api/uploadphoto',
+    //     ), // Replace with your API endpoint
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: jsonEncode({'ImageData': base64Image}),
+    //   );
 
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('API Error: ${response.statusCode}')),
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
-      );
-    } finally {
-      setState(() {
-        _isProcessing = false;
-        _image = null;
-      });
-    }
+    //   if (response.statusCode == 200) {
+    //     print(response.statusCode);
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const VerificationIdBackPage(),
+    //       ),
+    //     );
+    //   } else {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('API Error: ${response.statusCode}')),
+    //     );
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const VerificationIdBackPage(),
+    //       ),
+    //     );
+    //   }
+    // } catch (e) {
+    //   ScaffoldMessenger.of(
+    //     context,
+    //   ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+    //   );
+    // } finally {
+    //   setState(() {
+    //     _isProcessing = false;
+    //     _image = null;
+    //   });
+    // }
   }
 
   @override
@@ -146,7 +148,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
     screenHeight = MediaQuery.sizeOf(context).height;
     print("IDScannerScreen: build called");
     return Scaffold(
-      appBar: AppBar(title: Text('Scan ID')),
+      appBar: AppBar(title: Text('Scan Front of ID')),
       body:
           _camerasLoaded
               ? FutureBuilder<void>(
