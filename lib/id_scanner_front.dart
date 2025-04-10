@@ -23,6 +23,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   bool _camerasLoaded = false; // Added this
   double screenWidth = 100;
   double screenHeight = 100;
+  String idType = "";
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
   Future<void> _setupCamera() async {
     print("IDScannerScreen: Starting camera setup");
     print(widget.verifyIdType);
+    idType = widget.verifyIdType.toString();
     try {
       _cameras = await availableCameras();
       print("IDScannerScreen: Available cameras found");
@@ -90,54 +92,60 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
     });
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+      MaterialPageRoute(
+        builder: (context) => VerificationIdBackPage(idType: idType),
+      ),
     );
+    setState(() {
+      _isProcessing = false;
+      _image = null;
+    });
     return;
-    try {
-      Uint8List imageBytes = await imageFile.readAsBytes();
-      String base64Image = base64Encode(imageBytes);
+    // try {
+    //   Uint8List imageBytes = await imageFile.readAsBytes();
+    //   String base64Image = base64Encode(imageBytes);
 
-      var response = await http.post(
-        Uri.parse(
-          'https://mic.thegwd.ca/test/api/uploadphoto',
-        ), // Replace with your API endpoint
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'ImageData': base64Image}),
-      );
+    //   var response = await http.post(
+    //     Uri.parse(
+    //       'https://mic.thegwd.ca/test/api/uploadphoto',
+    //     ), // Replace with your API endpoint
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: jsonEncode({'ImageData': base64Image}),
+    //   );
 
-      if (response.statusCode == 200) {
-        print(response.statusCode);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('API Error: ${response.statusCode}')),
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const VerificationIdBackPage(),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
-      );
-    } finally {
-      setState(() {
-        _isProcessing = false;
-        _image = null;
-      });
-    }
+    //   if (response.statusCode == 200) {
+    //     print(response.statusCode);
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const VerificationIdBackPage(),
+    //       ),
+    //     );
+    //   } else {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('API Error: ${response.statusCode}')),
+    //     );
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const VerificationIdBackPage(),
+    //       ),
+    //     );
+    //   }
+    // } catch (e) {
+    //   ScaffoldMessenger.of(
+    //     context,
+    //   ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const VerificationIdBackPage()),
+    //   );
+    // } finally {
+    //   setState(() {
+    //     _isProcessing = false;
+    //     _image = null;
+    //   });
+    // }
   }
 
   @override
@@ -146,7 +154,7 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
     screenHeight = MediaQuery.sizeOf(context).height;
     print("IDScannerScreen: build called");
     return Scaffold(
-      appBar: AppBar(title: Text('Scan ID')),
+      appBar: AppBar(title: Text('Scan Front of ID')),
       body:
           _camerasLoaded
               ? FutureBuilder<void>(
@@ -202,40 +210,13 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
                                     left: 10.0,
                                     top: 5.0,
                                   ),
-                                  height: 130,
+                                  height: 100,
                                   width: screenWidth,
                                   color: Colors.white,
                                   child: Text(
                                     "Are you happy with this picture?",
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 65,
-                                left: 15,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ConstrainedBox(
-                                      // Wrap the Flexible with ConstrainedBox
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                            20,
-                                      ), // Adjust maxWidth as needed
-                                      child: Flexible(
-                                        child: Text(
-                                          "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontStyle: FontStyle.italic,
-                                            fontSize: 10.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
                                 ),
                               ),
                               Positioned(

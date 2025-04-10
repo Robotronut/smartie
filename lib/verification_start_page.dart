@@ -10,8 +10,11 @@ class VerificationStartPage extends StatefulWidget {
 }
 
 class _VerificationStartPageState extends State<VerificationStartPage> {
-
   String _selectedVerificationId = "Driver's License";
+  double deviceHeight(BuildContext context) =>
+      MediaQuery.of(context).size.height;
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +28,8 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 64.0,
-                bottom: 24.0,
+                top: deviceHeight(context) * 0.05,
+                bottom: deviceHeight(context) * 0.03,
                 left: 28.0,
                 right: 28.0,
               ),
@@ -38,7 +41,9 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.08)),
+                  Padding(
+                    padding: EdgeInsets.all(deviceHeight(context) * 0.025),
+                  ),
 
                   FractionallySizedBox(
                     alignment: Alignment.center,
@@ -73,68 +78,72 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
             Padding(
               padding: EdgeInsets.only(
                 top: 0.0,
-                bottom: 16.0,
+                bottom: deviceHeight(context) * 0.01,
                 left: 16.0,
                 right: 16.0,
               ),
               child: Column(
                 children: [
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        spacing: 20.0,
-                        children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "You will need:",
-                                style: TextStyle(
-                                  color: const Color.fromRGBO(0, 162, 233, 1),
-                                  fontSize: 14.0,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 16.0,
+                      right: 16.0,
+                      bottom: 4.0,
+                    ),
+                    child: Column(
+                      spacing: 20.0,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "You will need:",
+                            style: TextStyle(
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                              fontSize: 14.0,
 
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check_box_outlined,
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                            ),
+                            Padding(padding: EdgeInsets.all(4.0)),
+                            Expanded(
+                              child: Text(
+                                "A valid government-issued ID (Driver's license or passport)",
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.start,
                               ),
                             ),
+                          ],
+                        ),
 
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.check_box_outlined,
-                                color: const Color.fromRGBO(0, 162, 233, 1),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check_box_outlined,
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                            ),
+                            Padding(padding: EdgeInsets.all(4.0)),
+                            Expanded(
+                              child: Text(
+                                "Make sure you are in a well-lit place",
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.start,
                               ),
-                              Padding(padding: EdgeInsets.all(4.0)),
-                              Expanded(
-                                child: Text(
-                                  "A valid government-issued ID (Driver's license or passport)",
-                                  style: TextStyle(fontSize: 14.0),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.check_box_outlined,
-                                color: const Color.fromRGBO(0, 162, 233, 1),
-                              ),
-                              Padding(padding: EdgeInsets.all(4.0)),
-                              Expanded(
-                                child: Text(
-                                  "Make sure you are in a well-lit place",
-                                  style: TextStyle(fontSize: 14.0),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
+                  ),
 
                   Padding(padding: EdgeInsets.all(8.0)),
 
@@ -159,14 +168,29 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
                               )
                               .toList(),
                       onChanged: (value) {
-                          setState(() {
-                            _selectedVerificationId = value!;
-                          });
+                        setState(() {
+                          _selectedVerificationId = value!;
+                        });
                       },
-                    )
+                    ),
                   ),
 
-                  Padding(padding: EdgeInsets.all(8.0)),
+                  Padding(padding: EdgeInsets.all(deviceHeight(context) * 0.01)),
+
+                  FractionallySizedBox(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0, // Same width as the first text
+                    child: Text(
+                      "Please note: Verification pictures will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(255, 69, 69, 1),
+                        fontSize: 14.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  Padding(padding: EdgeInsets.all(deviceHeight(context) * 0.01)),
 
                   //Submit Button
                   SizedBox(
@@ -176,7 +200,10 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => IDScannerScreen(verifyIdType: _selectedVerificationId),
+                            builder:
+                                (context) => IDScannerScreen(
+                                  verifyIdType: _selectedVerificationId,
+                                ),
                           ),
                         );
                       },
@@ -211,22 +238,19 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
                   Padding(padding: EdgeInsets.all(4.0)),
 
                   GestureDetector(
-                      onTap: () {
-                        // open web page
-                        launch(
-                          'https://benefitswayfinder.org/',
-                          isNewTab: true,
-                        );
-                      },
-                      child: Text(
-                        'Click here to learn more',
-                        style: TextStyle(
-                          color: Colors.cyan, // Color for the sign-up link
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
+                    onTap: () {
+                      // open web page
+                      launch('https://benefitswayfinder.org/', isNewTab: true);
+                    },
+                    child: Text(
+                      'Click here to learn more',
+                      style: TextStyle(
+                        color: Colors.cyan, // Color for the sign-up link
+                        fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
                     ),
+                  ),
                 ],
               ),
             ),
@@ -235,6 +259,7 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
       ),
     );
   }
+
   Future<void> launch(String url, {bool isNewTab = true}) async {
     await launchUrl(
       Uri.parse(url),
