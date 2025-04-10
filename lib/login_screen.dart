@@ -91,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.white, toolbarHeight: 1),
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color.fromARGB(255, 3, 24, 56),
       body: SafeArea(

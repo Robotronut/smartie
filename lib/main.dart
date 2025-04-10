@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smartie/bank_terms_cond_screen.dart';
 import 'package:smartie/verification_id_back.dart';
 import 'package:smartie/verification_start_page.dart';
@@ -8,6 +9,11 @@ import 'login_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en', 'US'), Locale('fr', 'FR')],

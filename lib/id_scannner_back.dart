@@ -94,6 +94,10 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
       context,
       MaterialPageRoute(builder: (context) => const VerificationSelfiePage()),
     );
+    setState(() {
+      _isProcessing = false;
+      _image = null;
+    });
     return;
     // try {
     //   Uint8List imageBytes = await imageFile.readAsBytes();
@@ -205,40 +209,13 @@ class _IDScannerScreenIdBackState extends State<IDScannerIdBackScreen> {
                                     left: 10.0,
                                     top: 5.0,
                                   ),
-                                  height: 130,
+                                  height: 100,
                                   width: screenWidth,
                                   color: Colors.white,
                                   child: Text(
                                     "Are you happy with this picture?",
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 65,
-                                left: 15,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ConstrainedBox(
-                                      // Wrap the Flexible with ConstrainedBox
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                            20,
-                                      ), // Adjust maxWidth as needed
-                                      child: Flexible(
-                                        child: Text(
-                                          "This picture will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontStyle: FontStyle.italic,
-                                            fontSize: 10.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
                                 ),
                               ),
                               Positioned(

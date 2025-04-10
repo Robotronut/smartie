@@ -42,13 +42,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
     var entries = <DropdownMenuEntry<String>>[];
     entries.add(const DropdownMenuEntry(value: "RBC", label: "RBC"));
     entries.add(const DropdownMenuEntry(value: "TD", label: "TD"));
-       entries.add(const DropdownMenuEntry(value: "CIBC", label: "CIBC"));
+    entries.add(const DropdownMenuEntry(value: "CIBC", label: "CIBC"));
     entries.add(
       const DropdownMenuEntry(value: "Scotiabank", label: "Scotiabank"),
     );
     entries.add(const DropdownMenuEntry(value: "BMO", label: "BMO"));
     entries.add(const DropdownMenuEntry(value: "HSBC", label: "HSBC"));
-    entries.add(const DropdownMenuEntry(value: "ATB Financial", label: "ATB Financial"));
+    entries.add(
+      const DropdownMenuEntry(value: "ATB Financial", label: "ATB Financial"),
+    );
     entries.add(
       const DropdownMenuEntry(value: "Laurentian", label: "Laurentian"),
     );
@@ -129,7 +131,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                 ),
                 SizedBox(height: 10),
-                
+
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -137,13 +139,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                   ),
                 ),
-                
+
                 SizedBox(height: 10),
 
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
+                  decoration: InputDecoration(border: OutlineInputBorder()),
                   value: _selectedCommunicationMode,
                   items:
                       ["Email", "Mobile Phone"]
@@ -155,9 +155,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           )
                           .toList(),
                   onChanged: (value) {
-                      setState(() {
-                        _selectedCommunicationMode = value!;
-                      });
+                    setState(() {
+                      _selectedCommunicationMode = value!;
+                    });
                   },
                 ),
 
@@ -165,48 +165,49 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                 Column(
                   children: [
-                    _selectedCommunicationMode == 'Email' ? 
-                    // Email Input
-                    TextFormField(
-                      controller: _emailController,
-                      focusNode: _emailFocusNode,
-                      decoration: InputDecoration(
-                        labelText: 'Your Email',
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Enter a valid email';
-                        }
-                        isEmailValidated = true;
-                        return null;
-                      },
-                    )
-
-                    :
-
-                    // Mobile Number Input
-                    IntlPhoneField(
-                      controller: _phoneController,
-                      focusNode: _phoneFocusNode,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        label: Text(
-                          "Enter phone number",
-                          style: TextStyle(fontSize: 14.0),
+                    _selectedCommunicationMode == 'Email'
+                        ?
+                        // Email Input
+                        TextFormField(
+                          controller: _emailController,
+                          focusNode: _emailFocusNode,
+                          decoration: InputDecoration(
+                            labelText: 'Your Email',
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            if (!RegExp(
+                              r'^[^@]+@[^@]+\.[^@]+',
+                            ).hasMatch(value)) {
+                              return 'Enter a valid email';
+                            }
+                            isEmailValidated = true;
+                            return null;
+                          },
+                        )
+                        :
+                        // Mobile Number Input
+                        IntlPhoneField(
+                          controller: _phoneController,
+                          focusNode: _phoneFocusNode,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            label: Text(
+                              "Enter phone number",
+                              style: TextStyle(fontSize: 14.0),
+                            ),
+                            // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+                          ),
+                          initialCountryCode: 'CA',
+                          showCountryFlag: false,
+                          onChanged: (phone) {
+                            print("phone pressed $phone");
+                            isPhoneValidated = true;
+                          },
                         ),
-                        // contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-                      ),
-                      initialCountryCode: 'CA',
-                      showCountryFlag: false,
-                      onChanged: (phone) {
-                        print("phone pressed $phone");
-                        isPhoneValidated = true;
-                      },
-                    ),
                   ],
                 ),
 
@@ -282,7 +283,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       filled: true,
                       contentPadding: EdgeInsets.symmetric(vertical: 5.0),
                       fillColor:
-                          _creditorInvite ? Colors.transparent : Color.fromRGBO(128, 128, 128, 0.5),
+                          _creditorInvite
+                              ? Colors.transparent
+                              : Color.fromRGBO(128, 128, 128, 0.5),
                       border: OutlineInputBorder(),
                     ),
                     dropdownMenuEntries: entries(),
@@ -322,6 +325,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 DropdownButtonFormField<String>(
                   isExpanded: true,
                   value: _selectedReason,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                    fontFamily: "Galano",
+                  ),
                   decoration: InputDecoration(
                     labelText: 'How can Smarti&e help you today?',
                     border: OutlineInputBorder(),
@@ -334,8 +342,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             "Apply for Credit",
                             "Get Help with Renting",
                             "Plan for a Major Life Change",
-                            "Start University or Leave Home with Confidence",
-                            "Increase Your Income / Understand Your Benefits",
+                            "Start University",
+                            "Leave Home with Confidence",
+                            "Increase Your Income",
+                            "Understand Your Benefits",
                             "Newcomer to Canada",
                             "Prepare for Credit Counseling",
                             "Prepare for Insolvency",
@@ -409,7 +419,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: FilledButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate() &
-                          _isChecked & (isEmailValidated | isPhoneValidated)) {
+                          _isChecked &
+                          (isEmailValidated | isPhoneValidated)) {
                         // Handle form submission
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -432,7 +443,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         );
                         _nameFocusNode.requestFocus();
-                      } else if (_selectedCommunicationMode == "Email" && !isEmailValidated) {
+                      } else if (_selectedCommunicationMode == "Email" &&
+                          !isEmailValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -441,7 +453,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         );
                         _emailFocusNode.requestFocus();
-                      } else if (_selectedCommunicationMode == "Mobile Phone" && !isPhoneValidated) {
+                      } else if (_selectedCommunicationMode == "Mobile Phone" &&
+                          !isPhoneValidated) {
                         // Show a warning if phone is not validated
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

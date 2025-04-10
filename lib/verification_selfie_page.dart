@@ -6,6 +6,10 @@ import 'package:smartie/home_screen.dart';
 
 class VerificationSelfiePage extends StatelessWidget {
   const VerificationSelfiePage({super.key});
+  double deviceHeight(BuildContext context) =>
+      MediaQuery.of(context).size.height;
+
+  double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +23,8 @@ class VerificationSelfiePage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 24.0,
-                bottom: 4.0,
+                top: deviceHeight(context) * 0.04,
+                bottom: deviceHeight(context) * 0.01,
                 left: 18.0,
                 right: 18.0,
               ),
@@ -32,7 +36,7 @@ class VerificationSelfiePage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(4.0)),
+                  Padding(padding: EdgeInsets.all(deviceHeight(context) * 0.02)),
 
                   FractionallySizedBox(
                     alignment: Alignment.center,
@@ -47,7 +51,7 @@ class VerificationSelfiePage extends StatelessWidget {
                     ),
                   ),
 
-                  Padding(padding: EdgeInsets.all(8.0)),
+                  Padding(padding: EdgeInsets.all(deviceHeight(context) * 0.01)),
 
                   FractionallySizedBox(
                     alignment: Alignment.center,
@@ -79,8 +83,8 @@ class VerificationSelfiePage extends StatelessWidget {
 
             Padding(
               padding: EdgeInsets.only(
-                top: 10.0,
-                bottom: 6.0,
+                top: deviceHeight(context) * 0.01,
+                bottom: deviceHeight(context) * 0.01,
                 left: 6.0,
                 right: 6.0,
               ),
@@ -180,7 +184,7 @@ class VerificationSelfiePage extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Start Now",
+                          "Take Selfie",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
