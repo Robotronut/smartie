@@ -52,7 +52,7 @@ class _BankTermsCondScreenState extends State<BankTermsCondScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(48.0)),
+                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1)),
 
                   Icon(
                     Icons.lock_outline_rounded,

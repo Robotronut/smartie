@@ -38,7 +38,7 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
                     width: MediaQuery.of(context).size.width * 0.7,
                   ),
 
-                  Padding(padding: EdgeInsets.all(24.0)),
+                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.08)),
 
                   FractionallySizedBox(
                     alignment: Alignment.center,

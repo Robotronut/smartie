@@ -1067,12 +1067,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     SizedBox(
                       width: double.infinity, 
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(
-                            context,
-                            MaterialPageRoute(builder: (context) => SummaryScreen())
-                          );
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
                           padding: EdgeInsets.symmetric(vertical: 15),
