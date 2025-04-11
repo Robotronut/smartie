@@ -329,10 +329,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     labelText: 'How can Smarti&e help you today?',
                     border: OutlineInputBorder(),
                   ),
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.037,
-                    color: Colors.black
-                  ),
                   items:
                       [
                             "Help Budgeting",
