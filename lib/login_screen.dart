@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+  bool _pwdVisible = false;
 
   // Function to validate credentials
   Future<void> _validateAndLogin() async {
@@ -154,10 +155,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 15),
                         TextFormField(
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText: !_pwdVisible,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             border: OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _pwdVisible = !_pwdVisible;
+                                });
+                              }, 
+                              icon: Icon(_pwdVisible ? Icons.visibility : Icons.visibility_off)
+                              )
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {

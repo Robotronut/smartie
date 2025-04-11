@@ -325,11 +325,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 DropdownButtonFormField<String>(
                   isExpanded: true,
                   value: _selectedReason,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontFamily: "Galano",
-                  ),
                   decoration: InputDecoration(
                     labelText: 'How can Smarti&e help you today?',
                     border: OutlineInputBorder(),

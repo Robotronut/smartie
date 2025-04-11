@@ -2,44 +2,60 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smartie/login_screen.dart';
 
+
 class BankVerifyScreen extends StatefulWidget {
   @override
   _BankVerifyScreenState createState() => _BankVerifyScreenState();
 }
 
-class _BankVerifyScreenState extends State<BankVerifyScreen> {
-
-  String _text = 'We are verifying your bank details';
-  int _dotCount = 0;
-  late Timer _timer;
+class _BankVerifyScreenState extends State<BankVerifyScreen> with TickerProviderStateMixin {
+  bool isVerified = false;
+  late AnimationController _controller;
+  late Animation<double> _progressAnimation;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    //Delay for 3s
-    Future.delayed(Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context, 
-        MaterialPageRoute(builder: (context) => LoginScreen())
-      );
-    });
+    super.initState();
 
-    // Loading dots animation
-    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    // Initialize the AnimationController with the TickerProviderStateMixin
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )
+      ..addListener(() {
+        setState(() {});  // Rebuild the widget whenever the animation value changes
+      })
+      ..repeat();  // This makes the animation repeat indefinitely without reversing
+
+    // After 5 seconds, mark as verified
+    Timer(Duration(seconds: 5), () {
       setState(() {
-        _dotCount = (_dotCount + 1) % 4;
-        _text = 'We are verifying your bank details' + '.' * _dotCount;
+        isVerified = true;
       });
     });
+
+    // Initialize the progress animation to animate from 0.0 to 1.0
+    _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.linear),
+    );
+
+    // After 5 seconds, mark as verified
+    Timer(Duration(seconds: 5), () {
+      setState(() {
+        isVerified = true;
+      });
+    });
+
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    _controller.dispose(); // Dispose of the animation controller to avoid memory leaks
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,14 +75,6 @@ class _BankVerifyScreenState extends State<BankVerifyScreen> {
                 ),
 
                 Padding(padding: EdgeInsets.all(48.0)),
-                
-                Text(
-                  _text,
-                  style: TextStyle(fontSize: 16.0),
-                  textAlign: TextAlign.center,
-                ),
-
-                 Padding(padding: EdgeInsets.all(24.0)),
 
                 Text(
                   "Did you know?",
