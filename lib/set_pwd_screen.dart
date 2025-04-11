@@ -39,7 +39,7 @@ class _SetPwdScreenState extends State<SetPwdScreen> {
                 Column(
                   children: [
                     Text(
-                    "Verify Your Email/Phone Number",
+                    "Verify Your\nEmail/Phone Number",
                     style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
@@ -138,7 +138,7 @@ class _SetPwdScreenState extends State<SetPwdScreen> {
                     FractionallySizedBox(
                       widthFactor: 0.95,
                       child: Text(
-                        "Set a strong password (6–12 characters) using letters, numbers, and symbols like @ _ #",
+                        "Set a strong password (6–12 characters) using letters, numbers,\n and symbols (e.g., @ \$ _ #)",
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Colors.blueGrey

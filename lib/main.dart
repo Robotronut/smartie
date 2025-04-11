@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:smartie/bank_terms_cond_screen.dart';
 import 'package:smartie/verification_id_back.dart';
 import 'package:smartie/verification_start_page.dart';
+import 'package:smartie/set_pwd_screen.dart';
 import 'login_screen.dart';
 
 Future<void> main() async {
