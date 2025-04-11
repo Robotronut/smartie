@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smartie/login_screen.dart';
+import 'package:smartie/set_pwd_screen.dart';
 
 
 class BankVerifyScreen extends StatefulWidget {
@@ -146,7 +147,7 @@ class _BankVerifyScreenState extends State<BankVerifyScreen> with TickerProvider
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) => SetPwdScreen(),
                           ),
                         );
                       },

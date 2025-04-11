@@ -21,12 +21,16 @@ class Message {
 }
 
 class MessageProvider with ChangeNotifier {
-  List<Message> _messages = [Message("Hello! Please let me know how I can help you today.")];
+  List<Message> _messages = [
+    Message("Hello! Please let me know how I can help you today."),
+  ];
 
   List<Message> get messages => _messages;
 
-  void addMessage(String text) {
+  Future<void> addMessage(String text) async {
     _messages.add(Message(text));
+    notifyListeners();
+    await Future.delayed(const Duration(seconds: 1));
     _messages.add(Message("Thank you. Please tell me more."));
     notifyListeners();
   }
@@ -1391,29 +1395,32 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
                             Padding(padding: EdgeInsets.all(10.0)),
 
-                    SizedBox(
-                      width: double.infinity, 
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: Text(
-                          'Share SMARTI&E Report',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ), 
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromRGBO(
+                                    0,
+                                    162,
+                                    233,
+                                    1,
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Share SMARTI&E Report',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                )
-                )
-              ),
 
                     Padding(padding: EdgeInsets.all(10.0)),
                   ],
@@ -1421,9 +1428,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
               ),
             ),
 
-            Center(child: MessageWidget()),
+            Center(child: Text("Page Coming Soon.")),
 
-            Center(child: Text("Page Coming Soon")),
+            Center(child: MessageWidget()),
 
             Center(child: Text("Page Coming Soon")),
 
