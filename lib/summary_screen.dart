@@ -1371,7 +1371,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             Padding(padding: EdgeInsets.all(8.0)),
 
                             Text(
-                              'Share the creditor you\'d like to share your SMARTIE report with. THis list has been automatically populated based on your connected accounts.',
+                              'Share the creditor you\'d like to share your SMARTIE report with. This list has been automatically populated based on your connected accounts.',
                               style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.grey,
