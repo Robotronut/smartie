@@ -84,7 +84,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome to SMARTI&E'),
+        title: Text('Welcome'),
         backgroundColor: Color(0xFF008FD7), // Same color as the login button
       ),
       body: SingleChildScrollView(

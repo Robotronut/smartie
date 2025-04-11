@@ -81,7 +81,7 @@ class _BankVerifyScreenState extends State<BankVerifyScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 16.0, bottom: 64.0, left: 36.0, right: 36.0),
                   child: Text(
-                    "Did you know that by using SMARTIE, you're joining the 49% of Canadians who seek financial advice to enhance their financial well-being?",
+                    "Did you know that by using SMARTI&E, you're joining the 49% of Canadians who seek financial advice to enhance their financial well-being?",
                     style: TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
@@ -90,10 +90,71 @@ class _BankVerifyScreenState extends State<BankVerifyScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 36.0, right: 36.0),
                   child: Text(
-                    "Ready to take control? Let's do this!",
+                    "You’re all set—let’s dive into your personalised affordability dashboard and take control of your financial future.",
                     style: TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
+                ),
+
+                Padding(padding: EdgeInsets.all(24.0)),
+
+                !isVerified ?
+                  Column(
+                    children: [
+                      Text(
+                        "We are verifying your bank details.",
+                        style: TextStyle(fontSize: 16.0),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      Padding(padding: EdgeInsets.all(4.0)),
+
+                      LinearProgressIndicator(
+                        value: _progressAnimation.value,
+                        minHeight: 8,
+                        backgroundColor: Colors.blue[100],
+                        valueColor: AlwaysStoppedAnimation<Color>(const Color.fromRGBO(0, 162, 233, 1)),
+                      )
+                    ],
+                  ) :
+
+                  Column(
+                    children: [
+                      Text(
+                        "The verification was successful!",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      Padding(padding: EdgeInsets.all(4.0)),
+
+                      SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      child: Text(
+                        "Let's Go",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  ],
                 ),
 
                 Padding(padding: EdgeInsets.all(64.0)),

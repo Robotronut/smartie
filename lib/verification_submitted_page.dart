@@ -68,7 +68,7 @@ class VerificationSubmittedPage extends StatelessWidget {
                     Padding(padding: EdgeInsets.all(8.0)),
 
                     Text(
-                      "Your ID is confirmed — SMARTIE is ready when you are. Click Next to get started!",
+                      "Your ID is confirmed — SMARTI&E is ready when you are. Click Next to get started!",
                       style: TextStyle(fontSize: 14.0),
                       textAlign: TextAlign.center,
                     ),

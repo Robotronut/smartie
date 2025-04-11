@@ -21,7 +21,7 @@ class TermsAndCondPopUp extends StatelessWidget {
             spacing: 12.0,
             children: [
               Text(
-                "SMARTIE - Terms and Conditions for Bank Account Connection",
+                "SMARTI&E - Terms and Conditions for Bank Account Connection",
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24.0),
               ),
 
@@ -36,7 +36,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "By using SMARTIE and connecting your bank account, you agree to these Terms and Conditions. Please read them carefully. This process allows SMARTIE to access your financial data solely for providing personalized financial insights, affordability assessments, and tailored advice. No credit check will be conducted.",
+                "By using SMARTI&E and connecting your bank account, you agree to these Terms and Conditions. Please read them carefully. This process allows SMARTI&E to access your financial data solely for providing personalized financial insights, affordability assessments, and tailored advice. No credit check will be conducted.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -46,7 +46,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "You consent to allow SMARTIE to securely access your financial data from your connected bank account(s) to provide tailored insights and recommendations. This access is read-only and used solely for the purposes described in this agreement.",
+                "You consent to allow SMARTI&E to securely access your financial data from your connected bank account(s) to provide tailored insights and recommendations. This access is read-only and used solely for the purposes described in this agreement.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -56,7 +56,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "• SMARTIE will never store or share your banking credentials.\n• Your financial data will be accessed securely and used only to provide you with personalized insights, budgeting tools, and recommendations.\n• Your information will not be sold or shared with third parties without your explicit consent, unless required by law.",
+                "• SMARTI&E will never store or share your banking credentials.\n• Your financial data will be accessed securely and used only to provide you with personalized insights, budgeting tools, and recommendations.\n• Your information will not be sold or shared with third parties without your explicit consent, unless required by law.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -66,7 +66,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "Connecting your bank account with SMARTIE does not involve a credit check and will not affect your credit score in any way.",
+                "Connecting your bank account with SMARTI&E does not involve a credit check and will not affect your credit score in any way.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -76,7 +76,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "SMARTIE uses industry-standard encryption protocols to ensure that your data is transmitted and stored securely. We are committed to maintaining the highest standards of data protection.",
+                "SMARTI&E uses industry-standard encryption protocols to ensure that your data is transmitted and stored securely. We are committed to maintaining the highest standards of data protection.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -86,7 +86,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "You agree to provide accurate information and ensure that you have the authority to connect the bank accounts you choose to link with SMARTIE.",
+                "You agree to provide accurate information and ensure that you have the authority to connect the bank accounts you choose to link with SMARTI&E.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -96,7 +96,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "You may disconnect your bank account from SMARTIE at any time. Upon disconnection, SMARTIE will immediately cease access to your financial data.",
+                "You may disconnect your bank account from SMARTI&E at any time. Upon disconnection, SMARTI&E will immediately cease access to your financial data.",
                 style: TextStyle(fontSize: 14.0),
               ),
 
@@ -106,7 +106,7 @@ class TermsAndCondPopUp extends StatelessWidget {
               ),
 
               Text(
-                "SMARTIE reserves the right to modify these Terms and Conditions. Any changes will be communicated to you via the app, and your continued use of SMARTIE following such changes will constitute acceptance.",
+                "SMARTI&E reserves the right to modify these Terms and Conditions. Any changes will be communicated to you via the app, and your continued use of SMARTI&E following such changes will constitute acceptance.",
                 style: TextStyle(fontSize: 14.0),
               ),
 

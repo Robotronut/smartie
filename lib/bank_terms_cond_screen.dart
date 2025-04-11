@@ -80,7 +80,7 @@ class _BankTermsCondScreenState extends State<BankTermsCondScreen> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "By connecting your bank SmartI&E is able to give you accurate personalized insights, smarter recommendations, ans a clearer view of your finances - without impacting your credit score.",
+                      "By connecting your bank SmartI&E is able to give you accurate personalized insights, smarter recommendations, and a clearer view of your finances - without impacting your credit score.",
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14.0,

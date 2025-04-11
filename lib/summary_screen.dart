@@ -280,7 +280,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             ),
             NavigationDestination(
               icon: Icon(Icons.sentiment_very_satisfied_outlined),
-              label: "SMARTIE",
+              label: "SMARTI&E",
             ),
             NavigationDestination(
               icon: Icon(Icons.task_outlined),
@@ -710,7 +710,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             Divider(color: Colors.grey),
 
                             Text(
-                              'SMARTIE Summary',
+                              'SMARTI&E Summary',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w600,
@@ -1361,7 +1361,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             Padding(padding: EdgeInsets.all(8.0)),
 
                             Text(
-                              'Share Your SMARTIE Report',
+                              'Share Your SMARTI&E Report',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w600,
@@ -1371,7 +1371,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             Padding(padding: EdgeInsets.all(8.0)),
 
                             Text(
-                              'Share the creditor you\'d like to share your SMARTIE report with. THis list has been automatically populated based on your connected accounts.',
+                              'Share the creditor you\'d like to share your SMARTI&E report with. This list has been automatically populated based on your connected accounts.',
                               style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.grey,
@@ -1391,33 +1391,29 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
                             Padding(padding: EdgeInsets.all(10.0)),
 
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromRGBO(
-                                    0,
-                                    162,
-                                    233,
-                                    1,
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 15),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                child: Text(
-                                  'Share SMARTIE Report',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
+                    SizedBox(
+                      width: double.infinity, 
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        child: Text(
+                          'Share SMARTI&E Report',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ), 
                         ),
                       ),
                     ),
+                  ],
+                )
+                )
+              ),
 
                     Padding(padding: EdgeInsets.all(10.0)),
                   ],
