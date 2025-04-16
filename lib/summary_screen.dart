@@ -2035,8 +2035,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
             Center(child: Text("Page Coming Soon")),
 
-            Center(child: Text("Page Coming Soon")),
-
             Center(child: SupportWidget()),
           ][currentPageIndex],
     );
