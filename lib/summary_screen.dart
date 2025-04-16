@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smartie/contact_messages.dart';
+import 'package:smartie/repayment_plan.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
@@ -18,6 +20,12 @@ class DataItem {
 class Message {
   final String text;
   Message(this.text);
+}
+
+class Contact {
+  final String name;
+  final Message message;
+  Contact(this.name, this.message);
 }
 
 class MessageProvider with ChangeNotifier {
@@ -44,7 +52,8 @@ class MessageWidget extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MessageProvider(),
       child: Scaffold(
-        appBar: AppBar(title: Text('Messages')),
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(title: Text('Smarti&e')),
         body: Column(
           children: [
             Expanded(
@@ -61,10 +70,20 @@ class MessageWidget extends StatelessWidget {
                             left: 80,
                             right: 10,
                           ),
-                          child: ListTile(
-                            title: Text(messageProvider.messages[index].text),
-                            textColor: Colors.white,
-                            tileColor: Colors.green,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  messageProvider.messages[index].text,
+                                ),
+                                textColor: Colors.white,
+                                tileColor: Colors.green,
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("You"),
+                              ),
+                            ],
                           ),
                         );
                       } else {
@@ -75,10 +94,20 @@ class MessageWidget extends StatelessWidget {
                             left: 10,
                             right: 80,
                           ),
-                          child: ListTile(
-                            title: Text(messageProvider.messages[index].text),
-                            textColor: Colors.white,
-                            tileColor: Colors.blue,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  messageProvider.messages[index].text,
+                                ),
+                                textColor: Colors.white,
+                                tileColor: Colors.blue,
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Smarti&e Bot"),
+                              ),
+                            ],
                           ),
                         );
                       }
@@ -114,6 +143,62 @@ class MessageWidget extends StatelessWidget {
                         },
                       ),
                     ],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ContactsWidget extends StatelessWidget {
+  List<Contact> contacts = [
+    new Contact("Alice", new Message("Hey, how are you?")),
+    new Contact("Rob", new Message("Thank you!")),
+    new Contact(
+      "Scotiabank",
+      new Message("Alert: New email from Scotiabank..."),
+    ),
+    new Contact("Smarti&e", new Message("Need some financial advice?")),
+    new Contact(
+      "Debra",
+      new Message("Hi, would you be able to send me the report?"),
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => MessageProvider(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(title: Text('Messages')),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: contacts.length,
+                itemBuilder: (context, index) {
+                  final contact = contacts[index];
+                  return ListTile(
+                    leading: CircleAvatar(
+                      child: Text(contact.name![0]), // First letter of the name
+                    ),
+                    title: Text(contact.name!),
+                    subtitle: Text(contact.message.text!),
+                    onTap: () {
+                      // navigate to messages screen on tap
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => ContactMessages(contact: contact),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -1428,15 +1513,37 @@ class _SummaryScreenState extends State<SummaryScreen> {
               ),
             ),
 
-            Center(child: Text("Page Coming Soon.")),
+            Center(child: ContactsWidget()),
 
             Center(child: MessageWidget()),
 
             Center(child: Text("Page Coming Soon")),
 
-            Center(child: Text("Page Coming Soon")),
-
-            Center(child: Text("Page Coming Soon")),
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RepaymentPlan(),
+                      ),
+                    );
+                  },
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  child: Text(
+                    "Calculate Repayment Plan",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
           ][currentPageIndex],
     );
   }
