@@ -24,39 +24,49 @@ class _ContactMessagesState extends State<ContactMessages> {
           children: [
             if (widget.contact.message.text != "")
               Container(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    left: 10,
-                    right: 80,
+                padding: EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  left: 10,
+                  right: 80,
+                ),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.blue,
                   ),
                   child: ListTile(
                     title: Text(widget.contact.message.text),
                     textColor: Colors.white,
-                    tileColor: Colors.blue,
                   ),
                 ),
+              ),
             Expanded(
               child: Consumer<MessageProvider>(
                 builder: (context, messageProvider, child) {
                   return ListView.builder(
                     itemCount: messageProvider.messages.length,
                     itemBuilder: (context, index) {
-                        return Container(
-                          padding: EdgeInsets.only(
-                            top: 10,
-                            bottom: 10,
-                            left: 80,
-                            right: 10,
+                      return Container(
+                        padding: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          left: 80,
+                          right: 10,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.green),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.green,
                           ),
                           child: ListTile(
                             title: Text(messageProvider.messages[index].text),
                             textColor: Colors.white,
-                            tileColor: Colors.green,
                           ),
-                        );
-                      
-                      
+                        ),
+                      );
                     },
                   );
                 },

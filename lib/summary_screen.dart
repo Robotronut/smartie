@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smartie/pdf_viewer_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:smartie/contact_messages.dart';
 import 'package:smartie/repayment_plan.dart';
@@ -73,16 +74,25 @@ class MessageWidget extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              ListTile(
-                                title: Text(
-                                  messageProvider.messages[index].text,
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.green),
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.green,
                                 ),
-                                textColor: Colors.white,
-                                tileColor: Colors.green,
+                                child: ListTile(
+                                  title: Text(
+                                    messageProvider.messages[index].text,
+                                  ),
+                                  textColor: Colors.white,
+                                ),
                               ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("You"),
+                              Padding(
+                                padding: EdgeInsets.only(left: 5),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("You"),
+                                ),
                               ),
                             ],
                           ),
@@ -97,16 +107,25 @@ class MessageWidget extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              ListTile(
-                                title: Text(
-                                  messageProvider.messages[index].text,
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.blue,
                                 ),
-                                textColor: Colors.white,
-                                tileColor: Colors.blue,
+                                child: ListTile(
+                                  title: Text(
+                                    messageProvider.messages[index].text,
+                                  ),
+                                  textColor: Colors.white,
+                                ),
                               ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text("Smarti&e Bot"),
+                              Padding(
+                                padding: EdgeInsets.only(left: 5),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("Smarti&e Bot"),
+                                ),
                               ),
                             ],
                           ),
@@ -117,7 +136,8 @@ class MessageWidget extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
+            Container(
+              color: Colors.white,
               padding: const EdgeInsets.all(8.0),
               child: Consumer<MessageProvider>(
                 builder: (context, messageProvider, child) {
@@ -156,7 +176,6 @@ class MessageWidget extends StatelessWidget {
 }
 
 class SupportWidget extends StatelessWidget {
-  
   SupportWidget({super.key});
 
   void _launchURL(String url) async {
@@ -185,535 +204,532 @@ class SupportWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 16.0)
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
-                        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(padding: EdgeInsets.only(top: 16.0)),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'FAQs',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'FAQs',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      ExpansionTile(
+                        title: Text('Budgeting'),
+                        children: [
+                          ExpansionTile(
+                            title: Text('What is MDI?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'MDI stands for Monthly Disposable Income. It’s the amount left after fixed, flexible, debt, savings, and emergency fund allocations.',
+                                ),
                               ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text(
+                              'What counts as fixed vs flexible expenses?',
                             ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            ExpansionTile(
-                              title: Text('Budgeting'),
-                              children: [
-                                ExpansionTile(
-                                  title: Text('What is MDI?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('MDI stands for Monthly Disposable Income. It’s the amount left after fixed, flexible, debt, savings, and emergency fund allocations.'),
-                                  )
-                                  ],
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Fixed expenses include rent, bills, subscriptions—things that are the same each month. Flexible expenses include groceries, transport, entertainment, and other spending that varies.',
                                 ),
-                                ExpansionTile(
-                                  title: Text('What counts as fixed vs flexible expenses?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Fixed expenses include rent, bills, subscriptions—things that are the same each month. Flexible expenses include groceries, transport, entertainment, and other spending that varies.'),
-                                  )
-                                  ],
-                                ),
-                                ExpansionTile(
-                                  title: Text('What is MDI?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('MDI stands for Monthly Disposable Income. It’s the amount left after fixed, flexible, debt, savings, and emergency fund allocations.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            
-                            ExpansionTile(
-                              title: Text('Savings'),
-                              children: [
-                                ExpansionTile(
-                                  title: Text('How much should I save each month?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('A good rule of thumb is to save at least 20% of your income. This app starts by suggesting 5% for emergency savings and 5% for general savings, but you can adjust based on your goals.'),
-                                  )
-                                  ],
-                                ),
-                                ExpansionTile(
-                                  title: Text('What is an Emergency Fund?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('It’s money set aside for unexpected expenses like medical emergencies, car repairs, or job loss. This app suggests saving 5% of your income toward your emergency fund.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            
-                            ExpansionTile(
-                              title: Text('Debt & Repayment'),
-                              children: [
-                                ExpansionTile(
-                                  title: Text('Can this app help me pay off debt?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Yes! You can track your debts and use the Repayment Planner tool to build a payoff strategy, whether you\'re using the Snowball or Avalanche method.'),
-                                  )
-                                  ],
-                                ),
-                                ExpansionTile(
-                                  title: Text('How do I track my debt payments?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Go to the Debt section, input your balances and monthly payments. The app will automatically deduct them from your monthly income and adjust your MDI.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            ExpansionTile(
-                              title: Text('Privacy & Data'),
-                              children: [
-                                ExpansionTile(
-                                  title: Text('Is my data secure?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Yes, your financial data is stored securely and never shared with third parties without your consent. You can read more in our Privacy Policy.'),
-                                  )
-                                  ],
-                                ),
-                                ExpansionTile(
-                                  title: Text('Can I reset my data?'),
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Absolutely. Go to Settings > Reset Data to clear all saved values and start fresh.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            Divider(color: Colors.grey),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            Text(
-                              'Proposed Plan',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
                               ),
-                            ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text('What is MDI?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'MDI stands for Monthly Disposable Income. It’s the amount left after fixed, flexible, debt, savings, and emergency fund allocations.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
-                            Padding(padding: EdgeInsets.all(8.0)),
+                      ExpansionTile(
+                        title: Text('Savings'),
+                        children: [
+                          ExpansionTile(
+                            title: Text('How much should I save each month?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'A good rule of thumb is to save at least 20% of your income. This app starts by suggesting 5% for emergency savings and 5% for general savings, but you can adjust based on your goals.',
+                                ),
+                              ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text('What is an Emergency Fund?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'It’s money set aside for unexpected expenses like medical emergencies, car repairs, or job loss. This app suggests saving 5% of your income toward your emergency fund.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
+                      ExpansionTile(
+                        title: Text('Debt & Repayment'),
+                        children: [
+                          ExpansionTile(
+                            title: Text('Can this app help me pay off debt?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Yes! You can track your debts and use the Repayment Planner tool to build a payoff strategy, whether you\'re using the Snowball or Avalanche method.',
+                                ),
+                              ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text('How do I track my debt payments?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Go to the Debt section, input your balances and monthly payments. The app will automatically deduct them from your monthly income and adjust your MDI.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      ExpansionTile(
+                        title: Text('Privacy & Data'),
+                        children: [
+                          ExpansionTile(
+                            title: Text('Is my data secure?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Yes, your financial data is stored securely and never shared with third parties without your consent. You can read more in our Privacy Policy.',
+                                ),
+                              ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text('Can I reset my data?'),
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Absolutely. Go to Settings > Reset Data to clear all saved values and start fresh.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      Divider(color: Colors.grey),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Text(
+                        'Proposed Plan',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '\$$installment',
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 162, 233, 1),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 36.0,
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(left: 4.0),
+                                child: Text(
+                                  'Installment',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                formattedDate,
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+
+                              Padding(padding: EdgeInsets.all(4.0)),
+
+                              Text(
+                                'Starting Date',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 239, 237, 237),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '\$$installment',
+                                      "Repayment Plan",
                                       style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                          0,
-                                          162,
-                                          233,
-                                          1,
-                                        ),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 36.0,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ),
-
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 4.0),
-                                      child: Text(
-                                        'Installment',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      formattedDate,
-                                      style: TextStyle(fontSize: 16.0),
                                     ),
 
                                     Padding(padding: EdgeInsets.all(4.0)),
 
                                     Text(
-                                      'Starting Date',
+                                      'Plan',
                                       style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12.0,
+                                        color: const Color.fromARGB(
+                                          255,
+                                          129,
+                                          129,
+                                          129,
+                                        ),
+                                        fontSize: 14.0,
                                       ),
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        239,
-                                        237,
-                                        237,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        12.0,
-                                      ), // Rounded corners
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Repayment Plan",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-                                          Padding(padding: EdgeInsets.all(4.0)),
-
-                                          Text(
-                                            'Plan',
-                                            style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                255,
-                                                129,
-                                                129,
-                                                129,
-                                              ),
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                Padding(padding: EdgeInsets.all(4.0)),
-
-                                Expanded(
-                                  child: Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        239,
-                                        237,
-                                        237,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        12.0,
-                                      ), // Rounded corners
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Monthly*",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-                                          Padding(padding: EdgeInsets.all(4.0)),
-
-                                          Text(
-                                            'Frequency',
-                                            style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                255,
-                                                129,
-                                                129,
-                                                129,
-                                              ),
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        239,
-                                        237,
-                                        237,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        12.0,
-                                      ), // Rounded corners
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '\$$totalOutstanding',
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-                                          Padding(padding: EdgeInsets.all(4.0)),
-
-                                          Text(
-                                            'Total outstanding',
-                                            style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                255,
-                                                129,
-                                                129,
-                                                129,
-                                              ),
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                Padding(padding: EdgeInsets.all(4.0)),
-
-                                Expanded(
-                                  child: Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        239,
-                                        237,
-                                        237,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        12.0,
-                                      ), // Rounded corners
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "12",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-                                          Padding(padding: EdgeInsets.all(4.0)),
-
-                                          Text(
-                                            'Term',
-                                            style: TextStyle(
-                                              color: const Color.fromARGB(
-                                                255,
-                                                129,
-                                                129,
-                                                129,
-                                              ),
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            Divider(color: Colors.grey),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            Text(
-                              'External Resources',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),
 
-                            Padding(padding: EdgeInsets.all(8.0)),
+                          Padding(padding: EdgeInsets.all(4.0)),
 
-                            Text(
-                              'Government Financial Advice',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 239, 237, 237),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Monthly*",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                    Padding(padding: EdgeInsets.all(4.0)),
+
+                                    Text(
+                                      'Frequency',
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          129,
+                                          129,
+                                          129,
+                                        ),
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-
-                            Padding(padding: EdgeInsets.all(2.0)),
-
-                            Text(
-                              'Trusted, government-backed advice to help you budget, save, and manage debt.',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.grey,
-                              ),
-                            ),
-
-                            ExpansionTile(
-                              title: Text('United States'),
-                              children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        TextButton(
-                                        onPressed: () => _launchURL('https://www.consumerfinance.gov/consumer-tools/'),
-                                        child: Text('ConsumerFinance.gov'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('Tools and articles from the CFPB on budgeting, dealing with debt, credit building, and more.'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => _launchURL('https://www.mymoney.gov/'),
-                                        child: Text('MyMoney.gov'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('U.S. government site offering personal finance tips and resources across five key principles — earn, save, protect, spend, and borrow.'),
-                                      ),
-                                      Padding(padding: EdgeInsets.all(2.0)),
-                                    ],
-                                    )
-                                  )
-                              ],
-                            ),
-
-                            ExpansionTile(
-                              title: Text('Canada'),
-                              children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        TextButton(
-                                        onPressed: () => _launchURL('https://www.canada.ca/en/financial-consumer-agency/programs/financial-literacy.html'),
-                                        child: Text('Canada.ca - Financial Literacy'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('Tools and guidance from the Government of Canada for budgeting, saving, and understanding credit.'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => _launchURL('https://www.canada.ca/en/services/finance/tools.html'),
-                                        child: Text('FCAC Tools'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('Interactive tools like budget planners and mortgage calculators from the Financial Consumer Agency of Canada (FCAC).'),
-                                      ),
-                                      Padding(padding: EdgeInsets.all(2.0)),
-                                    ],
-                                    )
-                                  )
-                              ],
-                            ),         
-                          ],
-                        )
-                        )
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16.0)
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 239, 237, 237),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '\$$totalOutstanding',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                    Padding(padding: EdgeInsets.all(4.0)),
+
+                                    Text(
+                                      'Total outstanding',
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          129,
+                                          129,
+                                          129,
+                                        ),
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Padding(padding: EdgeInsets.all(4.0)),
+
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 239, 237, 237),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "12",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+
+                                    Padding(padding: EdgeInsets.all(4.0)),
+
+                                    Text(
+                                      'Term',
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          129,
+                                          129,
+                                          129,
+                                        ),
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                  ],
-                )
-              )
-            )
-      );
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Divider(color: Colors.grey),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Text(
+                        'External Resources',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Text(
+                        'Government Financial Advice',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      Padding(padding: EdgeInsets.all(2.0)),
+
+                      Text(
+                        'Trusted, government-backed advice to help you budget, save, and manage debt.',
+                        style: TextStyle(fontSize: 14.0, color: Colors.grey),
+                      ),
+
+                      ExpansionTile(
+                        title: Text('United States'),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(
+                                  onPressed:
+                                      () => _launchURL(
+                                        'https://www.consumerfinance.gov/consumer-tools/',
+                                      ),
+                                  child: Text('ConsumerFinance.gov'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 14.0),
+                                  child: Text(
+                                    'Tools and articles from the CFPB on budgeting, dealing with debt, credit building, and more.',
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed:
+                                      () => _launchURL(
+                                        'https://www.mymoney.gov/',
+                                      ),
+                                  child: Text('MyMoney.gov'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 14.0),
+                                  child: Text(
+                                    'U.S. government site offering personal finance tips and resources across five key principles — earn, save, protect, spend, and borrow.',
+                                  ),
+                                ),
+                                Padding(padding: EdgeInsets.all(2.0)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      ExpansionTile(
+                        title: Text('Canada'),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(
+                                  onPressed:
+                                      () => _launchURL(
+                                        'https://www.canada.ca/en/financial-consumer-agency/programs/financial-literacy.html',
+                                      ),
+                                  child: Text('Canada.ca - Financial Literacy'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 14.0),
+                                  child: Text(
+                                    'Tools and guidance from the Government of Canada for budgeting, saving, and understanding credit.',
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed:
+                                      () => _launchURL(
+                                        'https://www.canada.ca/en/services/finance/tools.html',
+                                      ),
+                                  child: Text('FCAC Tools'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 14.0),
+                                  child: Text(
+                                    'Interactive tools like budget planners and mortgage calculators from the Financial Consumer Agency of Canada (FCAC).',
+                                  ),
+                                ),
+                                Padding(padding: EdgeInsets.all(2.0)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(top: 16.0)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
-  
 }
 
 class ContactsWidget extends StatelessWidget {
@@ -767,6 +783,69 @@ class ContactsWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class DocumentWidget extends StatelessWidget {
+  // List of PDF documents (URLs or asset paths)
+  final List<Map<String, String>> pdfDocuments = [
+    {"title": "Void Cheque", "path": "assets/files/void_cheque.pdf"},
+    {"title": "Loan Statement", "path": "assets/files/loan_statement.pdf"},
+    {"title": "Monthly Summary", "path": "assets/files/account_statement.pdf"},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("My Documents")),
+      body: ListView.builder(
+        itemCount: pdfDocuments.length,
+        itemBuilder: (context, index) {
+          final pdf = pdfDocuments[index];
+          return Padding(
+            padding: const EdgeInsets.only(
+              bottom: 14.0,
+              left: 18.0,
+              right: 18.0,
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PdfViewerScreen(pdfPath: pdf["path"]!),
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.picture_as_pdf,
+                    size: 30.0,
+                    color: const Color.fromRGBO(0, 162, 233, 1),
+                  ),
+                  SizedBox(width: 16.0), // Space between icon and text
+                  Text(
+                    pdf["title"]!,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: const Color.fromRGBO(0, 162, 233, 1),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -843,7 +922,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
     summary_dataset[2] = DataItem(normalized[2], 'Flexible', Colors.green);
     summary_dataset[3] = DataItem(normalized[3], 'Debt', Colors.blue);
     summary_dataset[4] = DataItem(normalized[4], 'MDI', Colors.deepPurple);
-    summary_dataset[5] = DataItem(normalized[5], 'Emergency Fund', Colors.deepOrange);
+    summary_dataset[5] = DataItem(
+      normalized[5],
+      'Emergency Fund',
+      Colors.deepOrange,
+    );
     summary_dataset[6] = DataItem(normalized[6], 'Savings', Colors.lime);
   }
 
@@ -867,7 +950,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
       summary_dataset[2] = DataItem(normalized[2], 'Flexible', Colors.green);
       summary_dataset[3] = DataItem(normalized[3], 'Debt', Colors.blue);
       summary_dataset[4] = DataItem(normalized[4], 'MDI', Colors.deepPurple);
-      summary_dataset[5] = DataItem(normalized[5], 'Emergency Fund', Colors.deepOrange);
+      summary_dataset[5] = DataItem(
+        normalized[5],
+        'Emergency Fund',
+        Colors.deepOrange,
+      );
       summary_dataset[6] = DataItem(normalized[6], 'Savings', Colors.lime);
     });
   }
@@ -1478,15 +1565,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 ),
 
                                 // Padding(padding: EdgeInsets.only(left: 16.0)),
-
                                 SizedBox(
-                                  width: MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.24,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.24,
                                   height: 12.0,
                                 ),
-                            
+
                                 // Expanded(
                                 //   child: SizedBox(
                                 //     width: 200,
@@ -1898,11 +1982,16 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             Padding(padding: EdgeInsets.all(2.0)),
 
                             SizedBox(
-                              width: double.infinity, 
+                              width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color.fromRGBO(0, 162, 233, 1),
+                                  backgroundColor: const Color.fromRGBO(
+                                    0,
+                                    162,
+                                    233,
+                                    1,
+                                  ),
                                   padding: EdgeInsets.symmetric(vertical: 15),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
@@ -1910,9 +1999,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 ),
                                 child: Text(
                                   'Share SMARTIE Report',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ), 
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -2033,7 +2120,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
             Center(child: MessageWidget()),
 
-            Center(child: Text("Page Coming Soon")),
+            Center(child: DocumentWidget()),
 
             Center(child: SupportWidget()),
           ][currentPageIndex],
