@@ -215,32 +215,38 @@ class _StyledExpansionTileState extends State<StyledExpansionTile> {
           horizontalTitleGap: 0,
           contentPadding: EdgeInsets.zero,
           child: ExpansionTile(
-          tilePadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0), // Inner padding
-          childrenPadding: const EdgeInsets.only(left: 4, right: 4, bottom: 2),
-          title: Text(
-            widget.title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: widget.isTopLevel
-                  ? FontWeight.w600
-                  : (_isExpanded ? FontWeight.bold : FontWeight.normal),
-              color: widget.isTopLevel
-                  ? (_isExpanded ? const Color.fromRGBO(
-                                          0,
-                                          162,
-                                          233,
-                                          1,
-                                        ) : Colors.black)
-                  : Colors.black,
+            tilePadding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 0,
+            ), // Inner padding
+            childrenPadding: const EdgeInsets.only(
+              left: 4,
+              right: 4,
+              bottom: 2,
             ),
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight:
+                    widget.isTopLevel
+                        ? FontWeight.w600
+                        : (_isExpanded ? FontWeight.bold : FontWeight.normal),
+                color:
+                    widget.isTopLevel
+                        ? (_isExpanded
+                            ? const Color.fromRGBO(0, 162, 233, 1)
+                            : Colors.black)
+                        : Colors.black,
+              ),
+            ),
+            onExpansionChanged: (bool expanded) {
+              setState(() => _isExpanded = expanded);
+            },
+            children: widget.children,
           ),
-          onExpansionChanged: (bool expanded) {
-            setState(() => _isExpanded = expanded);
-          },
-          children: widget.children,
         ),
       ),
-      )
     );
   }
 }
@@ -274,52 +280,45 @@ class SupportWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 16.0)
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
-                        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(padding: EdgeInsets.only(top: 16.0)),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Proposed Plan',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Proposed Plan',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
 
                       Padding(padding: EdgeInsets.all(8.0)),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '\$${installment.toStringAsFixed(2)}',
-                                      style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                          0,
-                                          162,
-                                          233,
-                                          1,
-                                        ),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 36.0,
-                                      ),
-                                    ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '\$${installment.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(0, 162, 233, 1),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 36.0,
+                                ),
+                              ),
 
                               Padding(
                                 padding: EdgeInsets.only(left: 4.0),
@@ -405,35 +404,28 @@ class SupportWidget extends StatelessWidget {
 
                           Padding(padding: EdgeInsets.all(4.0)),
 
-                                Expanded(
-                                  child: Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        239,
-                                        237,
-                                        237,
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 239, 237, 237),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Monthly",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      borderRadius: BorderRadius.circular(
-                                        12.0,
-                                      ), // Rounded corners
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Monthly",
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
 
                                     Padding(padding: EdgeInsets.all(4.0)),
 
@@ -459,38 +451,31 @@ class SupportWidget extends StatelessWidget {
 
                       Padding(padding: EdgeInsets.all(8.0)),
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(
-                                        255,
-                                        239,
-                                        237,
-                                        237,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 239, 237, 237),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ), // Rounded corners
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '\$${totalOutstanding.toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      borderRadius: BorderRadius.circular(
-                                        12.0,
-                                      ), // Rounded corners
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 12.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '\$${totalOutstanding.toStringAsFixed(2)}',
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
 
                                     Padding(padding: EdgeInsets.all(4.0)),
 
@@ -565,226 +550,249 @@ class SupportWidget extends StatelessWidget {
 
                       Padding(padding: EdgeInsets.all(8.0)),
 
-                            Text(
-                              'FAQs',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            StyledExpansionTile(
-                              title: 'Budgeting',
-                              isTopLevel: true,
-                              children: [
-                                StyledExpansionTile(
-                                  title: 'What counts as fixed vs flexible expenses?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Fixed expenses include rent, bills, subscriptions—things that are the same each month. Flexible expenses include groceries, transport, entertainment, and other spending that varies.'),
-                                  )
-                                  ],
-                                ),
-                                StyledExpansionTile(
-                                  title: 'What is MDI?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('MDI stands for Monthly Disposable Income. It’s the amount left after fixed, flexible, debt, savings, and emergency fund allocations.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            
-                            StyledExpansionTile(
-                              title: 'Savings',
-                              isTopLevel: true,
-                              children: [
-                                StyledExpansionTile(
-                                  title: 'How much should I save each month?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('A good rule of thumb is to save at least 20% of your income. This app starts by suggesting 5% for emergency savings and 5% for general savings, but you can adjust based on your goals.'),
-                                  )
-                                  ],
-                                ),
-                                StyledExpansionTile(
-                                  title: 'What is an Emergency Fund?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('It’s money set aside for unexpected expenses like medical emergencies, car repairs, or job loss. This app suggests saving 5% of your income toward your emergency fund.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            
-                            StyledExpansionTile(
-                              title: 'Debt & Repayment',
-                              isTopLevel: true,
-                              children: [
-                                StyledExpansionTile(
-                                  title: 'Can this app help me pay off debt?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Yes! You can track your debts and use the Repayment Planner tool to build a payoff strategy, whether you\'re using the Snowball or Avalanche method.'),
-                                  )
-                                  ],
-                                ),
-                                StyledExpansionTile(
-                                  title: 'How do I track my debt payments?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Go to the Debt section, input your balances and monthly payments. The app will automatically deduct them from your monthly income and adjust your MDI.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            StyledExpansionTile(
-                              title: 'Privacy & Data',
-                              isTopLevel: true,
-                              children: [
-                                StyledExpansionTile(
-                                  title: 'Is my data secure?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Yes, your financial data is stored securely and never shared with third parties without your consent. You can read more in our Privacy Policy.'),
-                                  )
-                                  ],
-                                ),
-                                StyledExpansionTile(
-                                  title: 'Can I reset my data?',
-                                  children: [
-                                    Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Absolutely. Go to Settings > Reset Data to clear all saved values and start fresh.'),
-                                  )
-                                  ],
-                                )
-                              ],
-                            ),
-
-                            Divider(color: Colors.grey),
+                      Text(
+                        'FAQs',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
 
                       Padding(padding: EdgeInsets.all(8.0)),
 
-                            Text(
-                              'External Resources',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w600,
+                      StyledExpansionTile(
+                        title: 'Budgeting',
+                        isTopLevel: true,
+                        children: [
+                          StyledExpansionTile(
+                            title: 'What counts as fixed vs flexible expenses?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Fixed expenses include rent, bills, subscriptions—things that are the same each month. Flexible expenses include groceries, transport, entertainment, and other spending that varies.',
+                                ),
                               ),
-                            ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
-                            Text(
-                              'Government Financial Advice',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w700,
-                                color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
+                            ],
+                          ),
+                          StyledExpansionTile(
+                            title: 'What is MDI?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'MDI stands for Monthly Disposable Income. It’s the amount left after fixed, flexible, debt, savings, and emergency fund allocations.',
+                                ),
                               ),
-                            ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      StyledExpansionTile(
+                        title: 'Savings',
+                        isTopLevel: true,
+                        children: [
+                          StyledExpansionTile(
+                            title: 'How much should I save each month?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'A good rule of thumb is to save at least 20% of your income. This app starts by suggesting 5% for emergency savings and 5% for general savings, but you can adjust based on your goals.',
+                                ),
+                              ),
+                            ],
+                          ),
+                          StyledExpansionTile(
+                            title: 'What is an Emergency Fund?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'It’s money set aside for unexpected expenses like medical emergencies, car repairs, or job loss. This app suggests saving 5% of your income toward your emergency fund.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      StyledExpansionTile(
+                        title: 'Debt & Repayment',
+                        isTopLevel: true,
+                        children: [
+                          StyledExpansionTile(
+                            title: 'Can this app help me pay off debt?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Yes! You can track your debts and use the Repayment Planner tool to build a payoff strategy, whether you\'re using the Snowball or Avalanche method.',
+                                ),
+                              ),
+                            ],
+                          ),
+                          StyledExpansionTile(
+                            title: 'How do I track my debt payments?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Go to the Debt section, input your balances and monthly payments. The app will automatically deduct them from your monthly income and adjust your MDI.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      StyledExpansionTile(
+                        title: 'Privacy & Data',
+                        isTopLevel: true,
+                        children: [
+                          StyledExpansionTile(
+                            title: 'Is my data secure?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Yes, your financial data is stored securely and never shared with third parties without your consent. You can read more in our Privacy Policy.',
+                                ),
+                              ),
+                            ],
+                          ),
+                          StyledExpansionTile(
+                            title: 'Can I reset my data?',
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Absolutely. Go to Settings > Reset Data to clear all saved values and start fresh.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      Divider(color: Colors.grey),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Text(
+                        'External Resources',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      Padding(padding: EdgeInsets.all(8.0)),
+
+                      Text(
+                        'Government Financial Advice',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromRGBO(0, 162, 233, 1),
+                        ),
+                      ),
 
                       Padding(padding: EdgeInsets.all(2.0)),
 
-                            Text(
-                              'Trusted, government-backed advice to help you budget, save, and manage debt.',
-                              style: TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.grey,
+                      Text(
+                        'Trusted, government-backed advice to help you budget, save, and manage debt.',
+                        style: TextStyle(fontSize: 13.0, color: Colors.grey),
+                      ),
+
+                      Padding(padding: EdgeInsets.all(2.0)),
+
+                      StyledExpansionTile(
+                        title: 'United States',
+                        isTopLevel: true,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                onPressed:
+                                    () => _launchURL(
+                                      'https://www.consumerfinance.gov/consumer-tools/',
+                                    ),
+                                child: Text('ConsumerFinance.gov'),
                               ),
-                            ),
-
-                            Padding(padding: EdgeInsets.all(2.0)),
-
-                            StyledExpansionTile(
-                              title: 'United States',
-                              isTopLevel: true,
-                              children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        TextButton(
-                                        onPressed: () => _launchURL('https://www.consumerfinance.gov/consumer-tools/'),
-                                        child: Text('ConsumerFinance.gov'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('Tools and articles from the CFPB on budgeting, dealing with debt, credit building, and more.'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => _launchURL('https://www.mymoney.gov/'),
-                                        child: Text('MyMoney.gov'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('U.S. government site offering personal finance tips and resources across five key principles — earn, save, protect, spend, and borrow.'),
-                                      ),
-                                    ],
-                                    )
-                              ],
-                            ),
-
-                            StyledExpansionTile(
-                              title: 'Canada',
-                              isTopLevel: true,
-                              children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        TextButton(
-                                        onPressed: () => _launchURL('https://www.canada.ca/en/financial-consumer-agency/programs/financial-literacy.html'),
-                                        child: Text('Canada.ca - Financial Literacy'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('Tools and guidance from the Government of Canada for budgeting, saving, and understanding credit.'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => _launchURL('https://www.canada.ca/en/services/finance/tools.html'),
-                                        child: Text('FCAC Tools'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 14.0),
-                                        child: Text('Interactive tools like budget planners and mortgage calculators from the Financial Consumer Agency of Canada (FCAC).'),
-                                      ),
-                                      Padding(padding: EdgeInsets.all(2.0)),
-                                    ],
-                                    )
-                              ],
-                            ),         
-                          ],
-                        )
-                        )
+                              Padding(
+                                padding: EdgeInsets.only(left: 14.0),
+                                child: Text(
+                                  'Tools and articles from the CFPB on budgeting, dealing with debt, credit building, and more.',
+                                ),
+                              ),
+                              TextButton(
+                                onPressed:
+                                    () =>
+                                        _launchURL('https://www.mymoney.gov/'),
+                                child: Text('MyMoney.gov'),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 14.0),
+                                child: Text(
+                                  'U.S. government site offering personal finance tips and resources across five key principles — earn, save, protect, spend, and borrow.',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16.0)
+
+                      StyledExpansionTile(
+                        title: 'Canada',
+                        isTopLevel: true,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                onPressed:
+                                    () => _launchURL(
+                                      'https://www.canada.ca/en/financial-consumer-agency/programs/financial-literacy.html',
+                                    ),
+                                child: Text('Canada.ca - Financial Literacy'),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 14.0),
+                                child: Text(
+                                  'Tools and guidance from the Government of Canada for budgeting, saving, and understanding credit.',
+                                ),
+                              ),
+                              TextButton(
+                                onPressed:
+                                    () => _launchURL(
+                                      'https://www.canada.ca/en/services/finance/tools.html',
+                                    ),
+                                child: Text('FCAC Tools'),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 14.0),
+                                child: Text(
+                                  'Interactive tools like budget planners and mortgage calculators from the Financial Consumer Agency of Canada (FCAC).',
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.all(2.0)),
+                            ],
+                          ),
+                        ],
                       ),
-                  ],
-                )
-              )
-            )
-      );
+                    ],
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(top: 16.0)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -877,7 +885,8 @@ class DocumentWidget extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PdfViewerScreen(pdfPath: pdf["path"]!),
+                    builder:
+                        (context) => PdfViewerScreen(pdfPath: pdf["path"]!),
                   ),
                 );
               },
@@ -949,10 +958,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
     return entries;
   }
 
-  int income = 0;
-  int fixedExp = 0;
-  int flexExp = 0;
-  int debt = 0;
+  double income = 0;
+  double fixedExp = 0;
+  double flexExp = 0;
+  double debt = 0;
   double mdi = 0;
   double savings = 0;
   double emergencyFund = 0;
@@ -963,13 +972,22 @@ class _SummaryScreenState extends State<SummaryScreen> {
   @override
   void initState() {
     super.initState();
-    income = 12000 + rand.nextInt(2000);
-    fixedExp = 1200 + rand.nextInt(1000);
-    flexExp = 300 + rand.nextInt(400);
-    debt = 100 + rand.nextInt(300);
-    emergencyFund = 0.05 * income;
-    savings = 0.05 * (income - emergencyFund);
-    mdi = income - (fixedExp + flexExp + debt + savings + emergencyFund);
+    income = double.parse(
+      (12000 + rand.nextDouble() * 2000).toStringAsFixed(2),
+    );
+    fixedExp = double.parse(
+      (1200 + rand.nextDouble() * 1000).toStringAsFixed(2),
+    );
+    flexExp = double.parse((300 + rand.nextDouble() * 400).toStringAsFixed(2));
+    debt = double.parse((100 + rand.nextDouble() * 300).toStringAsFixed(2));
+    emergencyFund = double.parse((0.05 * income).toStringAsFixed(2));
+    savings = double.parse(
+      (0.05 * (income - emergencyFund)).toStringAsFixed(2),
+    );
+    mdi = double.parse(
+      (income - (fixedExp + flexExp + debt + savings + emergencyFund))
+          .toStringAsFixed(2),
+    );
 
     // For chart percentages
     List<double> rawValues = List.generate(7, (_) => rand.nextDouble());
@@ -991,13 +1009,24 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
   void _generateRandomValues() {
     setState(() {
-      income = 12000 + rand.nextInt(2000);
-      fixedExp = 1000 + rand.nextInt(1000);
-      flexExp = 300 + rand.nextInt(400);
-      debt = 100 + rand.nextInt(500);
-      emergencyFund = 0.05 * income;
-      savings = 0.05 * (income - emergencyFund);
-      mdi = income - (fixedExp + flexExp + debt + savings + emergencyFund);
+      income = double.parse(
+        (12000 + rand.nextDouble() * 2000).toStringAsFixed(2),
+      );
+      fixedExp = double.parse(
+        (1200 + rand.nextDouble() * 1000).toStringAsFixed(2),
+      );
+      flexExp = double.parse(
+        (300 + rand.nextDouble() * 400).toStringAsFixed(2),
+      );
+      debt = double.parse((100 + rand.nextDouble() * 300).toStringAsFixed(2));
+      emergencyFund = double.parse((0.05 * income).toStringAsFixed(2));
+      savings = double.parse(
+        (0.05 * (income - emergencyFund)).toStringAsFixed(2),
+      );
+      mdi = double.parse(
+        (income - (fixedExp + flexExp + debt + savings + emergencyFund))
+            .toStringAsFixed(2),
+      );
 
       // For chart percentages
       List<double> rawValues = List.generate(7, (_) => rand.nextDouble());
@@ -1168,430 +1197,381 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             ),
 
                             TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Income',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$$income',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Income',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
-
-                                Padding(padding: EdgeInsets.only(top: 1.0)),
-
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Fixed Exp',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$$income',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$$fixedExp',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
                                   ),
-
-                            Padding(padding: EdgeInsets.only(top: 1.0)),
-
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Flex Exp',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$$flexExp',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                Padding(padding: EdgeInsets.only(top: 1.0)),
-
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Debt',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$$debt',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                ],
+                              ),
+                            ),
 
                             Padding(padding: EdgeInsets.only(top: 1.0)),
 
                             TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'MDI',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$${mdi.toStringAsFixed(2)}',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Fixed Exp',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
-
-                                Padding(padding: EdgeInsets.only(top: 1.0)),
-
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Savings',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$$fixedExp',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$${savings.toStringAsFixed(2)}',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
                                   ),
+                                ],
+                              ),
+                            ),
 
                             Padding(padding: EdgeInsets.only(top: 1.0)),
 
-                                TextButton(
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size.zero,
-                                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Emergency Fund',
-                                          style: TextStyle(
-                                            fontSize:
-                                                MediaQuery.of(
-                                                  context,
-                                                ).size.width *
-                                                0.04,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '\$${emergencyFund.toStringAsFixed(2)}',
-                                              style: TextStyle(
-                                                fontSize:
-                                                    MediaQuery.of(
-                                                      context,
-                                                    ).size.width *
-                                                    0.04,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                decorationThickness: 2.0,
-                                              ),
-                                            ),
-                                            Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Color.fromRGBO(
-                                                0,
-                                                162,
-                                                233,
-                                                1,
-                                              ),
-                                              size: 24.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Flex Exp',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                            
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$$flexExp',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 1.0)),
+
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Debt',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$$debt',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 1.0)),
+
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'MDI',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$${mdi.toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 1.0)),
+
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Savings',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$${savings.toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 1.0)),
+
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Emergency Fund',
+                                    style: TextStyle(
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                          0.04,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$${emergencyFund.toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 2.0,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Color.fromRGBO(0, 162, 233, 1),
+                                        size: 24.0,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             Divider(color: Colors.grey),
 
                             Text(
@@ -2004,14 +1984,22 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  _selectedCreditor == null ? 
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Select a creditor.'), backgroundColor: Colors.red),
-                                    ) :
-                                    {};
+                                  _selectedCreditor == null
+                                      ? ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Select a creditor.'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      )
+                                      : {};
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: _isChecked ? const Color.fromRGBO(0, 162, 233, 1) : Colors.grey,
+                                  backgroundColor:
+                                      _isChecked
+                                          ? const Color.fromRGBO(0, 162, 233, 1)
+                                          : Colors.grey,
                                   padding: EdgeInsets.symmetric(vertical: 15),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
