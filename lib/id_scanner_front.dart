@@ -6,6 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:smartie/verification_id_back.dart';
+//import 'package:veriff_flutter/veriff_flutter.dart';
+import 'package:crypto/crypto.dart';
 
 class IDScannerScreen extends StatefulWidget {
   final String verifyIdType;
@@ -100,7 +102,114 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       _isProcessing = false;
       _image = null;
     });
-    return;
+
+    dynamic sessionId = await _getVeriffSessionId();
+
+    final String url =
+        'https://stationapi.veriff.com/v1/sessions/$sessionId/media';
+
+    Uint8List imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    final Map<String, dynamic> requestBody = {
+      'image': {'context': 'document-front', 'content': base64Image},
+    };
+
+    final String requestBodyJson = jsonEncode(requestBody);
+
+    String secret = generateSHA256Hash(
+      'f2b60612-e179-45b0-bd5b-a336139dab71',
+      requestBodyJson,
+    );
+
+    // try to get a response from the API
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'X-AUTH-CLIENT': '14376978-a1d8-43f0-b701-3aaac829ee4e',
+          'X-HMAC-SIGNATURE': secret,
+          'Content-Type': 'application/json',
+        },
+        body: requestBodyJson,
+      );
+      // 200 is success code
+      if (response.statusCode == 200) {
+        print('Passport uploaded successfully!');
+      } else {
+        throw Exception('Failed to create session: ${response.body}');
+      }
+    } catch (e) {
+      print('Error creating session: $e');
+      rethrow;
+    }
+
+    final String url3 = 'https://stationapi.veriff.com/v1/sessions/$sessionId';
+    final Map<String, dynamic> patchRequest = {
+      'verification': {'status': 'submitted'},
+    };
+    String secret2 = generateSHA256Hash(
+      'f2b60612-e179-45b0-bd5b-a336139dab71',
+      jsonEncode(patchRequest),
+    );
+    try {
+      final response = await http.patch(
+        Uri.parse(url3),
+        headers: {
+          'X-AUTH-CLIENT': '14376978-a1d8-43f0-b701-3aaac829ee4e',
+          'X-HMAC-SIGNATURE': secret2,
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(patchRequest),
+      );
+      // 200 is success code
+      if (response.statusCode == 200) {
+        print('Passport uploaded successfully!');
+      } else {
+        throw Exception('Failed to create session: ${response.body}');
+      }
+    } catch (e) {
+      print('Error creating session: $e');
+      rethrow;
+    }
+
+    final String url2 =
+        'https://stationapi.veriff.com/v1/sessions/$sessionId/decision';
+    String secret3 = generateHmacSha256(
+      sessionId,
+      'f2b60612-e179-45b0-bd5b-a336139dab71',
+    );
+    try {
+      final response = await http.get(
+        Uri.parse(url2),
+        headers: {
+          'X-AUTH-CLIENT': '14376978-a1d8-43f0-b701-3aaac829ee4e',
+          'X-HMAC-SIGNATURE': secret3,
+          'Content-Type': 'application/json',
+        },
+      );
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        final String status = data['status'];
+        final String decision = data['verification']['status'];
+
+        print('Session Status: $status');
+        print('Verification Decision: $decision');
+
+        if (decision == 'approved') {
+          print('Document passed verification.');
+        } else {
+          print('Verification is still in progress.');
+        }
+      } else {
+        print('Failed to fetch verification status: ${response}');
+      }
+    } catch (e) {
+      print('Error checking verification status: $e');
+    }
+
     // try {
     //   Uint8List imageBytes = await imageFile.readAsBytes();
     //   String base64Image = base64Encode(imageBytes);
@@ -146,6 +255,60 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
     //     _image = null;
     //   });
     // }
+  }
+
+  Future<dynamic> _getVeriffSessionId() async {
+    final String url = 'https://stationapi.veriff.com/v1/sessions';
+    final Map<String, dynamic> requestBody = {
+      'verification': {
+        'callback': "https://stationapi.veriff.com",
+        'person': {'firstName': "Tyler", 'lastName': "Elliott"},
+        'document': {'type': "PASSPORT"},
+      },
+    };
+
+    // try to get a response from the API
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'X-AUTH-CLIENT': '14376978-a1d8-43f0-b701-3aaac829ee4e',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      // 201 is success code
+      if (response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        return data['verification']['id'];
+      } else {
+        throw Exception('Failed to create session: ${response.body}');
+      }
+    } catch (e) {
+      print('Error creating session: $e');
+      rethrow;
+    }
+  }
+
+  String generateSHA256Hash(String secret, String requestBody) {
+    final key = utf8.encode(secret);
+    final body = utf8.encode(requestBody);
+
+    final hmac = Hmac(sha256, key);
+    final digest = hmac.convert(body);
+
+    return digest.toString();
+  }
+
+  String generateHmacSha256(String queryId, String apiSecret) {
+    final key = utf8.encode(apiSecret);
+    final message = utf8.encode(queryId);
+
+    final hmac = Hmac(sha256, key);
+    final digest = hmac.convert(message);
+
+    return digest.toString();
   }
 
   @override
