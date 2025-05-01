@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:smartie/pdf_viewer_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:smartie/contact_messages.dart';
 import 'package:smartie/repayment_plan.dart';
+import 'package:file_picker/file_picker.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
@@ -28,6 +30,13 @@ class Contact {
   final String name;
   final Message message;
   Contact(this.name, this.message);
+}
+
+class SmartieNotification {
+  final Icon icon;
+  final String title;
+  final String message;
+  SmartieNotification(this.icon, this.title, this.message);
 }
 
 class MessageProvider with ChangeNotifier {
@@ -600,14 +609,40 @@ class DocumentWidget extends StatelessWidget {
   // List of PDF documents (URLs or asset paths)
   final List<Map<String, String>> pdfDocuments = [
     {"title": "Void Cheque", "path": "assets/files/void_cheque.pdf"},
-    {"title": "Loan Statement", "path": "assets/files/loan_statement.pdf"},
-    {"title": "Monthly Summary", "path": "assets/files/account_statement.pdf"},
+    {"title": "Bank Statement", "path": "assets/files/account_statement.pdf"},
+    {"title": "Utility Bill", "path": "assets/files/utility-bill.pdf"},
+    {"title": "ID Verification", "path": "assets/files/passport.pdf"},
+    {"title": "Other", "path": "assets/files/loan_statement.pdf"},
   ];
+
+  Future<void> chooseFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    if (result != null) {
+      File file = File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("My Documents")),
+      appBar: AppBar(
+        title: Text("Secure Lock Box"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline),
+            tooltip: 'Add new file',
+            onPressed: () async {
+              // handle the press
+              await chooseFile();
+            },
+          ),
+        ],
+      ),
       body: ListView.builder(
         itemCount: pdfDocuments.length,
         itemBuilder: (context, index) {
@@ -1414,15 +1449,97 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
 class _SummaryScreenState extends State<SummaryScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _creditorController = TextEditingController();
-  String? _selectedCreditor;
-
   final TextEditingController _shareReportController = TextEditingController();
-  String? _selectedEntityforShareReport;
-
   final TextEditingController _emailController = TextEditingController();
+  String? _selectedEntityforShareReport;
+  String? _selectedCreditor;
 
   String selectedValue = 'Monthly';
   int currentPageIndex = 0;
+  OverlayEntry? _overlayEntry;
+
+  void showCustomPopup(BuildContext context, String title, String message) {
+    //final overlay = Overlay.of(context);
+    _overlayEntry = OverlayEntry(
+      builder:
+          (context) => Positioned(
+            top: MediaQuery.of(context).size.height * 0.125,
+            left: MediaQuery.of(context).size.width * 0.1,
+            right: MediaQuery.of(context).size.width * 0.1,
+            child: Material(
+              elevation: 8.0,
+              borderRadius: BorderRadius.circular(8.0),
+              shadowColor: Colors.black,
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Icon(Icons.check_circle),
+                          Padding(padding: EdgeInsets.only(left: 10.0)),
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        message,
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () {
+                          _overlayEntry?.remove();
+                        },
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            214,
+                            238,
+                            249,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                        child: Text(
+                          "Dismiss",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromRGBO(0, 162, 233, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+    );
+
+    Overlay.of(context).insert(_overlayEntry!);
+
+    // Remove the popup after 5 seconds if user does not dismiss
+    Future.delayed(Duration(seconds: 5), () {
+      _overlayEntry?.remove();
+    });
+  }
 
   final List<DataItem> summary_dataset = [
     DataItem(0.43, 'Income', Colors.pink),
@@ -1469,6 +1586,97 @@ class _SummaryScreenState extends State<SummaryScreen> {
   final rand = Random();
 
   bool _isChecked = false;
+
+  final GlobalKey _bellIconKey = GlobalKey();
+  OverlayEntry? _overlayEntry2;
+
+  // test notifications
+   final List<SmartieNotification> _notifications = [
+    SmartieNotification(Icon(Icons.money),"You're Making Progress!", "You've just paid off \$100 — that’s one more step toward your financial freedom. Keep going, you're doing great!"),
+    SmartieNotification(Icon(Icons.celebration),"We See You. We Celebrate You.", "Paying down debt takes courage. You’re building confidence, one payment at a time. You've got this."),
+    SmartieNotification(Icon(Icons.rocket_launch),"Milestone Unlocked!", "You've hit your halfway mark — 50% of your goal is complete. Take a moment to be proud."),
+    SmartieNotification(Icon(Icons.question_mark),"Did You Know?", "Paying off just an extra \$20/month can save you hundreds in interest. You’re making smart moves already."),
+  ];
+
+  void _showNotificationsPopup() {
+    if (_overlayEntry2 != null) {
+      _removeNotificationsPopup();
+      return;
+    }
+
+    final RenderBox renderBox =
+        _bellIconKey.currentContext!.findRenderObject() as RenderBox;
+    final Offset position = renderBox.localToGlobal(Offset.zero);
+    final Size size = renderBox.size;
+
+    _overlayEntry2 = OverlayEntry(
+      builder:
+          (context) => Positioned(
+            top: position.dy + size.height,
+            right: MediaQuery.of(context).size.width - position.dx - size.width,
+            child: Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(8.0),
+              child: Container(
+                width: 250,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 8.0, top: 8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(8.0),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "My Notifications",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        trackVisibility: true,
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: _notifications.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(_notifications[index].title, maxLines: 2,),
+                              leading: _notifications[index].icon,
+                              onTap: () {
+                                print("Clicked on: ${_notifications[index]}");
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+    );
+
+    Overlay.of(context).insert(_overlayEntry2!);
+  }
+
+  void _removeNotificationsPopup() {
+    _overlayEntry2?.remove();
+    _overlayEntry2 = null;
+  }
 
   @override
   void initState() {
@@ -1595,7 +1803,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            key: _bellIconKey,
+            onPressed: _showNotificationsPopup,
             icon: Icon(Icons.notifications_none_rounded, color: Colors.white),
           ),
         ],
@@ -1631,6 +1840,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             setState(() {
               currentPageIndex = index;
             });
+            _removeNotificationsPopup();
           },
           indicatorColor: const Color.fromARGB(255, 204, 227, 246),
           backgroundColor: Colors.white,
@@ -1645,7 +1855,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 child: Column(
                   children: [
                     Padding(padding: EdgeInsets.all(8.0)),
-
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: BoxDecoration(
@@ -2698,7 +2907,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showCustomPopup(
+                                    context,
+                                    "Milestone Unlocked!",
+                                    "You've hit your halfway mark — 50% of your goal is complete. Take a moment to be proud.",
+                                  );
+                                },
                                 style: FilledButton.styleFrom(
                                   backgroundColor: const Color.fromARGB(
                                     255,
