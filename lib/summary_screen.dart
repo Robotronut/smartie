@@ -856,34 +856,6 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
 
                             Padding(padding: EdgeInsets.all(8.0)),
 
-                            DropdownMenu(
-                                label: const Text('Payment Frequency'),
-                                initialSelection: selectedFreqValue,
-                                width: MediaQuery.of(context).size.width * 0.85,
-                                dropdownMenuEntries:
-                                    <DropdownMenuEntry<String>>[
-                                      DropdownMenuEntry(
-                                        value: 'Weekly',
-                                        label: 'Weekly',
-                                      ),
-                                      DropdownMenuEntry(
-                                        value: 'Bi-weekly',
-                                        label: 'Bi-weekly',
-                                      ),
-                                      DropdownMenuEntry(
-                                        value: 'Monthly',
-                                        label: 'Monthly',
-                                      ),
-                                    ],
-                                onSelected: (value) {
-                                  setState(() {
-                                    selectedFreqValue = value!;
-                                  });
-                                },
-                              ),
-
-                            Padding(padding: EdgeInsets.all(8.0)),
-
                             _selectedDebtType == 'Other'
                             ? Column(
                               children: [
@@ -927,6 +899,34 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                               ],
                             )
                             : SizedBox(),
+
+                            DropdownMenu(
+                                label: const Text('Payment Frequency'),
+                                initialSelection: selectedFreqValue,
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                dropdownMenuEntries:
+                                    <DropdownMenuEntry<String>>[
+                                      DropdownMenuEntry(
+                                        value: 'Weekly',
+                                        label: 'Weekly',
+                                      ),
+                                      DropdownMenuEntry(
+                                        value: 'Bi-weekly',
+                                        label: 'Bi-weekly',
+                                      ),
+                                      DropdownMenuEntry(
+                                        value: 'Monthly',
+                                        label: 'Monthly',
+                                      ),
+                                    ],
+                                onSelected: (value) {
+                                  setState(() {
+                                    selectedFreqValue = value!;
+                                  });
+                                },
+                              ),
+
+                            Padding(padding: EdgeInsets.all(8.0)),
 
                             Stack(
                               children: [
@@ -1113,7 +1113,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                         style: TextStyle(
                                   color: const Color.fromRGBO(0, 162, 233, 1),
                                   fontWeight: FontWeight.w600,
-                                  fontSize: MediaQuery.of(context).size.width * 0.07,
+                                  fontSize: MediaQuery.of(context).size.width * (debtValue.toString().length > 6 ? 0.05 : 0.09),
                                 ),
                       ),
                         ],
@@ -1141,7 +1141,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                 style: TextStyle(
                                   color: const Color.fromRGBO(0, 162, 233, 1),
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 42.0,
+                                  fontSize: MediaQuery.of(context).size.width * (installment.toStringAsFixed(2).toString().length > 7 ? 0.08 : 0.12),
                                 ),
                               ),
 
