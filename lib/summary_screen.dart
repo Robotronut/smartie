@@ -839,55 +839,48 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: DropdownMenu<String>(
-                                    controller: _debtTypeController,
-                                    enableFilter: true,
-                                    width: MediaQuery.of(context).size.width,
-                                    requestFocusOnTap: true,
-                                    label: const Text('Select debt type'),
-                                    dropdownMenuEntries: debtType(),
-                                    onSelected: (value) {
-                                      setState(() {
-                                        _selectedDebtType = value;
-                                        debtValue = getDebtTypeMap()[value] ?? 0;
-                                      });
-                                    },
-                                  ),
-                                ),
+                            DropdownMenu<String>(
+                                controller: _debtTypeController,
+                                enableFilter: true,
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                requestFocusOnTap: true,
+                                label: const Text('Select debt type'),
+                                dropdownMenuEntries: debtType(),
+                                onSelected: (value) {
+                                  setState(() {
+                                    _selectedDebtType = value;
+                                    debtValue = getDebtTypeMap()[value] ?? 0;
+                                  });
+                                },
+                              ),
 
-                              Padding(padding: EdgeInsets.all(2.0)),
+                            Padding(padding: EdgeInsets.all(8.0)),
 
-                              Expanded(
-                                child: DropdownMenu(
-                                  label: const Text('Frequency'),
-                                  initialSelection: selectedFreqValue,
-                                  dropdownMenuEntries:
-                                      <DropdownMenuEntry<String>>[
-                                        DropdownMenuEntry(
-                                          value: 'Weekly',
-                                          label: 'Weekly',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Bi-weekly',
-                                          label: 'Bi-weekly',
-                                        ),
-                                        DropdownMenuEntry(
-                                          value: 'Monthly',
-                                          label: 'Monthly',
-                                        ),
-                                      ],
-                                  onSelected: (value) {
-                                    setState(() {
-                                      selectedFreqValue = value!;
-                                    });
-                                  },
-                                ),
-                              )
-                              ],
-                            ),
+                            DropdownMenu(
+                                label: const Text('Payment Frequency'),
+                                initialSelection: selectedFreqValue,
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                dropdownMenuEntries:
+                                    <DropdownMenuEntry<String>>[
+                                      DropdownMenuEntry(
+                                        value: 'Weekly',
+                                        label: 'Weekly',
+                                      ),
+                                      DropdownMenuEntry(
+                                        value: 'Bi-weekly',
+                                        label: 'Bi-weekly',
+                                      ),
+                                      DropdownMenuEntry(
+                                        value: 'Monthly',
+                                        label: 'Monthly',
+                                      ),
+                                    ],
+                                onSelected: (value) {
+                                  setState(() {
+                                    selectedFreqValue = value!;
+                                  });
+                                },
+                              ),
 
                             Padding(padding: EdgeInsets.all(8.0)),
 
@@ -935,61 +928,102 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                             )
                             : SizedBox(),
 
-                              Row(
-                                children: [
-                                  Text(
-                                    'Term',
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  
-                                  Expanded(
-                                    child: Slider(
-                                      value: term, 
-                                      onChanged: (newTerm){
-                                        setState(() {
-                                          term = newTerm;
-                                        });
-                                      },
-                                      min: 1,
-                                      max: 60,
-                                      divisions: 59,
-                                      label: term.toStringAsFixed(0),
-                                      activeColor: const Color.fromRGBO(0, 162, 233, 1),
-                                    ),
-                                  )
-                                    ],
-                              ),
-
-                              Row(
-                                children: [
-                                  Text(
-                                'Start Date'
-                              ),
-
-                              Padding(padding: EdgeInsets.all(8.0)),
-                              
-                              Expanded(
-                                child: Container(
-                                  padding:  EdgeInsets.zero,
+                            Stack(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(top: 4),
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey), // Outline color
-                                    borderRadius: BorderRadius.circular(8), // Optional: rounded corners
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: ListTile(
-                                    title: Text(
-                                      startDate != null
-                                          ? '${startDate?.toLocal()}'.split(' ')[0]
-                                          : 'Select Start Date',
-                                    ),
-                                    leading: Icon(Icons.calendar_month),
-                                    onTap: () {
-                                      setState(() {
-                                        _showCalendar = !_showCalendar;
-                                      });
-                                    },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04)
+                                      ),
+                                      Text(
+                                          '${term.toInt()} ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: const Color.fromRGBO(0, 162, 233, 1),
+                                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                                          ),
+                                      ),
+
+                                      Text(
+                                          'months'
+                                      ),
+                                      
+                                      Expanded(
+                                        child: Slider(
+                                          value: term, 
+                                          onChanged: (newTerm){
+                                            setState(() {
+                                              term = newTerm;
+                                            });
+                                          },
+                                          min: 1,
+                                          max: 60,
+                                          divisions: 59,
+                                          label: term.toStringAsFixed(0),
+                                          activeColor: const Color.fromRGBO(0, 162, 233, 1),
+                                        ),
+                                      )
+                                        ],
                                   ),
                                 ),
-                                )
+                                Positioned(
+                                    left: 12,
+                                    top: -3.8,
+                                    child: Container(
+                                      color: Colors.white,
+                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      child: const Text(
+                                        'Term',
+                                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                                      ),
+                                    ),
+                                  ),
+                                  ],
+                            ),
+
+                              
+                              Padding(padding: EdgeInsets.all(8.0)),
+                              
+                              Stack(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(
+                                        startDate != null
+                                            ? '${startDate?.toLocal()}'.split(' ')[0]
+                                            : 'Select Start Date',
+                                      ),
+                                      leading: const Icon(Icons.calendar_month),
+                                      onTap: () {
+                                        setState(() {
+                                          _showCalendar = !_showCalendar;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 12,
+                                    top: -3.8,
+                                    child: Container(
+                                      color: Colors.white,
+                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      child: const Text(
+                                        'Start Date',
+                                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
 
@@ -1068,7 +1102,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                         'Your debt amount is',
                         style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16.0,
+                                  fontSize: MediaQuery.of(context).size.width * 0.04,
                                 ),
                       ),
 
@@ -1079,7 +1113,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                         style: TextStyle(
                                   color: const Color.fromRGBO(0, 162, 233, 1),
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 28.0,
+                                  fontSize: MediaQuery.of(context).size.width * 0.07,
                                 ),
                       ),
                         ],
