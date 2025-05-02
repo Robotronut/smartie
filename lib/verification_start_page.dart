@@ -177,21 +177,6 @@ class _VerificationStartPageState extends State<VerificationStartPage> {
 
                   Padding(padding: EdgeInsets.all(deviceHeight(context) * 0.01)),
 
-                  FractionallySizedBox(
-                    alignment: Alignment.center,
-                    widthFactor: 1.0, // Same width as the first text
-                    child: Text(
-                      "Please note: Verification pictures will be saved on the SMARTI&E server during the validation process. After approval, all images are deleted.",
-                      style: TextStyle(
-                        color: const Color.fromRGBO(255, 69, 69, 1),
-                        fontSize: 14.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                  Padding(padding: EdgeInsets.all(deviceHeight(context) * 0.01)),
-
                   //Submit Button
                   SizedBox(
                     width: double.infinity,

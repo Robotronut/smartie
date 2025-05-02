@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:smartie/pdf_viewer_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:smartie/contact_messages.dart';
-import 'package:smartie/repayment_plan.dart';
 import 'package:file_picker/file_picker.dart';
 
 class SummaryScreen extends StatefulWidget {
@@ -718,6 +717,8 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   DateTime? startDate;
   bool _showCalendar = false;
   bool _isChecked = false;
+  bool _isEvaluated = false;
+  bool _isOther = false;
 
   List<DropdownMenuEntry<String>> debtType() {
     var debtType = <DropdownMenuEntry<String>>[];
@@ -849,12 +850,12 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Proposed Plan')),
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(padding: EdgeInsets.only(top: 16.0)),
               Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 decoration: BoxDecoration(
@@ -866,26 +867,6 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back),
-                          ),
-                          Text(
-                            'Proposed Plan',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      Padding(padding: EdgeInsets.all(8.0)),
-
                       Form(
                         key: _formKey,
                         child: Column(
@@ -900,6 +881,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                               onSelected: (value) {
                                 setState(() {
                                   _selectedDebtType = value;
+                                  if(value == "Other") _isOther = true;
                                   debtValue = getDebtTypeMap()[value] ?? 0;
                                 });
                               },
@@ -907,49 +889,48 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
 
                             Padding(padding: EdgeInsets.all(8.0)),
 
-                            _selectedDebtType == 'Other'
-                                ? Column(
-                                  children: [
-                                    TextFormField(
-                                      controller: _customDebtNameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Enter debt type',
-                                        border: OutlineInputBorder(),
-                                      ),
-                                      onChanged: (value) {
-                                        _selectedDebtType = value;
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter a debt type';
-                                        }
-                                        return null;
-                                      },
+                            if (_isOther)
+                              Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _customDebtNameController,
+                                    decoration: InputDecoration(
+                                      labelText: 'Enter debt type',
+                                      border: OutlineInputBorder(),
                                     ),
+                                    onChanged: (value) {
+                                      _selectedDebtType = value;
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter a debt type';
+                                      }
+                                      return null;
+                                    },
+                                  ),
 
-                                    Padding(padding: EdgeInsets.all(4.0)),
+                                  Padding(padding: EdgeInsets.all(4.0)),
 
-                                    TextFormField(
-                                      controller: _customDebtValueController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Enter debt value',
-                                        border: OutlineInputBorder(),
-                                      ),
-                                      onChanged: (value) {
-                                        debtValue = double.parse(value);
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter a value';
-                                        }
-                                        return null;
-                                      },
+                                  TextFormField(
+                                    controller: _customDebtValueController,
+                                    decoration: InputDecoration(
+                                      labelText: 'Enter debt value',
+                                      border: OutlineInputBorder(),
                                     ),
+                                    onChanged: (value) {
+                                      debtValue = double.parse(value);
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter a value';
+                                      }
+                                      return null;
+                                    },
+                                  ),
 
-                                    Padding(padding: EdgeInsets.all(8.0)),
-                                  ],
-                                )
-                                : SizedBox(),
+                                  Padding(padding: EdgeInsets.all(8.0)),
+                                ],
+                              ),
 
                             DropdownMenu(
                               label: const Text('Payment Frequency'),
@@ -1135,6 +1116,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                     setState(() {
                                       installment = calculateInstallment(term);
                                       endDate = calculateEndDate();
+                                      _isEvaluated = true;
                                     });
                                   } else if (_selectedDebtType == null) {
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -1195,7 +1177,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                               fontSize:
                                   MediaQuery.of(context).size.width *
                                   (debtValue.toStringAsFixed(2).length > 5
-                                      ? 0.06
+                                      ? 0.055
                                       : 0.09),
                             ),
                           ),
@@ -1304,6 +1286,34 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                       ),
 
                       Padding(padding: EdgeInsets.all(8.0)),
+
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Plan shared successfully!'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                _isEvaluated
+                                    ? const Color.fromRGBO(0, 162, 233, 1)
+                                    : Colors.grey,
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          child: Text(
+                            'Share Plan',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
 
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1644,6 +1654,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
   final rand = Random();
 
   bool _isChecked = false;
+  bool _isEvaluated = false;
+  bool _isOther = false;
 
   final GlobalKey _bellIconKey = GlobalKey();
   OverlayEntry? _overlayEntry2;

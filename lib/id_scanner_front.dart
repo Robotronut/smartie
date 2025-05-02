@@ -103,6 +103,8 @@ class _IDScannerScreenState extends State<IDScannerScreen> {
       _image = null;
     });
 
+    // code below is veriff api for future use
+    return;
     dynamic sessionId = await _getVeriffSessionId();
 
     final String url =
