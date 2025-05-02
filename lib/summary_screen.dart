@@ -731,6 +731,9 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
       const DropdownMenuEntry(value: "Personal Loan", label: "Personal Loan"),
     );
     debtType.add(const DropdownMenuEntry(value: "Mortgage", label: "Mortgage"));
+    debtType.add(
+      const DropdownMenuEntry(value: "Rent Arrears", label: "Rent Arrears"),
+    );
     debtType.add(const DropdownMenuEntry(value: "Car Loan", label: "Car Loan"));
     debtType.add(
       const DropdownMenuEntry(value: "Student Loan", label: "Student Loan"),
@@ -765,6 +768,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
       "Credit Card Debt": 5200,
       "Personal Loan": 9000,
       "Mortgage": 250000,
+      "Rent Arrears": 2000,
       "Car Loan": 18000,
       "Student Loan": 30000,
       "Medical Bills": 3500,
