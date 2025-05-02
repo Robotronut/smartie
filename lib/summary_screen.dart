@@ -1194,8 +1194,8 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                               fontWeight: FontWeight.w600,
                               fontSize:
                                   MediaQuery.of(context).size.width *
-                                  (debtValue.toString().length > 6
-                                      ? 0.05
+                                  (debtValue.toStringAsFixed(2).length > 5
+                                      ? 0.06
                                       : 0.09),
                             ),
                           ),
