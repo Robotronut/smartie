@@ -302,7 +302,7 @@ class SupportWidget extends StatelessWidget {
                   padding: EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [ 
+                    children: [
                       Text(
                         'FAQs',
                         style: TextStyle(
@@ -695,7 +695,7 @@ class DocumentWidget extends StatelessWidget {
   }
 }
 
-class RepaymentPlanCalculator extends StatefulWidget{
+class RepaymentPlanCalculator extends StatefulWidget {
   const RepaymentPlanCalculator({super.key});
 
   @override
@@ -705,8 +705,10 @@ class RepaymentPlanCalculator extends StatefulWidget{
 class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _debtTypeController = TextEditingController();
-  final TextEditingController _customDebtNameController = TextEditingController();
-  final TextEditingController _customDebtValueController = TextEditingController();
+  final TextEditingController _customDebtNameController =
+      TextEditingController();
+  final TextEditingController _customDebtValueController =
+      TextEditingController();
   String? _selectedDebtType;
   double debtValue = 0;
   double frequency = 4.34;
@@ -719,22 +721,28 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
 
   List<DropdownMenuEntry<String>> debtType() {
     var debtType = <DropdownMenuEntry<String>>[];
-    debtType.add(const DropdownMenuEntry(value: "Credit Card Debt", label: "Credit Card Debt"));
-    debtType.add(const DropdownMenuEntry(value: "Personal Loan", label: "Personal Loan"));
     debtType.add(
-      const DropdownMenuEntry(value: "Mortgage", label: "Mortgage"),
+      const DropdownMenuEntry(
+        value: "Credit Card Debt",
+        label: "Credit Card Debt",
+      ),
     );
+    debtType.add(
+      const DropdownMenuEntry(value: "Personal Loan", label: "Personal Loan"),
+    );
+    debtType.add(const DropdownMenuEntry(value: "Mortgage", label: "Mortgage"));
     debtType.add(const DropdownMenuEntry(value: "Car Loan", label: "Car Loan"));
-    debtType.add(const DropdownMenuEntry(value: "Student Loan", label: "Student Loan"));
-    debtType.add(const DropdownMenuEntry(value: "Medical Bills", label: "Medical Bills"));
+    debtType.add(
+      const DropdownMenuEntry(value: "Student Loan", label: "Student Loan"),
+    );
+    debtType.add(
+      const DropdownMenuEntry(value: "Medical Bills", label: "Medical Bills"),
+    );
     debtType.add(
       const DropdownMenuEntry(value: "Family Loan", label: "Family Loan"),
     );
     debtType.add(
-      const DropdownMenuEntry(
-        value: "Friend Loan",
-        label: "Friend Loan",
-      ),
+      const DropdownMenuEntry(value: "Friend Loan", label: "Friend Loan"),
     );
     debtType.add(
       const DropdownMenuEntry(value: "Business Loan", label: "Business Loan"),
@@ -742,8 +750,9 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
     debtType.add(
       const DropdownMenuEntry(value: "Overdraft", label: "Overdraft"),
     );
+    debtType.add(const DropdownMenuEntry(value: "Tax Debt", label: "Tax Debt"));
     debtType.add(
-      const DropdownMenuEntry(value: "Tax Debt", label: "Tax Debt"),
+      const DropdownMenuEntry(value: "Utilities", label: "Utilities"),
     );
     debtType.add(
       const DropdownMenuEntry(value: "Other", label: "Other (Please specify)"),
@@ -752,22 +761,23 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   }
 
   Map<String, double> getDebtTypeMap() {
-  return {
-    "Credit Card Debt": 5200,
-    "Personal Loan": 9000,
-    "Mortgage": 250000,
-    "Car Loan": 18000,
-    "Student Loan": 30000,
-    "Medical Bills": 3500,
-    "Family Loan": 2000,
-    "Friend Loan": 1500,
-    "Business Loan": 40000,
-    "Overdraft": 1000,
-    "Tax Debt": 10000,
-    "Other": double.tryParse(_customDebtValueController.text) ?? 0,
-  };
-}
-  
+    return {
+      "Credit Card Debt": 5200,
+      "Personal Loan": 9000,
+      "Mortgage": 250000,
+      "Car Loan": 18000,
+      "Student Loan": 30000,
+      "Medical Bills": 3500,
+      "Family Loan": 2000,
+      "Friend Loan": 1500,
+      "Business Loan": 40000,
+      "Overdraft": 1000,
+      "Tax Debt": 10000,
+      "Utilities": 1300,
+      "Other": double.tryParse(_customDebtValueController.text) ?? 0,
+    };
+  }
+
   double installment = 0.0;
   double totalOutstanding = 5000.56 + Random().nextInt(500).toDouble();
 
@@ -783,10 +793,10 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   DateTime? endDate;
 
   // Function to calculate installment
-  double calculateInstallment(term){
+  double calculateInstallment(term) {
     double paymentsPerMonth;
 
-    switch (selectedFreqValue){
+    switch (selectedFreqValue) {
       case 'Monthly':
         paymentsPerMonth = 1.0;
         break;
@@ -806,12 +816,16 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   }
 
   // Function to calculate end date
-  DateTime calculateEndDate(){
+  DateTime calculateEndDate() {
     double paymentsPerMonth;
 
-    switch (selectedFreqValue){
+    switch (selectedFreqValue) {
       case 'Monthly':
-        return DateTime(startDate!.year, startDate!.month + term.toInt(), startDate!.day);
+        return DateTime(
+          startDate!.year,
+          startDate!.month + term.toInt(),
+          startDate!.day,
+        );
       case 'Bi-weekly':
         paymentsPerMonth = 2.172;
         break;
@@ -851,12 +865,10 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: (){
-                              Navigator.pop(
-                                context
-                              );
-                            }, 
-                            icon: Icon(Icons.arrow_back)
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back),
                           ),
                           Text(
                             'Proposed Plan',
@@ -875,91 +887,90 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                         child: Column(
                           children: [
                             DropdownMenu<String>(
-                                controller: _debtTypeController,
-                                enableFilter: true,
-                                width: MediaQuery.of(context).size.width * 0.85,
-                                requestFocusOnTap: true,
-                                label: const Text('Select debt type'),
-                                dropdownMenuEntries: debtType(),
-                                onSelected: (value) {
-                                  setState(() {
-                                    _selectedDebtType = value;
-                                    debtValue = getDebtTypeMap()[value] ?? 0;
-                                  });
-                                },
-                              ),
+                              controller: _debtTypeController,
+                              enableFilter: true,
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              requestFocusOnTap: true,
+                              label: const Text('Select Debt Type'),
+                              dropdownMenuEntries: debtType(),
+                              onSelected: (value) {
+                                setState(() {
+                                  _selectedDebtType = value;
+                                  debtValue = getDebtTypeMap()[value] ?? 0;
+                                });
+                              },
+                            ),
 
                             Padding(padding: EdgeInsets.all(8.0)),
 
                             _selectedDebtType == 'Other'
-                            ? Column(
-                              children: [
-                                TextFormField(
-                                  controller: _customDebtNameController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Enter debt type',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  onChanged: (value) {
-                                    _selectedDebtType = value;
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter a debt type';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                ? Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: _customDebtNameController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Enter debt type',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      onChanged: (value) {
+                                        _selectedDebtType = value;
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a debt type';
+                                        }
+                                        return null;
+                                      },
+                                    ),
 
-                                Padding(padding: EdgeInsets.all(4.0)),
+                                    Padding(padding: EdgeInsets.all(4.0)),
 
-                                TextFormField(
-                                  controller: _customDebtValueController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Enter debt value',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  onChanged: (value) {
-                                    debtValue = double.parse(value);
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter a value';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                    TextFormField(
+                                      controller: _customDebtValueController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Enter debt value',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      onChanged: (value) {
+                                        debtValue = double.parse(value);
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter a value';
+                                        }
+                                        return null;
+                                      },
+                                    ),
 
-                                Padding(padding: EdgeInsets.all(8.0)),
-                              ],
-                            )
-                            : SizedBox(),
+                                    Padding(padding: EdgeInsets.all(8.0)),
+                                  ],
+                                )
+                                : SizedBox(),
 
                             DropdownMenu(
-                                label: const Text('Payment Frequency'),
-                                initialSelection: selectedFreqValue,
-                                width: MediaQuery.of(context).size.width * 0.85,
-                                dropdownMenuEntries:
-                                    <DropdownMenuEntry<String>>[
-                                      DropdownMenuEntry(
-                                        value: 'Weekly',
-                                        label: 'Weekly',
-                                      ),
-                                      DropdownMenuEntry(
-                                        value: 'Bi-weekly',
-                                        label: 'Bi-weekly',
-                                      ),
-                                      DropdownMenuEntry(
-                                        value: 'Monthly',
-                                        label: 'Monthly',
-                                      ),
-                                    ],
-                                onSelected: (value) {
-                                  setState(() {
-                                    selectedFreqValue = value!;
-                                  });
-                                },
-                              ),
+                              label: const Text('Payment Frequency'),
+                              initialSelection: selectedFreqValue,
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                                DropdownMenuEntry(
+                                  value: 'Weekly',
+                                  label: 'Weekly',
+                                ),
+                                DropdownMenuEntry(
+                                  value: 'Bi-weekly',
+                                  label: 'Bi-weekly',
+                                ),
+                                DropdownMenuEntry(
+                                  value: 'Monthly',
+                                  label: 'Monthly',
+                                ),
+                              ],
+                              onSelected: (value) {
+                                setState(() {
+                                  selectedFreqValue = value!;
+                                });
+                              },
+                            ),
 
                             Padding(padding: EdgeInsets.all(8.0)),
 
@@ -974,25 +985,38 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                   child: Row(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04)
+                                        padding: EdgeInsets.only(
+                                          left:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                        ),
                                       ),
                                       Text(
-                                          '${term.toInt()} ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: const Color.fromRGBO(0, 162, 233, 1),
-                                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                                        '${term.toInt()} ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color.fromRGBO(
+                                            0,
+                                            162,
+                                            233,
+                                            1,
                                           ),
+                                          fontSize:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.04,
+                                        ),
                                       ),
 
-                                      Text(
-                                          'months'
-                                      ),
-                                      
+                                      Text('months'),
+
                                       Expanded(
                                         child: Slider(
-                                          value: term, 
-                                          onChanged: (newTerm){
+                                          value: term,
+                                          onChanged: (newTerm) {
                                             setState(() {
                                               term = newTerm;
                                             });
@@ -1001,108 +1025,122 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                           max: 60,
                                           divisions: 59,
                                           label: term.toStringAsFixed(0),
-                                          activeColor: const Color.fromRGBO(0, 162, 233, 1),
+                                          activeColor: const Color.fromRGBO(
+                                            0,
+                                            162,
+                                            233,
+                                            1,
+                                          ),
                                         ),
-                                      )
-                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Positioned(
-                                    left: 12,
-                                    top: -3.8,
-                                    child: Container(
-                                      color: Colors.white,
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                                      child: const Text(
-                                        'Term',
-                                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                                  left: 12,
+                                  top: -3.8,
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                    ),
+                                    child: const Text(
+                                      'Term',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black87,
                                       ),
                                     ),
                                   ),
-                                  ],
+                                ),
+                              ],
                             ),
 
-                              
-                              Padding(padding: EdgeInsets.all(8.0)),
-                              
-                              Stack(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: ListTile(
-                                      title: Text(
-                                        startDate != null
-                                            ? '${startDate?.toLocal()}'.split(' ')[0]
-                                            : 'Select Start Date',
-                                      ),
-                                      leading: const Icon(Icons.calendar_month),
-                                      onTap: () {
-                                        setState(() {
-                                          _showCalendar = !_showCalendar;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 12,
-                                    top: -3.8,
-                                    child: Container(
-                                      color: Colors.white,
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                                      child: const Text(
-                                        'Start Date',
-                                        style: TextStyle(fontSize: 12, color: Colors.black87),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            Padding(padding: EdgeInsets.all(8.0)),
 
-                              _showCalendar
-                              ? CalendarDatePicker(
-                                  initialDate: DateTime.now(), 
-                                  firstDate: DateTime.now(), 
-                                  lastDate: DateTime.now().add(Duration(days: 30)), 
+                            Stack(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(top: 2),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: ListTile(
+                                    title: Text(
+                                      startDate != null
+                                          ? '${startDate?.toLocal()}'.split(
+                                            ' ',
+                                          )[0]
+                                          : 'Select Start Date',
+                                    ),
+                                    leading: const Icon(Icons.calendar_month),
+                                    onTap: () {
+                                      setState(() {
+                                        _showCalendar = !_showCalendar;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 12,
+                                  top: -3.8,
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                    ),
+                                    child: const Text(
+                                      'Start Date',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            _showCalendar
+                                ? CalendarDatePicker(
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now().add(
+                                    Duration(days: 30),
+                                  ),
                                   onDateChanged: (selectedDate) {
                                     setState(() {
                                       startDate = selectedDate;
                                       _isChecked = true;
                                       _showCalendar = !_showCalendar;
                                     });
-                                  }
+                                  },
                                 )
-                              : SizedBox(),
+                                : SizedBox(),
 
-                              Padding(padding: EdgeInsets.all(4.0)),
-                              
-                              SizedBox(
+                            Padding(padding: EdgeInsets.all(4.0)),
+
+                            SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate() && _selectedDebtType != null && startDate != null) {
+                                  if (_formKey.currentState!.validate() &&
+                                      _selectedDebtType != null &&
+                                      startDate != null) {
                                     setState(() {
                                       installment = calculateInstallment(term);
                                       endDate = calculateEndDate();
                                     });
-                                  }
-                                  else if (_selectedDebtType == null){
-                                    ScaffoldMessenger.of(
-                                      context,
-                                    ).showSnackBar(
+                                  } else if (_selectedDebtType == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text('Select a debt type.'),
                                         backgroundColor: Colors.red,
                                       ),
                                     );
-                                  }
-                                  else if (startDate == null){
-                                    ScaffoldMessenger.of(
-                                      context,
-                                    ).showSnackBar(
+                                  } else if (startDate == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text('Select start date.'),
                                         backgroundColor: Colors.red,
@@ -1111,9 +1149,10 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: _isChecked
-                                                  ?const Color.fromRGBO(0, 162, 233, 1)
-                                                  : Colors.grey,
+                                  backgroundColor:
+                                      _isChecked
+                                          ? const Color.fromRGBO(0, 162, 233, 1)
+                                          : Colors.grey,
                                   padding: EdgeInsets.symmetric(vertical: 15),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
@@ -1124,9 +1163,9 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                            )
-                          ]
-                        )
+                            ),
+                          ],
+                        ),
                       ),
 
                       Padding(padding: EdgeInsets.all(8.0)),
@@ -1134,23 +1173,28 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                       Row(
                         children: [
                           Text(
-                        'Your debt amount is',
-                        style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                                ),
-                      ),
+                            'Your debt amount is',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04,
+                            ),
+                          ),
 
-                      Padding(padding: EdgeInsets.all(4.0)),
+                          Padding(padding: EdgeInsets.all(4.0)),
 
-                      Text(
-                        '\$$debtValue',
-                        style: TextStyle(
-                                  color: const Color.fromRGBO(0, 162, 233, 1),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: MediaQuery.of(context).size.width * (debtValue.toString().length > 6 ? 0.05 : 0.09),
-                                ),
-                      ),
+                          Text(
+                            '\$${debtValue.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              color: const Color.fromRGBO(0, 162, 233, 1),
+                              fontWeight: FontWeight.w600,
+                              fontSize:
+                                  MediaQuery.of(context).size.width *
+                                  (debtValue.toString().length > 6
+                                      ? 0.05
+                                      : 0.09),
+                            ),
+                          ),
                         ],
                       ),
 
@@ -1159,10 +1203,10 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                       Text(
                         'Your repayment plan with ${selectedFreqValue.toLowerCase()} payments over a term of ${term.toInt()} months is',
                         style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.0,
-                                  color: Colors.blueGrey
-                                ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.0,
+                          color: Colors.blueGrey,
+                        ),
                       ),
 
                       Row(
@@ -1176,7 +1220,15 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                                 style: TextStyle(
                                   color: const Color.fromRGBO(0, 162, 233, 1),
                                   fontWeight: FontWeight.w600,
-                                  fontSize: MediaQuery.of(context).size.width * (installment.toStringAsFixed(2).toString().length > 7 ? 0.08 : 0.12),
+                                  fontSize:
+                                      MediaQuery.of(context).size.width *
+                                      (installment
+                                                  .toStringAsFixed(2)
+                                                  .toString()
+                                                  .length >
+                                              7
+                                          ? 0.08
+                                          : 0.12),
                                 ),
                               ),
 
@@ -1196,52 +1248,54 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                           Column(
                             children: [
                               Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                _isChecked
-                                ? '${startDate?.toLocal()}'.split(' ')[0]
-                                : "----/--/--",
-                                style: TextStyle(fontSize: 16.0),
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    _isChecked
+                                        ? '${startDate?.toLocal()}'.split(
+                                          ' ',
+                                        )[0]
+                                        : "----/--/--",
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+
+                                  Padding(padding: EdgeInsets.all(4.0)),
+
+                                  Text(
+                                    'Start Date',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ],
                               ),
 
-                              Padding(padding: EdgeInsets.all(4.0)),
+                              Padding(padding: EdgeInsets.all(8.0)),
 
-                              Text(
-                                'Start Date',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.0,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    _isChecked
+                                        ? '${endDate?.toLocal()}'.split(' ')[0]
+                                        : "----/--/--",
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+
+                                  Padding(padding: EdgeInsets.all(4.0)),
+
+                                  Text(
+                                    'End Date',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-
-                          Padding(padding: EdgeInsets.all(8.0)),
-                          
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                _isChecked
-                                ? '${endDate?.toLocal()}'.split(' ')[0]
-                                : "----/--/--",
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-
-                              Padding(padding: EdgeInsets.all(4.0)),
-
-                              Text(
-                                'End Date',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                            ],
-                          )
                         ],
                       ),
 
@@ -1435,15 +1489,15 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                       //   ],
                       // ),
                     ],
+                  ),
                 ),
               ),
-              ),
-            ])
-        )
-      )
-      );
+            ],
+          ),
+        ),
+      ),
+    );
   }
-  
 }
 
 class _SummaryScreenState extends State<SummaryScreen> {
@@ -1591,11 +1645,27 @@ class _SummaryScreenState extends State<SummaryScreen> {
   OverlayEntry? _overlayEntry2;
 
   // test notifications
-   final List<SmartieNotification> _notifications = [
-    SmartieNotification(Icon(Icons.money),"You're Making Progress!", "You've just paid off \$100 — that’s one more step toward your financial freedom. Keep going, you're doing great!"),
-    SmartieNotification(Icon(Icons.celebration),"We See You. We Celebrate You.", "Paying down debt takes courage. You’re building confidence, one payment at a time. You've got this."),
-    SmartieNotification(Icon(Icons.rocket_launch),"Milestone Unlocked!", "You've hit your halfway mark — 50% of your goal is complete. Take a moment to be proud."),
-    SmartieNotification(Icon(Icons.question_mark),"Did You Know?", "Paying off just an extra \$20/month can save you hundreds in interest. You’re making smart moves already."),
+  final List<SmartieNotification> _notifications = [
+    SmartieNotification(
+      Icon(Icons.money),
+      "You're Making Progress!",
+      "You've just paid off \$100 — that’s one more step toward your financial freedom. Keep going, you're doing great!",
+    ),
+    SmartieNotification(
+      Icon(Icons.celebration),
+      "We See You. We Celebrate You.",
+      "Paying down debt takes courage. You’re building confidence, one payment at a time. You've got this.",
+    ),
+    SmartieNotification(
+      Icon(Icons.rocket_launch),
+      "Milestone Unlocked!",
+      "You've hit your halfway mark — 50% of your goal is complete. Take a moment to be proud.",
+    ),
+    SmartieNotification(
+      Icon(Icons.question_mark),
+      "Did You Know?",
+      "Paying off just an extra \$20/month can save you hundreds in interest. You’re making smart moves already.",
+    ),
   ];
 
   void _showNotificationsPopup() {
@@ -1653,7 +1723,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
                           itemCount: _notifications.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              title: Text(_notifications[index].title, maxLines: 2,),
+                              title: Text(
+                                _notifications[index].title,
+                                maxLines: 2,
+                              ),
                               leading: _notifications[index].icon,
                               onTap: () {
                                 print("Clicked on: ${_notifications[index]}");
@@ -2686,176 +2759,219 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               key: _formKey,
                               child: Column(
                                 children: [
-                              DropdownMenu<String>(
-                              controller: _shareReportController,
-                              enableFilter: true,
-                              width: MediaQuery.of(context).size.width,
-                              requestFocusOnTap: true,
-                              label: const Text('Share it with'),
-                              dropdownMenuEntries: <DropdownMenuEntry<String>>[
-                                      DropdownMenuEntry(
-                                        value: 'Creditor',
-                                        label: 'Creditor',
-                                      ),
-                                      DropdownMenuEntry(
-                                        value: 'Personal Contact',
-                                        label: 'Personal Contact',
-                                      ),
-                                      DropdownMenuEntry(
-                                        value: 'Business Outside SMARTI&E',
-                                        label: 'Business Outside SMARTI&E',
-                                      ),
-                                    ],
+                                  DropdownMenu<String>(
+                                    controller: _shareReportController,
+                                    enableFilter: true,
+                                    width: MediaQuery.of(context).size.width,
+                                    requestFocusOnTap: true,
+                                    label: const Text('Share it with'),
+                                    dropdownMenuEntries:
+                                        <DropdownMenuEntry<String>>[
+                                          DropdownMenuEntry(
+                                            value: 'Creditor',
+                                            label: 'Creditor',
+                                          ),
+                                          DropdownMenuEntry(
+                                            value: 'Personal Contact',
+                                            label: 'Personal Contact',
+                                          ),
+                                          DropdownMenuEntry(
+                                            value: 'Business Outside SMARTI&E',
+                                            label: 'Business Outside SMARTI&E',
+                                          ),
+                                        ],
                                     onSelected: (value) {
                                       setState(() {
                                         _selectedEntityforShareReport = value;
                                       });
                                     },
-                            ),
-
-                            Padding(padding: EdgeInsets.only(bottom: 16.0)),
-
-                            _selectedEntityforShareReport == 'Creditor' 
-                              ? DropdownMenu<String>(
-                              controller: _creditorController,
-                              enableFilter: true,
-                              width: MediaQuery.of(context).size.width,
-                              requestFocusOnTap: true,
-                              label: const Text('Choose a Creditor'),
-                              dropdownMenuEntries: entries(),
-                              onSelected: (value) {
-                                setState(() {
-                                  _selectedCreditor = value;
-                                  _isChecked = true;
-                                });
-                              },
-                            )
-                            : _selectedEntityforShareReport == 'Personal Contact'
-                            ? Column(
-                              children: [
-                                TextFormField(
-                                controller: _emailController,
-                                decoration: InputDecoration(
-                                  labelText: 'Enter email',
-                                  border: OutlineInputBorder(),
-                                ),
-                                onTap: (){
-                                  _isChecked = true;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  if (!RegExp(
-                                    r'^[^@]+@[^@]+\.[^@]+',
-                                  ).hasMatch(value)) {
-                                    return 'Enter a valid email';
-                                  }
-                                  return null;
-                                },
-                              ),
-
-                              Padding(padding: EdgeInsets.all(2.0)),
-
-                              Text(
-                                'Reciever must have the app downloaded on their phone.',
-                                style: TextStyle(
-                                  fontSize: 12.0,
-                                  color: const Color.fromRGBO(0, 162, 233, 1),
-                                ),
-                              ),
-                              ],
-                            )
-                            : _selectedEntityforShareReport == 'Business Outside SMARTI&E'
-                            ? Column(
-                              children: [
-                                TextFormField(
-                                controller: _emailController,
-                                decoration: InputDecoration(
-                                  labelText: 'Enter email',
-                                  border: OutlineInputBorder(),
-                                ),
-                                onTap: (){
-                                  _isChecked = true;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  if (!RegExp(
-                                    r'^[^@]+@[^@]+\.[^@]+',
-                                  ).hasMatch(value)) {
-                                    return 'Enter a valid email';
-                                  }
-                                  return null;
-                                },
-                              ),
-
-                              Padding(padding: EdgeInsets.all(2.0)),
-
-                              Text(
-                                'They will only get access to high-level PDF summary. To view further details, they must be a member of the programme.',
-                                style: TextStyle(
-                                  fontSize: 12.0,
-                                  color: const Color.fromRGBO(0, 162, 233, 1),
-                                ),
-                              ),
-                              ],
-                            )
-                            :SizedBox(),
-                           
-                            Padding(padding: EdgeInsets.all(4.0)),
-
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                  _selectedEntityforShareReport =='Creditor' && _selectedCreditor == null
-                                      ? ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text('Select a creditor.'),
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      )
-                                      : _isChecked ? {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            content: Text('Report shared successfully!'),
-                                            backgroundColor: Colors.green,
-                                          ),
-                                        )
-                                      }
-                                      : {};
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      _isChecked
-                                          ? const Color.fromRGBO(0, 162, 233, 1)
-                                          : Colors.grey,
-                                  padding: EdgeInsets.symmetric(vertical: 15),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                ),
-                                child: Text(
-                                  'Share SMARTI&E Report',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 16.0),
+                                  ),
+
+                                  _selectedEntityforShareReport == 'Creditor'
+                                      ? DropdownMenu<String>(
+                                        controller: _creditorController,
+                                        enableFilter: true,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        requestFocusOnTap: true,
+                                        label: const Text('Choose a Creditor'),
+                                        dropdownMenuEntries: entries(),
+                                        onSelected: (value) {
+                                          setState(() {
+                                            _selectedCreditor = value;
+                                            _isChecked = true;
+                                          });
+                                        },
+                                      )
+                                      : _selectedEntityforShareReport ==
+                                          'Personal Contact'
+                                      ? Column(
+                                        children: [
+                                          TextFormField(
+                                            controller: _emailController,
+                                            decoration: InputDecoration(
+                                              labelText: 'Enter email',
+                                              border: OutlineInputBorder(),
+                                            ),
+                                            onTap: () {
+                                              _isChecked = true;
+                                            },
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Please enter your email';
+                                              }
+                                              if (!RegExp(
+                                                r'^[^@]+@[^@]+\.[^@]+',
+                                              ).hasMatch(value)) {
+                                                return 'Enter a valid email';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+
+                                          Padding(padding: EdgeInsets.all(2.0)),
+
+                                          Text(
+                                            'Reciever must have the app downloaded on their phone.',
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: const Color.fromRGBO(
+                                                0,
+                                                162,
+                                                233,
+                                                1,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                      : _selectedEntityforShareReport ==
+                                          'Business Outside SMARTI&E'
+                                      ? Column(
+                                        children: [
+                                          TextFormField(
+                                            controller: _emailController,
+                                            decoration: InputDecoration(
+                                              labelText: 'Enter email',
+                                              border: OutlineInputBorder(),
+                                            ),
+                                            onTap: () {
+                                              _isChecked = true;
+                                            },
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Please enter your email';
+                                              }
+                                              if (!RegExp(
+                                                r'^[^@]+@[^@]+\.[^@]+',
+                                              ).hasMatch(value)) {
+                                                return 'Enter a valid email';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+
+                                          Padding(padding: EdgeInsets.all(2.0)),
+
+                                          Text(
+                                            'They will only get access to high-level PDF summary. To view further details, they must be a member of the programme.',
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: const Color.fromRGBO(
+                                                0,
+                                                162,
+                                                233,
+                                                1,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                      : SizedBox(),
+
+                                  Padding(padding: EdgeInsets.all(4.0)),
+
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          _selectedEntityforShareReport ==
+                                                      'Creditor' &&
+                                                  _selectedCreditor == null
+                                              ? ScaffoldMessenger.of(
+                                                context,
+                                              ).showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Select a creditor.',
+                                                  ),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              )
+                                              : _isChecked
+                                              ? {
+                                                ScaffoldMessenger.of(
+                                                  context,
+                                                ).showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Report shared successfully!',
+                                                    ),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                  ),
+                                                ),
+                                              }
+                                              : {};
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            _isChecked
+                                                ? const Color.fromRGBO(
+                                                  0,
+                                                  162,
+                                                  233,
+                                                  1,
+                                                )
+                                                : Colors.grey,
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 15,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            5,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Share SMARTI&E Report',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                                ])
                             ),
 
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton(
                                 onPressed: () {
-                                  Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => RepaymentPlanCalculator())
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) =>
+                                              RepaymentPlanCalculator(),
+                                    ),
                                   );
                                 },
                                 style: FilledButton.styleFrom(
@@ -2988,7 +3104,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton(
-                                onPressed: ()  => _launchURL(
+                                onPressed:
+                                    () => _launchURL(
                                       'https://benefitswayfinder.org/',
                                     ),
                                 style: FilledButton.styleFrom(
@@ -3065,20 +3182,25 @@ class _SummaryScreenState extends State<SummaryScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: TextButton(
-                                onPressed: (){}, 
+                                onPressed: () {},
                                 child: Text(
-                                          'Option to opt out',
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: const Color.fromRGBO(0, 162, 233, 1),
-                                            fontWeight: FontWeight.bold,
-                                            decoration: TextDecoration.underline,
-                                            decorationColor: const Color.fromRGBO(0, 162, 233, 1),
-                                            decorationThickness: 2.0,
-                                          ),
-                                        ),
-                              )
+                                  'Option to opt out',
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: const Color.fromRGBO(0, 162, 233, 1),
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: const Color.fromRGBO(
+                                      0,
+                                      162,
+                                      233,
+                                      1,
+                                    ),
+                                    decorationThickness: 2.0,
+                                  ),
+                                ),
                               ),
+                            ),
                           ],
                         ),
                       ),
