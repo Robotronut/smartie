@@ -881,7 +881,11 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                               onSelected: (value) {
                                 setState(() {
                                   _selectedDebtType = value;
-                                  if(value == "Other") _isOther = true;
+                                  if (value == "Other") {
+                                    _isOther = true;
+                                  } else {
+                                    _isOther = false;
+                                  }
                                   debtValue = getDebtTypeMap()[value] ?? 0;
                                 });
                               },
