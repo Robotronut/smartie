@@ -723,13 +723,13 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   List<DropdownMenuEntry<String>> debtType() {
     var debtType = <DropdownMenuEntry<String>>[];
     debtType.add(
+      const DropdownMenuEntry(value: "Utilities", label: "Utilities"),
+    );
+    debtType.add(
       const DropdownMenuEntry(
         value: "Credit Card Debt",
         label: "Credit Card Debt",
       ),
-    );
-    debtType.add(
-      const DropdownMenuEntry(value: "Personal Loan", label: "Personal Loan"),
     );
     debtType.add(const DropdownMenuEntry(value: "Mortgage", label: "Mortgage"));
     debtType.add(
@@ -743,20 +743,17 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
       const DropdownMenuEntry(value: "Medical Bills", label: "Medical Bills"),
     );
     debtType.add(
+      const DropdownMenuEntry(value: "Business Loan", label: "Business Loan"),
+    );
+    debtType.add(const DropdownMenuEntry(value: "Tax Debt", label: "Tax Debt"));
+    debtType.add(
       const DropdownMenuEntry(value: "Family Loan", label: "Family Loan"),
     );
     debtType.add(
       const DropdownMenuEntry(value: "Friend Loan", label: "Friend Loan"),
     );
     debtType.add(
-      const DropdownMenuEntry(value: "Business Loan", label: "Business Loan"),
-    );
-    debtType.add(
-      const DropdownMenuEntry(value: "Overdraft", label: "Overdraft"),
-    );
-    debtType.add(const DropdownMenuEntry(value: "Tax Debt", label: "Tax Debt"));
-    debtType.add(
-      const DropdownMenuEntry(value: "Utilities", label: "Utilities"),
+      const DropdownMenuEntry(value: "Personal Loan", label: "Personal Loan"),
     );
     debtType.add(
       const DropdownMenuEntry(value: "Other", label: "Other (Please specify)"),
@@ -850,7 +847,22 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Proposed Plan')),
+      appBar: AppBar(
+        title: Text('Proposed Plan'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Plan shared successfully!'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            }, 
+            icon: Icon(Icons.share)
+          )
+        ],
+      ),
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       body: Center(
         child: SingleChildScrollView(
@@ -1179,10 +1191,7 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                               color: const Color.fromRGBO(0, 162, 233, 1),
                               fontWeight: FontWeight.w600,
                               fontSize:
-                                  MediaQuery.of(context).size.width *
-                                  (debtValue.toStringAsFixed(2).length > 5
-                                      ? 0.055
-                                      : 0.09),
+                                  MediaQuery.of(context).size.width * 0.055,
                             ),
                           ),
                         ],
@@ -1291,33 +1300,33 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
 
                       Padding(padding: EdgeInsets.all(8.0)),
 
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Plan shared successfully!'),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                _isEvaluated
-                                    ? const Color.fromRGBO(0, 162, 233, 1)
-                                    : Colors.grey,
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          child: Text(
-                            'Share Plan',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: double.infinity,
+                      //   child: ElevatedButton(
+                      //     onPressed: () {
+                      //       ScaffoldMessenger.of(context).showSnackBar(
+                      //         SnackBar(
+                      //           content: Text('Plan shared successfully!'),
+                      //           backgroundColor: Colors.green,
+                      //         ),
+                      //       );
+                      //     },
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor:
+                      //           _isEvaluated
+                      //               ? const Color.fromRGBO(0, 162, 233, 1)
+                      //               : Colors.grey,
+                      //       padding: EdgeInsets.symmetric(vertical: 15),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(5),
+                      //       ),
+                      //     ),
+                      //     child: Text(
+                      //       'Share Plan',
+                      //       style: TextStyle(color: Colors.white),
+                      //     ),
+                      //   ),
+                      // ),
 
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
