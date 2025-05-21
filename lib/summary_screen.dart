@@ -3208,7 +3208,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               ),
                             ),
 
-                            SizedBox(
+/*                             SizedBox(
                               width: double.infinity,
                               child: TextButton(
                                 onPressed: () {},
@@ -3229,7 +3229,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   ),
                                 ),
                               ),
-                            ),
+                            ), */
                           ],
                         ),
                       ),

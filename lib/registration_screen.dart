@@ -60,6 +60,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         label: "National Bank of Canada",
       ),
     );
+    // check other bug
     entries.add(const DropdownMenuEntry(value: "Other", label: "Other"));
     return entries;
   }
@@ -293,6 +294,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       if (value == 'Other') {
                         setState(() {
                           _showOtherCreditorInput = true;
+                        });
+                      }
+                      else{
+                        setState(() {
+                          _showOtherCreditorInput = false;
                         });
                       }
                     },
