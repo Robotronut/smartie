@@ -858,9 +858,9 @@ class _RepaymentPlanState extends State<RepaymentPlanCalculator> {
                   backgroundColor: Colors.green,
                 ),
               );
-            }, 
-            icon: Icon(Icons.share)
-          )
+            },
+            icon: Icon(Icons.share),
+          ),
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
@@ -2808,9 +2808,17 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                             value: 'Business Outside SMARTI&E',
                                             label: 'Business Outside SMARTI&E',
                                           ),
+                                          DropdownMenuEntry(
+                                            value: 'Credit Counselling',
+                                            label: 'Credit Counselling',
+                                          ),
                                         ],
                                     onSelected: (value) {
                                       setState(() {
+                                        _isChecked = false;
+                                        if(value == "Credit Counselling"){
+                                          _isChecked = true;
+                                        }
                                         _selectedEntityforShareReport = value;
                                       });
                                     },
@@ -2919,6 +2927,21 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                                 1,
                                               ),
                                             ),
+                                          ),
+                                        ],
+                                      )
+                                      : _selectedEntityforShareReport ==
+                                          'Credit Counselling'
+                                      ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TextButton(
+                                            onPressed:
+                                                () => _launchURL(
+                                                  'https://creditcounsellingcanada.ca/',
+                                                ),
+                                            child: Text('Learn more'),
                                           ),
                                         ],
                                       )
@@ -3208,7 +3231,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                               ),
                             ),
 
-/*                             SizedBox(
+                            /*                             SizedBox(
                               width: double.infinity,
                               child: TextButton(
                                 onPressed: () {},
